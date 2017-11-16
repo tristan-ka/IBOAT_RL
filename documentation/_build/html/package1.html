@@ -1,0 +1,371 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Package Sim &#8212; IBOAT RL 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Package RL" href="package2.html" />
+    <link rel="prev" title="Welcome to IBOAT RL’s documentation!" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="package2.html" title="Package RL"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to IBOAT RL’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IBOAT RL 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/IBOAT_logo1.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Package Sim</a><ul>
+<li><a class="reference internal" href="#module-Simulator">Simulator</a></li>
+<li><a class="reference internal" href="#module-hysteresis">Hysteresis</a></li>
+<li><a class="reference internal" href="#module-mdp">Markov Decision Process (MDP)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to IBOAT RL&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="package2.html"
+                        title="next chapter">Package RL</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/package1.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="package-sim">
+<h1>Package Sim<a class="headerlink" href="#package-sim" title="Permalink to this headline">¶</a></h1>
+<p>This package contains all the classes required to build a simulation for the learning.</p>
+<p>The simulator uses</p>
+<div class="section" id="module-Simulator">
+<span id="simulator"></span><h2>Simulator<a class="headerlink" href="#module-Simulator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Simulator.Simulator">
+<em class="property">class </em><code class="descclassname">Simulator.</code><code class="descname">Simulator</code><span class="sig-paren">(</span><em>duration</em>, <em>time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Simulator object : It simulates a simplified dynamic of the boat with the config.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first simple">
+<li><strong>time_step</strong> (<em>float</em>) &#8211; time step of the simulator, corresponds to the frequency of data acquisition.</li>
+<li><strong>size</strong> (<em>float</em>) &#8211; size of the simulation.</li>
+<li><strong>delay</strong> (<em>int</em>) &#8211; delay between the heading command and its activation.</li>
+<li><strong>sail_pos</strong> (<em>float</em>) &#8211; position of the windsail [rad].</li>
+<li><strong>Hdg_target</strong> (<em>float</em>) &#8211; target heading towards which we want the boat to sail.</li>
+<li><strong>hdg</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; array of size <strong>size</strong> that stores the heading of the boat [rad].</li>
+<li><strong>vmg</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; array of size <strong>size</strong> that stores the velocity made good.</li>
+<li><strong>hyst</strong> (<a class="reference internal" href="#hysteresis.Hysteresis" title="hysteresis.Hysteresis"><em>hysteresis.Hysteresis</em></a>) &#8211; Memory of the flow state during the simulations.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><strong>ValueError</strong> &#8211; if the size of the simulation is zero or less.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Simulator.Simulator.computeNewValues">
+<code class="descname">computeNewValues</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.computeNewValues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.getHdg">
+<code class="descname">getHdg</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.getLength">
+<code class="descname">getLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getLength" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.getTimeStep">
+<code class="descname">getTimeStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getTimeStep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.incrementDelayHdg">
+<code class="descname">incrementDelayHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.incrementDelayHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.incrementHdg">
+<code class="descname">incrementHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.incrementHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.updateHdg">
+<code class="descname">updateHdg</code><span class="sig-paren">(</span><em>k</em>, <em>inc</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.Simulator.updateVMG">
+<code class="descname">updateVMG</code><span class="sig-paren">(</span><em>k</em>, <em>vmg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateVMG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The configuration of the boat is illustrated in the following figure:</p>
+</div>
+<a class="reference internal image-reference" href="_images/scheme.png"><img alt="_images/scheme.png" src="_images/scheme.png" style="width: 400.0px; height: 360.0px;" /></a>
+<a class="reference internal image-reference" href="_images/block_diagrams.png"><img alt="_images/block_diagrams.png" src="_images/block_diagrams.png" style="width: 400.0px; height: 200.0px;" /></a>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be careful, the delay is expressed has an offset of index. the delay in s is equal to delay*time_step</p>
+</div>
+</div>
+<div class="section" id="module-hysteresis">
+<span id="hysteresis"></span><h2>Hysteresis<a class="headerlink" href="#module-hysteresis" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hysteresis.Hysteresis">
+<em class="property">class </em><code class="descclassname">hysteresis.</code><code class="descname">Hysteresis</code><a class="headerlink" href="#hysteresis.Hysteresis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Markov Decision process modelization of the transition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><strong>e</strong> (<em>float</em>) &#8211; state of the flow (0 if attached and 1 if detached)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hysteresis.Hysteresis.calculateSpeed">
+<code class="descname">calculateSpeed</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#hysteresis.Hysteresis.calculateSpeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the velocity from angle of attack.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<em>float</em>) &#8211; angle of attack</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">v - Boat velocity</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hysteresis.Hysteresis.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hysteresis.Hysteresis.copy" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a deepcopy of the object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hysteresis.Hysteresis.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hysteresis.Hysteresis.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the memory of the flow.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mdp">
+<span id="markov-decision-process-mdp"></span><h2>Markov Decision Process (MDP)<a class="headerlink" href="#module-mdp" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mdp.MDP">
+<em class="property">class </em><code class="descclassname">mdp.</code><code class="descname">MDP</code><span class="sig-paren">(</span><em>duration_history</em>, <em>duration_simulation</em>, <em>delta_t</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Markov Decision process modelization of the transition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>history_duration</strong> (<em>float</em>) &#8211; Duration of the memory.</li>
+<li><strong>simulation_duration</strong> (<em>float</em>) &#8211; Duration of the memory.</li>
+<li><strong>size</strong> (<em>int</em>) &#8211; size of the first dimension of the state.</li>
+<li><strong>dt</strong> (<em>float</em>) &#8211; time step between each value of the state.</li>
+<li><strong>s</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; state containing the history of angles of attacks and velocities.</li>
+<li><strong>idx_memory</strong> (<em>range</em>) &#8211; indices corresponding to the values shared by two successive states.</li>
+<li><strong>simulator</strong> (<a class="reference internal" href="#module-Simulator" title="Simulator"><em>Simulator</em></a>) &#8211; Simulator used to compute new values after a transition.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; reward associated with a transition.</li>
+<li><strong>discount</strong> (<em>float</em>) &#8211; discount factor.</li>
+<li><strong>action</strong> (<em>float</em>) &#8211; action for transition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mdp.MDP.computeState">
+<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.computeState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.MDP.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the MDP object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Deep copy of the object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#mdp.MDP" title="mdp.MDP">MDP</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdp.MDP.extractSimulationData">
+<code class="descname">extractSimulationData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.extractSimulationData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.MDP.initializeMDP">
+<code class="descname">initializeMDP</code><span class="sig-paren">(</span><em>hdg0</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.initializeMDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialization of the Markov Decicison Process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hdg0</strong> (<em>float</em>) &#8211; initial heading of the boat.</li>
+<li><strong>np.array</strong><strong>(</strong><strong>)</strong> (<em>WH</em>) &#8211; Vector of wind heading.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">s initialized state</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.array()</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdp.MDP.policy">
+<code class="descname">policy</code><span class="sig-paren">(</span><em>i_treshold</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.policy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.MDP.transition">
+<code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.transition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The class variable simulation_duration defines the frequency of action taking. The reward is the average of the new velocities computed after each transition.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="package2.html" title="Package RL"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to IBOAT RL’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">IBOAT RL 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Tristan Karch.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
+    </div>
+  </body>
+</html>
