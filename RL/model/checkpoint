@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+model_checkpoint_path: "Model_5000close to stall.cptk"
+all_model_checkpoint_paths: "Model_5000close to stall.cptk"
+=======
+model_checkpoint_path: "Model_509.cptk"
+all_model_checkpoint_paths: "Model_509.cptk"
+>>>>>>> refs/remotes/origin/master

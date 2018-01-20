@@ -1,6 +1,5 @@
-
-
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +8,7 @@
     
     <title>Package RL &#8212; IBOAT RL 1.0.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -25,31 +24,214 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Package Sim" href="package1.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
-    <![endif]-->
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head>
   <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="package1.html" title="Package Sim"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IBOAT RL 1.0.0 documentation</a> &#187;</li> 
-      </ul>
-    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="package-rl">
+<h1>Package RL<a class="headerlink" href="#package-rl" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-policyLearning">
+<span id="policy-learner"></span><h2>Policy Learner<a class="headerlink" href="#module-policyLearning" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="policyLearning.PolicyLearner">
+<em class="property">class </em><code class="descclassname">policyLearning.</code><code class="descname">PolicyLearner</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>policy_angle</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The aim of this class is to learn the Q-value of the action defined by a policy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>state_size</strong> (<em>int</em>) &#8211; shape of the input (for convolutionnal layers).</li>
+<li><strong>action_size</strong> (<em>int</em>) &#8211; number of action output by the network.</li>
+<li><strong>memory</strong> (<em>deque</em>) &#8211; last-in first-out list of the batch.</li>
+<li><strong>gamma</strong> (<em>float</em>) &#8211; discount factor.</li>
+<li><strong>epsilon</strong> (<em>float</em>) &#8211; exploration rate.</li>
+<li><strong>epsilon_min</strong> (<em>float</em>) &#8211; smallest exploration rate that we want to converge to.</li>
+<li><strong>epsilon_decay</strong> (<em>float</em>) &#8211; decay factor that we apply after each replay.</li>
+<li><strong>learning_rate</strong> (<em>float</em>) &#8211; the learning rate of the NN.</li>
+<li><strong>model</strong> (<em>keras.model</em>) &#8211; NN, i.e the model containing the weight of the value estimator.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.act">
+<code class="descname">act</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.act" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the action that yields the maximum Q-value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> &#8211; state in which we want to chose an action.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the greedy action.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.actDeterministicallyUnderPolicy">
+<code class="descname">actDeterministicallyUnderPolicy</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.actDeterministicallyUnderPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the action to take from a state according to a policy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>np.array</em>) &#8211; state for which we want to know the policy action.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the policy action.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.actUnderPolicy">
+<code class="descname">actUnderPolicy</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.actUnderPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the same as <a class="reference internal" href="#policyLearning.PolicyLearner.actDeterministicallyUnderPolicy" title="policyLearning.PolicyLearner.actDeterministicallyUnderPolicy"><code class="xref py py-meth docutils literal"><span class="pre">actDeterministicallyUnderPolicy()</span></code></a> instead that the returned action is sometime taken randomly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the Q-value of the two actions in a given state using the neural network.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>np.array</em>) &#8211; state that we want to evaluate.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The actions values as a vector.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.remember">
+<code class="descname">remember</code><span class="sig-paren">(</span><em>state</em>, <em>action</em>, <em>reward</em>, <em>next_state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.remember" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remember a transition defined by an action <cite>action</cite> taken from a state <cite>state</cite> yielding a transition to a next state
+<cite>next_state</cite> and a reward <cite>reward</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>state</strong> (<em>np.array</em>) &#8211; initial state.</li>
+<li><strong>action</strong> (<em>int</em>) &#8211; action.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; reward received from transition.</li>
+<li><strong>next_state</strong> (<em>np.array</em>) &#8211; final state salut.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.replay">
+<code class="descname">replay</code><span class="sig-paren">(</span><em>batch_size</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.replay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the learning on a the experience replay memory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch_size</strong> &#8211; number of samples used in the experience replay memory for the fit.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the average loss over the replay batch.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span> <span class="n">history_duration</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Duration of state history [s]</span>
+ <span class="n">mdp_step</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Step between each state transition [s]</span>
+ <span class="n">time_step</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># time step [s] &lt;-&gt; 10Hz frequency of data acquisition</span>
+ <span class="n">mdp</span> <span class="o">=</span> <span class="n">MDP</span><span class="p">(</span><span class="n">history_duration</span><span class="p">,</span> <span class="n">mdp_step</span><span class="p">,</span> <span class="n">time_step</span><span class="p">)</span>
+
+ <span class="n">mean</span> <span class="o">=</span> <span class="mi">45</span> <span class="o">*</span> <span class="n">TORAD</span>
+ <span class="n">std</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">TORAD</span>
+ <span class="n">wind_samples</span> <span class="o">=</span> <span class="mi">10</span>
+ <span class="n">WH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+ <span class="n">hdg0</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+ <span class="n">mdp</span><span class="o">.</span><span class="n">initializeMDP</span><span class="p">(</span><span class="n">hdg0</span><span class="p">,</span><span class="n">WH</span><span class="p">)</span>
+
+ <span class="n">hdg0_rand_vec</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">24</span><span class="p">)</span>
+
+ <span class="n">action_size</span> <span class="o">=</span> <span class="mi">2</span>
+ <span class="n">policy_angle</span> <span class="o">=</span> <span class="mi">18</span>
+ <span class="n">agent</span> <span class="o">=</span> <span class="n">PolicyLearner</span><span class="p">(</span><span class="n">mdp</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">action_size</span><span class="p">,</span> <span class="n">policy_angle</span><span class="p">)</span>
+ <span class="c1">#agent.load(&quot;policy_learning_i18_test_long_history&quot;)</span>
+ <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">120</span>
+
+ <span class="n">EPISODES</span> <span class="o">=</span> <span class="mi">500</span>
+
+ <span class="n">loss_of_episode</span> <span class="o">=</span> <span class="p">[]</span>
+ <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPISODES</span><span class="p">):</span>
+     <span class="n">WH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+     <span class="n">hdg0_rand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">hdg0_rand_vec</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+     <span class="n">hdg0</span> <span class="o">=</span> <span class="n">hdg0_rand</span> <span class="o">*</span> <span class="n">TORAD</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+     <span class="c1"># initialize the incidence randomly</span>
+     <span class="n">mdp</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">hyst</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1">#</span>
+     <span class="c1">#  We reinitialize the memory of the flow</span>
+     <span class="n">state</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">initializeMDP</span><span class="p">(</span><span class="n">hdg0</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
+     <span class="n">loss_sim_list</span> <span class="o">=</span> <span class="p">[]</span>
+     <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
+         <span class="c1"># print(time)</span>
+         <span class="n">WH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">wind_samples</span><span class="p">)</span>
+<span class="hll">         <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">actDeterministicallyUnderPolicy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span><span class="hll">         <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
+</span><span class="hll">         <span class="n">agent</span><span class="o">.</span><span class="n">remember</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)</span>
+</span>         <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">memory</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">batch_size</span><span class="p">:</span>
+<span class="hll">             <span class="n">loss_sim_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">replay</span><span class="p">(</span><span class="n">batch_size</span><span class="p">))</span>
+</span>     <span class="n">loss_over_simulation_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">loss_sim_list</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">loss_sim_list</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+     <span class="n">loss_of_episode</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_over_simulation_time</span><span class="p">)</span>
+     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initial Heading : {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hdg0_rand</span><span class="p">))</span>
+     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;episode: {}/{}, Mean Loss = {}&quot;</span>
+           <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">EPISODES</span><span class="p">,</span> <span class="n">loss_over_simulation_time</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
@@ -58,14 +240,19 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Package RL</a><ul>
-<li><a class="reference internal" href="#dqn">DQN</a></li>
+<li><a class="reference internal" href="#module-policyLearning">Policy Learner</a></li>
+<li><a class="reference internal" href="#tutorial">Tutorial</a></li>
 </ul>
 </li>
 </ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="package1.html"
-                        title="previous chapter">Package Sim</a></p>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="package1.html" title="previous chapter">Package Sim</a></li>
+  </ul></li>
+</ul>
+</div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -85,43 +272,22 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="package-rl">
-<h1>Package RL<a class="headerlink" href="#package-rl" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="dqn">
-<h2>DQN<a class="headerlink" href="#dqn" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
-
-
-          </div>
-        </div>
-      </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="package1.html" title="Package Sim"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IBOAT RL 1.0.0 documentation</a> &#187;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2017, Tristan Karch.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/package2.rst.txt"
+          rel="nofollow">Page source</a>
     </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Tristan Karch.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
-    </div>
+
+    
+
+    
   </body>
 </html>

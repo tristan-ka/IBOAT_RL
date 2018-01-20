@@ -1,6 +1,5 @@
-
-
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +8,7 @@
     
     <title>Package Sim &#8212; IBOAT RL 1.0.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -25,75 +24,19 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Package RL" href="package2.html" />
     <link rel="prev" title="Welcome to IBOAT RL’s documentation!" href="index.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
-    <![endif]-->
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head>
   <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="package2.html" title="Package RL"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to IBOAT RL’s documentation!"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IBOAT RL 1.0.0 documentation</a> &#187;</li> 
-      </ul>
-    </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-            <p class="logo"><a href="index.html">
-              <img class="logo" src="_static/IBOAT_logo1.png" alt="Logo"/>
-            </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Package Sim</a><ul>
-<li><a class="reference internal" href="#module-Simulator">Simulator</a></li>
-<li><a class="reference internal" href="#module-hysteresis">Hysteresis</a></li>
-<li><a class="reference internal" href="#module-mdp">Markov Decision Process (MDP)</a></li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to IBOAT RL&#8217;s documentation!</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="package2.html"
-                        title="next chapter">Package RL</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/package1.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -102,15 +45,27 @@
             
   <div class="section" id="package-sim">
 <h1>Package Sim<a class="headerlink" href="#package-sim" title="Permalink to this headline">¶</a></h1>
-<p>This package contains all the classes required to build a simulation for the learning.</p>
-<p>The simulator uses</p>
+<p>This package contains all the classes required to build a simulation for the learning. In this small paragraph, the physic of the simulator is described
+so that the reader can better understand the implementation.</p>
+<p>We need the boat to be in a configuration when it sails upwind so that the flow around the sail is attached and the sail works as a wing.
+To generate the configuration we first assume that the boat as a target heading <cite>hdg_target</cite> = 0. The boat as a certain heading <cite>hdg</cite> with respect to the north
+and faces an upcoming wind of heading <cite>WH</cite>. To lower the number of parameters at stake we consider that the wind has a <strong>constant speed</strong> of 15 knts.
+The sail is oriented with respect to the boat heading with an angle <cite>sail_pos</cite> = -40°. The angle of attack of the wind on the sail is therefore equal to
+<cite>i = hdg + WH + sail_pos</cite>. This angle equation can be well understood thanks to the following image.</p>
+<a class="reference internal image-reference" href="_images/scheme.png"><img alt="_images/scheme.png" class="align-center" src="_images/scheme.png" style="width: 400.0px; height: 360.0px;" /></a>
+<p>The action taken to change the angle of attack are changes of boat heading <cite>delta_hdg</cite>. We therefore assume that <cite>sail_pos</cite> is constant and equal to -40°.
+The wind heading is fixed to <cite>WH</cite> = 45°. Finally, there is a delay between the command and the change of heading of τ = 0.5 seconds. The simulator can be
+represented with the following block diagram. It contains a delay and an hysteresis block that are variables of the simulator class.</p>
+<a class="reference internal image-reference" href="_images/block_diagrams.png"><img alt="_images/block_diagrams.png" class="align-center" src="_images/block_diagrams.png" style="width: 400.0px; height: 200.0px;" /></a>
 <div class="section" id="module-Simulator">
 <span id="simulator"></span><h2>Simulator<a class="headerlink" href="#module-Simulator" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="Simulator.Simulator">
 <em class="property">class </em><code class="descclassname">Simulator.</code><code class="descname">Simulator</code><span class="sig-paren">(</span><em>duration</em>, <em>time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Simulator object : It simulates a simplified dynamic of the boat with the config.</p>
+<p>The class simulator computes the value of the velocity made good for changes of heading over a certain duration. The
+heading and velocity are therefore represented as vector. The variables of the class accounts for the characteristics
+of the simulator exposed above.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -119,8 +74,8 @@
 <li><strong>time_step</strong> (<em>float</em>) &#8211; time step of the simulator, corresponds to the frequency of data acquisition.</li>
 <li><strong>size</strong> (<em>float</em>) &#8211; size of the simulation.</li>
 <li><strong>delay</strong> (<em>int</em>) &#8211; delay between the heading command and its activation.</li>
-<li><strong>sail_pos</strong> (<em>float</em>) &#8211; position of the windsail [rad].</li>
-<li><strong>Hdg_target</strong> (<em>float</em>) &#8211; target heading towards which we want the boat to sail.</li>
+<li><strong>sail_pos</strong> (<em>float</em>) &#8211; position of the windsail [rad] assumed constant and equal to -40°.</li>
+<li><strong>hdg_target</strong> (<em>float</em>) &#8211; target heading towards which we want the boat to sail.</li>
 <li><strong>hdg</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; array of size <strong>size</strong> that stores the heading of the boat [rad].</li>
 <li><strong>vmg</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; array of size <strong>size</strong> that stores the velocity made good.</li>
 <li><strong>hyst</strong> (<a class="reference internal" href="#hysteresis.Hysteresis" title="hysteresis.Hysteresis"><em>hysteresis.Hysteresis</em></a>) &#8211; Memory of the flow state during the simulations.</li>
@@ -132,35 +87,120 @@
 </tr>
 </tbody>
 </table>
+<p>Initialization of the simulation. The variables are set according to the assumption (<cite>sail_pos</cite> = -40°, <cite>hdg_target</cite> = 0° and <cite>delay</cite> = 5).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>duration</strong> (<em>float</em>) &#8211; Duration of the simulation in seconds.</li>
+<li><strong>time_step</strong> (<em>float</em>) &#8211; time_step of the simulation in seconds.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="Simulator.Simulator.computeNewValues">
 <code class="descname">computeNewValues</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.computeNewValues" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Compute the new value of the heading and velocity vector when the heading is incremented.
+This method uses the method <a class="reference internal" href="#Simulator.Simulator.incrementDelayHdg" title="Simulator.Simulator.incrementDelayHdg"><code class="xref py py-meth docutils literal"><span class="pre">incrementDelayHdg()</span></code></a> and <code class="xref py py-meth docutils literal"><span class="pre">Hysteresis.calculateSpeed()</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>delta_hdg</strong> &#8211; value of the increment of heading</li>
+<li><strong>WH</strong> &#8211; time series of the wind conditions during the simulation.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the new heading and velocity vectors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.getHdg">
 <code class="descname">getHdg</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Access the value at index k of the heading vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>k</strong> &#8211; desired index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the heading at index k.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.getLength">
 <code class="descname">getLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getLength" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Compute the length of a simulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">size.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.getTimeStep">
 <code class="descname">getTimeStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getTimeStep" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Access the time step of a simulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the time step of the simulator.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.incrementDelayHdg">
 <code class="descname">incrementDelayHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.incrementDelayHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Add <cite>delta_hdg</cite> to the (k+delay)-th index of the heading vector. This method defines the delay of the simulator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> &#8211; index corresponding to the time at which the change of heading command is activated. The increment is therefore added to all the indices i such that i&gt;=k+delay</li>
+<li><strong>delta_hdg</strong> &#8211; Value of the increment.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.incrementHdg">
 <code class="descname">incrementHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.incrementHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Add <cite>delta_hdg</cite> to the k-th index of the heading vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> &#8211; index corresponding to the value to be incremented.</li>
+<li><strong>delta_hdg</strong> &#8211; Value of the increment.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.plot">
@@ -170,21 +210,41 @@
 <dl class="method">
 <dt id="Simulator.Simulator.updateHdg">
 <code class="descname">updateHdg</code><span class="sig-paren">(</span><em>k</em>, <em>inc</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Modify the value at index k of the heading vector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> &#8211; index corresponding to the value to be updated</li>
+<li><strong>inc</strong> &#8211; value of the update</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.updateVMG">
 <code class="descname">updateVMG</code><span class="sig-paren">(</span><em>k</em>, <em>vmg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateVMG" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update the velocity of the k-th element of the velocity vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>k</strong> &#8211; index of the value to update.</li>
+<li><strong>vmg</strong> &#8211; new value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The configuration of the boat is illustrated in the following figure:</p>
-</div>
-<a class="reference internal image-reference" href="_images/scheme.png"><img alt="_images/scheme.png" src="_images/scheme.png" style="width: 400.0px; height: 360.0px;" /></a>
-<a class="reference internal image-reference" href="_images/block_diagrams.png"><img alt="_images/block_diagrams.png" src="_images/block_diagrams.png" style="width: 400.0px; height: 200.0px;" /></a>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Be careful, the delay is expressed has an offset of index. the delay in s is equal to delay*time_step</p>
@@ -337,35 +397,122 @@
 <p class="last">The class variable simulation_duration defines the frequency of action taking. The reward is the average of the new velocities computed after each transition.</p>
 </div>
 </div>
+<div class="section" id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
+<p>To visualize how a simulation can be generated we provide a file MDPmain.py that creates a simulation where the heading is first increase and then decrease.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">TORAD</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+
+<span class="n">history_duration</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">mdp_step</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">time_step</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">SP</span> <span class="o">=</span> <span class="o">-</span><span class="mi">40</span> <span class="o">*</span> <span class="n">TORAD</span>
+<span class="n">mdp</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">MDP</span><span class="p">(</span><span class="n">history_duration</span><span class="p">,</span> <span class="n">mdp_step</span><span class="p">,</span> <span class="n">time_step</span><span class="p">)</span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="mi">45</span> <span class="o">*</span> <span class="n">TORAD</span>
+<span class="n">std</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">TORAD</span>
+<span class="n">wind_samples</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">WH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">hdg0</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">TORAD</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">wind_samples</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">initializeMDP</span><span class="p">(</span><span class="n">hdg0</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
+
+<span class="n">SIMULATION_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">vmg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">wind_heading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">SIMULATION_TIME</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;t = {0} s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">WH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">wind_samples</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="n">SIMULATION_TIME</span> <span class="o">/</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="n">SIMULATION_TIME</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">SIMULATION_TIME</span> <span class="o">/</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="hll">    <span class="n">nex_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
+</span>    <span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">mdp</span><span class="o">.</span><span class="n">extractSimulationData</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]])</span>
+    <span class="n">vmg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">vmg</span><span class="p">,</span> <span class="n">mdp</span><span class="o">.</span><span class="n">extractSimulationData</span><span class="p">()[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]])</span>
+    <span class="n">wind_heading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">wind_heading</span><span class="p">,</span> <span class="n">WH</span><span class="p">])</span>
+
+<span class="n">time_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">SIMULATION_TIME</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">SIMULATION_TIME</span><span class="p">)</span> <span class="o">/</span> <span class="n">time_step</span><span class="p">))</span>
+<span class="n">hdg</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">wind_heading</span> <span class="o">-</span> <span class="n">SP</span>
+</pre></div>
+</div>
+<p>This results in the following value for the velocity, angle of attack and heading.</p>
+<a class="reference internal image-reference" href="_images/Figure_1.png"><img alt="alternate text" class="align-center" src="_images/Figure_1.png" style="width: 600.0px; height: 600.0px;" /></a>
+</div>
 </div>
 
 
           </div>
         </div>
       </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/IBOAT_logo1.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Package Sim</a><ul>
+<li><a class="reference internal" href="#module-Simulator">Simulator</a></li>
+<li><a class="reference internal" href="#module-hysteresis">Hysteresis</a></li>
+<li><a class="reference internal" href="#module-mdp">Markov Decision Process (MDP)</a></li>
+<li><a class="reference internal" href="#tutorial">Tutorial</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to IBOAT RL&#8217;s documentation!</a></li>
+      <li>Next: <a href="package2.html" title="next chapter">Package RL</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/package1.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="package2.html" title="Package RL"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to IBOAT RL’s documentation!"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">IBOAT RL 1.0.0 documentation</a> &#187;</li> 
-      </ul>
+    <div class="footer">
+      &copy;2017, Tristan Karch.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/package1.rst.txt"
+          rel="nofollow">Page source</a>
     </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Tristan Karch.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.6.
-    </div>
+
+    
+
+    
   </body>
 </html>

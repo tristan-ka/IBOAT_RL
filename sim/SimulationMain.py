@@ -20,7 +20,6 @@ delta_t=0.1
 t_history=10
 simulation = Simulator.Simulator(20, delta_t)
 
-
 # Note that we create one single speed calculator that we use to generate different experiences because it
 # saves the state of the flow and the previous incidences
 # Be carefull to generate experiences in a chronological way !!!
