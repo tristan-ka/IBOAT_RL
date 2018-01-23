@@ -41,11 +41,10 @@ class Agent:
 
         mean = 45 * TORAD
         std = 0 * TORAD
-        wind_samples = 10
         WH = np.random.uniform(mean - std, mean + std, size=10)
 
-        hdg0_rand_vec=(0,2,4,6,8,16,18,20,22)
-        # hdg0_rand_vec=(9,14)
+        hdg0_rand_vec=(0,2,4,6,8,10,12,15,17)
+        # hdg0_rand_vec=(9,13)
 
         count_luff=0
         count_bear_off=0
@@ -89,7 +88,7 @@ class Agent:
                 # choose action based on deterministic policy
                 print("CURRENT STATE")
                 new_s = np.reshape([s[0],s[1]],[2*self.state_size,1])
-                print(new_s)
+                print(np.transpose(new_s[:,0]))
                 a, = self.sess.run(self.network.actions,
                                    feed_dict={self.network.state_ph: [new_s]})
                 print("ACTION CHOISIE")
@@ -108,8 +107,6 @@ class Agent:
                 # Test with epsilon greedy action-taking
                 alea = np.random.rand()
                 if alea <= epsilon:
-                    print("TIRAGE ALEATOIRE")
-                    print(alea)
                     print("ACTION BRUITEE")
                     a = np.ones(np.shape(a)) * np.random.uniform(self.low_bound,self.high_bound)
                     print(a)
@@ -130,7 +127,13 @@ class Agent:
                     a[0] = self.low_bound
 
                 s_, r = self.mdp.transition(a, WH)
+                # Reward shaping
+                #if settings.REWARD_SHAPING and s_[0,59]>0.3:
+                 #   r = r - 1.5
+                #if settings.REWARD_SHAPING and s_[1,59]<1.4:
+                 #   r = r - 1.5
 
+                print("REWARD : {}".format(r))
                 # Stall counting
                 if (s_[1, 25] < s_[1, 24] and s_[1, 15] > s_[1, 14]) or (s_[1, 20] < s_[1, 19] and s_[1, 15] > s_[1, 14]):
                     n_stall += 1
@@ -145,7 +148,7 @@ class Agent:
                     DISPLAYER.add_i_v(s[0,29],s[1,29])
                 new_s_ = np.reshape([s_[0],s_[1]],[2*self.state_size,1])
 
-                self.buffer.add((new_s, a, r,new_s_ ,1.0))
+                self.buffer.add((new_s, a+50, r,new_s_ ,1.0))
 
                 # update network weights to fit a minibatch of experience
                 if self.total_steps % settings.TRAINING_FREQ == 0 and \

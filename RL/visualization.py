@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 sys.path.append("../sim/")
 import numpy as np
 from policyLearning import PolicyLearner
+from dqn import DQNAgent
 from Simulator import TORAD
 from mdp import MDP
+from environment import wind
 
 '''
 MISCELLANEOUS FUNCTIONS
@@ -23,30 +25,26 @@ def rollOut(time, SIMULATION_TIME, agent, mdp, action, WH):
 
 
 class ValidateNetwork:
-    def __init__(self, hist_duration, mdp_step, time_step, action_size, mean, std, wind_samples, hdg0, src_file,
+    def __init__(self, hist_duration, mdp_step, time_step, action_size, batch_size, mean, std, hdg0, src_file,
                  sim_time):
         self.mdp = MDP(hist_duration, mdp_step, time_step)
-        self.agent = PolicyLearner(self.mdp.size, action_size)
+        self.action_size = action_size
+        self.agent = PolicyLearner(self.mdp.size, action_size, batch_size)
         self.agent.load(src_file)
-        self.mean = mean
-        self.std = std
-        self.ws = wind_samples
+        self.wh = wind(mean, std, int(mdp_step / time_step))
         self.hdg0 = hdg0
         self.src = src_file
         self.sim_time = sim_time
 
-    def generateWind(self):
-        return np.random.uniform(self.mean - self.std, self.mean + self.std, size=self.ws)
-
     def generateQplots(self):
 
-        WH = self.generateWind()
-        hdg0 = self.hdg0 * TORAD * np.ones(self.ws)
+        WH = self.wh.generateWind()
+        hdg0 = self.hdg0 * TORAD * np.ones(self.wh.samples)
 
         state = self.mdp.initializeMDP(hdg0, WH)
 
-        agent1 = PolicyLearner(self.mdp.size, self.agent.action_size)
-        agent2 = PolicyLearner(self.mdp.size, self.agent.action_size)
+        agent1 = PolicyLearner(self.mdp.size, self.agent.action_size, self.agent.batch_size)
+        agent2 = PolicyLearner(self.mdp.size, self.agent.action_size, self.agent.batch_size)
         agent1.load(self.src)
         agent2.load(self.src)
 
@@ -62,7 +60,7 @@ class ValidateNetwork:
             agent1.stall = self.agent.get_stall()
             agent2.stall = self.agent.get_stall()
 
-            WH = self.generateWind()
+            WH = self.wh.generateWind()
             policy_action = self.agent.actDeterministicallyUnderPolicy(state)
 
             mdp_tmp2 = self.mdp.copy()
@@ -145,3 +143,32 @@ class ValidateNetwork:
         plt.show()
 
         return f
+
+    def simulateDQNControl(self, hdg0):
+        agent = DQNAgent(self.mdp.size, self.action_size)
+        agent.load(self.src)
+        WH = self.wh.generateWind()
+        hdg0 = hdg0 * TORAD * np.ones(self.wh.samples)
+
+        state = self.mdp.initializeMDP(hdg0, WH)
+
+        i = np.ones(0)
+        v = np.ones(0)
+        wind_heading = np.ones(0)
+
+        for time in range(self.sim_time):
+            WH=self.wh.generateWind()
+            action = agent.act(state)
+            next_state, reward = self.mdp.transition(action, WH)
+            state=next_state
+            i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
+            v = np.concatenate([v, self.mdp.extractSimulationData()[1, :]])
+            wind_heading = np.concatenate([wind_heading, WH[0:10]])
+
+        time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
+
+        f, axarr = plt.subplots(2, sharex=True)
+        axarr[0].plot(time_vec, i/TORAD)
+        axarr[1].plot(time_vec,v)
+
+        plt.show()

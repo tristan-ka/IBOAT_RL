@@ -6,15 +6,21 @@ import numpy as np
 def build_actor(states, bounds, action_size, trainable, scope):
     with tf.variable_scope(scope):
 
-        conv_i = tf.layers.conv1d(states[:,0:30,:], filters = settings.ACTOR_NETWORK_FILTERS,kernel_size = 20, strides = 1, trainable=trainable,
+        conv_i = tf.layers.conv1d(states[:,0:60,:], filters = settings.ACTOR_NETWORK_FILTERS,kernel_size = 50, strides = 1, trainable=trainable,
                                  activation=tf.nn.relu, name='conv_i')
-        conv_v = tf.layers.conv1d(states[:,30:60,:], filters=settings.ACTOR_NETWORK_FILTERS,kernel_size = 20, strides = 1, trainable=trainable,
+        conv_v = tf.layers.conv1d(states[:,60:120,:], filters=settings.ACTOR_NETWORK_FILTERS,kernel_size = 50, strides = 1, trainable=trainable,
                                  activation=tf.nn.relu, name='conv_v')
+        conv_i_2 = tf.layers.conv1d(conv_i, filters=10, kernel_size=5,
+                                    strides=1, trainable=trainable,
+                                    activation=tf.nn.relu, name='conv_i_2')
+        conv_v_2 = tf.layers.conv1d(conv_v, filters=10, kernel_size=5,
+                                    strides=1, trainable=trainable,
+                                    activation=tf.nn.relu, name='conv_v_2')
         # hidden_i = tf.layers.dense(conv_i, 20, trainable=trainable,
                                 #   activation=tf.nn.relu, name='dense_i')
         # hidden_v = tf.layers.dense(conv_v, 20, trainable=trainable,
                                 #   activation=tf.nn.relu, name='dense_v')
-        merge = tf.concat([conv_i,conv_v],axis = 1)
+        merge = tf.concat([conv_i_2,conv_v_2],axis = 1)
         merge_flat = tf.contrib.layers.flatten(merge,scope=scope)
         hidden_i_v = tf.layers.dense(merge_flat, 40, trainable=trainable,
                                    activation=tf.nn.relu, name='dense_i_v')
@@ -35,29 +41,33 @@ def build_critic(states, actions, trainable, reuse, scope):
     with tf.variable_scope(scope):
         # states_actions = tf.concat([states, actions], axis=1)
 
-        conv_i = tf.layers.conv1d(states[:, 0:30,:], reuse=reuse, filters=settings.ACTOR_NETWORK_FILTERS, kernel_size=20, strides=1, trainable=trainable,
+        conv_i = tf.layers.conv1d(states[:, 0:60,:], reuse=reuse, filters=settings.ACTOR_NETWORK_FILTERS, kernel_size=50, strides=1, trainable=trainable,
                                   activation=tf.nn.relu, name='conv_i')
-        conv_v = tf.layers.conv1d(states[:, 30:60,:], reuse = reuse, filters=settings.ACTOR_NETWORK_FILTERS, kernel_size=20, strides=1, trainable=trainable,
+        conv_v = tf.layers.conv1d(states[:, 60:120,:], reuse = reuse, filters=settings.ACTOR_NETWORK_FILTERS, kernel_size=50, strides=1, trainable=trainable,
                                   activation=tf.nn.relu, name='conv_v')
+        conv_i_2 = tf.layers.conv1d(conv_i, reuse=reuse, filters=10, kernel_size=5, strides=1, trainable=trainable,
+                                  activation=tf.nn.relu, name='conv_i_2')
+        conv_v_2 = tf.layers.conv1d(conv_v, reuse = reuse, filters=10, kernel_size=5, strides=1, trainable=trainable,
+                                  activation=tf.nn.relu, name='conv_v_2')
         # hidden_i = tf.layers.dense(conv_i, 20, trainable=trainable,reuse=reuse,
                     #               activation=tf.nn.relu, name='dense_i')
         #hidden_v = tf.layers.dense(conv_v, 20, trainable=trainable,reuse=reuse,
                           #         activation=tf.nn.relu, name='dense_v')
-        merge = tf.concat([conv_i,conv_v],axis = 1)
+        merge = tf.concat([conv_i_2,conv_v_2],axis = 1)
         merge_flat = tf.contrib.layers.flatten(merge)
 
         hidden_i_v = tf.layers.dense(merge_flat, 40, trainable=trainable,reuse=reuse,
                                      activation=tf.nn.relu, name='dense_i_v')
-        hidden_a = tf.layers.dense(actions, 1, trainable=trainable,reuse=reuse,
-                                     activation=tf.nn.relu, name='dense_a')
-        merge_with_action = tf.concat([tf.expand_dims(hidden_i_v,axis=2),hidden_a],axis = 1)
+        # hidden_a = tf.layers.dense(actions, 1, trainable=trainable,reuse=reuse,
+                                  #   activation=tf.nn.relu, name='dense_a')
+        merge_with_action = tf.concat([tf.expand_dims(hidden_i_v,axis=2),actions],axis = 1)
         merge_with_action_flat = tf.contrib.layers.flatten(merge_with_action)
 
         hidden_i_v_2 = tf.layers.dense(merge_with_action_flat, 10, trainable=trainable,reuse=reuse,
                                        activation=tf.nn.relu, name='dense_i_v_2')
         q_values = tf.layers.dense(hidden_i_v_2, 1,
                                    trainable=trainable, reuse=reuse,
-                                   name='dense_3')
+                                   name='dense_i_v_3')
     return q_values
 
 

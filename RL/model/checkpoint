@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-model_checkpoint_path: "Model_5000close to stall.cptk"
-all_model_checkpoint_paths: "Model_5000close to stall.cptk"
-=======
-model_checkpoint_path: "Model_509.cptk"
-all_model_checkpoint_paths: "Model_509.cptk"
->>>>>>> refs/remotes/origin/master
+model_checkpoint_path: "Model_300000_5000_epochs_state_60_buffer_5000.cptk"
+all_model_checkpoint_paths: "Model_300000_5000_epochs_state_60_buffer_5000.cptk"

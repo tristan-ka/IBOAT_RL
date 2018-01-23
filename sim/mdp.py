@@ -35,7 +35,6 @@ class MDP:
         self.idx_memory = range(int(self.simulation_duration / self.dt), self.size)
 
         self.simulator = None
-
         self.reward = None
         self.discount = None
         self.action = None
@@ -86,6 +85,12 @@ class MDP:
 
 
     def computeState(self, action, WH):
+        """
+        Computes the mdp state when an action is applied.
+        :param action:
+        :param WH:
+        :return:
+        """
 
         if action != 0 and action != 1:
             raise ValueError("Invalid action. Could not generate transition.")
@@ -125,19 +130,7 @@ class MDP:
 
 class RealistMDP:
     """
-        Markov Decision process modelization of the transition
-        Based on Realist Simulator of Iboat autonomous sailboat provided by Simulink
-
-        :ivar float history_duration: Duration of the memory.
-        :ivar float simulation_duration: Duration of the memory.
-        :ivar int size: size of the first dimension of the state.
-        :ivar float dt: time step between each value of the state.
-        :ivar np.array() s: state containing the history of angles of attacks and velocities.
-        :ivar range idx_memory: indices corresponding to the values shared by two successive states.
-        :ivar Simulator simulator: Simulator used to compute new values after a transition.
-        :ivar float reward: reward associated with a transition.
-        :ivar float discount: discount factor.
-        :ivar float action: action for transition.
+        Exact same class as the
 
         """
     def __init__(self, duration_history, duration_simulation, delta_t):
@@ -157,12 +150,6 @@ class RealistMDP:
 
 
     def copy(self):
-        """
-        Copy the MDP object
-
-        :return: Deep copy of the object.
-        :rtype: MDP
-        """
         return copy.deepcopy(self)
 
     '''
@@ -173,19 +160,7 @@ class RealistMDP:
         self.s = state
 
     def initializeMDP(self, hdg0, WH):
-        """
-        Initialization of the Markov Decicison Process.
 
-        :param hdg0: initial heading of the boat.
-        :type hdg0: float
-
-        :param WH np.array(): Vector of wind heading.
-
-
-        :return: s initialized state
-        :rtype: np.array()
-
-        """
         self.simulator = Simulator.RealistSimulator(self.simulation_duration, self.dt)
 
         # Delay of the dynamic
@@ -269,12 +244,6 @@ class ContinuousMDP:
 
 
     def copy(self):
-        """
-        Copy the MDP object
-
-        :return: Deep copy of the object.
-        :rtype: MDP
-        """
         return copy.deepcopy(self)
 
     '''
@@ -285,19 +254,7 @@ class ContinuousMDP:
         self.s = state
 
     def initializeMDP(self, hdg0, WH):
-        """
-        Initialization of the Markov Decicison Process.
 
-        :param hdg0: initial heading of the boat.
-        :type hdg0: float
-
-        :param WH np.array(): Vector of wind heading.
-
-
-        :return: s initialized state
-        :rtype: np.array()
-
-        """
         self.simulator = Simulator.RealistSimulator(self.simulation_duration, self.dt)
 
         # Delay of the dynamic

@@ -26,10 +26,11 @@ class PolicyLearner:
     :ivar keras.model model: NN, i.e the model containing the weight of the value estimator.
     '''
 
-    def __init__(self, state_size, action_size):
+    def __init__(self, state_size, action_size, batch_size):
         self.state_size = state_size
         self.action_size = action_size
-        self.memory = deque(maxlen=1)
+        self.batch_size = batch_size
+        self.memory = deque(maxlen=100)
         self.gamma = 0.975  # discount rate
         self.epsilon = 0.2  # exploration rate
         self.epsilon_min = 0.01
@@ -37,8 +38,8 @@ class PolicyLearner:
         self.learning_rate = 0.0001
         self.model = self._build_model()
 
-        self.policy_angle = 16*TORAD
-        self.attach_angle = 6*TORAD
+        self.policy_angle = 16 * TORAD
+        self.attach_angle = 6 * TORAD
         self.stall = 0
 
     '''
@@ -53,24 +54,24 @@ class PolicyLearner:
         """
         inp1 = Input(shape=(self.state_size, 1))
         conv1 = Convolution1D(40, 50, padding='same', dilation_rate=2, activation='relu', )(inp1)
-        #conv11 = Convolution1D(30, 20, padding='same', dilation_rate=2, activation='relu', )(conv1)
-        pool1 = MaxPooling1D(pool_size=2)(conv1)
+        conv11 = Convolution1D(30, 20, padding='same', dilation_rate=2, activation='relu', )(conv1)
+        pool1 = MaxPooling1D(pool_size=2)(conv11)
         # drop_1 = Dropout(0.25)(pool_1)
-        dense1 = Dense(80, activation='relu')(pool1)
-        out1 = Dense(40, activation='relu')(dense1)
+        dense1 = Dense(120, activation='relu')(pool1)
+        out1 = Dense(60, activation='relu')(dense1)
 
         inp2 = Input(shape=(self.state_size, 1))
         conv2 = Convolution1D(40, 50, padding='same', dilation_rate=2, activation='relu')(inp2)
-        #conv21 = Convolution1D(20, 20, padding='same', dilation_rate=2, activation='relu')(conv2)
-        pool2 = MaxPooling1D(pool_size=2)(conv2)
+        conv21 = Convolution1D(20, 20, padding='same', dilation_rate=2, activation='relu')(conv2)
+        pool2 = MaxPooling1D(pool_size=2)(conv21)
         # drop_2 = Dropout(0.25)(pool_2)
-        dense2 = Dense(80, activation='relu')(pool2)
-        out2 = Dense(40, activation='relu')(dense2)
+        dense2 = Dense(120, activation='relu')(pool2)
+        out2 = Dense(60, activation='relu')(dense2)
 
         merged = merge([out1, out2], mode='concat', concat_axis=1)
         merged = Flatten()(merged)
-        #dense_m1 = Dense(80, activation='relu')(merged)
-        dense_m2 = Dense(40, activation='relu')(merged)
+        dense_m1 = Dense(80, activation='relu')(merged)
+        dense_m2 = Dense(40, activation='relu')(dense_m1)
         dense = Dense(20, activation='relu')(dense_m2)
 
         out = Dense(2, activation='linear')(dense)
@@ -104,11 +105,17 @@ class PolicyLearner:
     '''
 
     def init_stall(self, mean, mdp):
+        """
+
+        :param mean:
+        :param mdp:
+        :return:
+        """
         if mdp.simulator.hdg[0] + mean + mdp.simulator.sail_pos > self.policy_angle:
-            self.stall=1
+            self.stall = 1
         else:
-            self.stall=0
-    
+            self.stall = 0
+
     def get_stall(self):
         return self.stall
 
@@ -202,7 +209,9 @@ class PolicyLearner:
         :return: the average loss over the replay batch.
         """
         minibatch = random.sample(self.memory, batch_size)
-        loss_list = []
+        X1 = []
+        X2 = []
+        Y = []
         for state, action, reward, next_state, stall in minibatch:  # We iterate over the minibatch
             next_action = self.evaluateNextAction(stall)  # We identify wich action to take in the resulting state (s')
             target = reward + self.gamma * \
@@ -215,19 +224,36 @@ class PolicyLearner:
             sub_state2 = np.reshape(state[1, :], [1, self.state_size, 1])
             target_f = self.model.predict([sub_state1, sub_state2])
             target_f[0][action] = target  # changes the action value of the action taken
-            sub_state1 = np.reshape(state[0, :], [1, self.state_size, 1])
-            sub_state2 = np.reshape(state[1, :], [1, self.state_size, 1])
-            scores = self.model.fit(x=[sub_state1, sub_state2], y=target_f, epochs=1,
-                                    verbose=0,
-                                    batch_size=32)  # fit for the previous action value --> update the weights in the network
-            loss_list.append(scores.history['loss'])
-            losses = np.array([loss_list])
+
+            X1.append(state[0, :])
+            X2.append(state[1, :])
+            Y.append(target_f)
+
+        X1 = np.array(X1)
+        X1 = np.reshape(X1, [batch_size, self.state_size, 1])
+        X2 = np.array(X2)
+        X2 = np.reshape(X2, [batch_size, self.state_size, 1])
+        Y = np.array(Y)
+        Y = np.reshape(Y,[batch_size,self.action_size])
+        scores = self.model.fit([X1, X2], Y, epochs=1,
+                                verbose=0,
+                                batch_size=batch_size)  # fit for the previous action value --> update the weights in the network
+        loss = scores.history['loss']
+
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay  # exploration decay
-        return np.sum(losses) / len(losses)
+        return loss
 
     def load(self, name):
+        """
+        Load the weight of the network saved in the file into :ivar model
+        :param name: name of the file containing the weights to load
+        """
         self.model.load_weights(name)
 
     def save(self, name):
+        """
+        Save the weights of the newtork
+        :param name: Name of the file where the weights are saved
+        """
         self.model.save_weights(name)

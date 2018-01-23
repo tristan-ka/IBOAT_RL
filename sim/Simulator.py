@@ -123,17 +123,7 @@ class Simulator:
 
 class RealistSimulator:
     """
-    Simulator object : It simulates a simplified dynamic of the boat with the config.
-
-    :ivar float time_step: time step of the simulator, corresponds to the frequency of data acquisition.
-    :ivar float size: size of the simulation.
-    :ivar int delay: delay between the heading command and its activation.
-    :ivar float sail_pos: position of the windsail [rad].
-    :ivar float hdg_target: target heading towards which we want the boat to sail.
-    :ivar np.array() hdg: array of size **size** that stores the heading of the boat [rad].
-    :ivar np.array() vmg: array of size **size** that stores the velocity made good.
-    :ivar Hysteresis hyst: Memory of the flow state during the simulations.
-    :raise ValueError: if the size of the simulation is zero or less.
+    TODO
     """
 
     def __init__(self, duration, time_step):

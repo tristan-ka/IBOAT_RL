@@ -1,97 +1,85 @@
-import math
-import random
+import sys
 
+sys.path.append("../sim/")
+from math import *
+
+import matplotlib.pyplot as plt
 import numpy as np
-from Hysteresis import Hysteresis
-from mdp import MDP
-
+from Simulator import TORAD
 from dqn import DQNAgent
-from sim import Simulator
-
-TORAD = math.pi / 180
+from environment import wind
+from mdp import MDP
 
 '''
 MDP Parameters
 '''
-history_duration = 3  # Duration of state history [s]
-mdp_step = 1  # Step between each state transition [s]
-time_step = 0.1  # time step [s] <-> 10Hz frequency of data acquisition
-delay=5
-mdp = MDP(history_duration, mdp_step, time_step,delay)
+mdp = MDP(duration_history=6, duration_simulation=1, delta_t=0.1)
 
 '''
 Environment Parameters
 '''
-WS = 7  # Wind Speed
-mean = 0  # Wind heading
-std = 0 * TORAD  # Wind noise
-wind_samples = mdp.size  # Number of wind sample
-WH = np.random.normal(mean, std, size=wind_samples)
+w = wind(mean=45 * TORAD, std=0 * TORAD, samples=10)
+WH = w.generateWind()
 
-'''
-Memeory generation --> Hysteresis
+hdg0 = 0 * np.ones(10)
+mdp.initializeMDP(hdg0, WH)
 
-Note that we create one single speed calculator that we use to generate different experiences because it
-saves the state of the flow and the previous incidences
-Be carefull to generate experiences in a chronological way !!!
+agent = DQNAgent(mdp.size, action_size=2)
+agent.load("../Networks/epsilon_pi")
+batch_size = 50
 
-'''
-speedCalculator = Hysteresis()
+EPISODES = 1000
+hdg0_rand_vec=[-3, 0, 3, 6, 9, 12, 15, 18, 21]
 
-state_size = mdp.size
-action_size = 2
-agent = DQNAgent(state_size, action_size)
-batch_size = 32
-EPISODES = 1
-
+loss_of_episode = []
+i = []
+v = []
+r = []
 for e in range(EPISODES):
-    i_rand = random.uniform(Simulator.IMIN, Simulator.IMAX)
-    i = i_rand * np.ones(mdp.size)
-    # initialize the incidence randomly
-    speedCalculator.reset()  #
+    WH = w.generateWind()
+    hdg0_rand = 0 * TORAD
+    hdg0 = hdg0_rand * np.ones(10)
+
+    mdp.simulator.hyst.reset()
+
     #  We reinitialize the memory of the flow
-    state = mdp.initializeMDP(i, WS, speedCalculator)
-    for time in range(500):
-        print(time)
-        WH = np.random.uniform(mean - std, mean + std, size=wind_samples)
+    state = mdp.initializeMDP(hdg0, WH)
+    loss_sim_list = []
+    for time in range(80):
+        WH = w.generateWind()
         action = agent.act(state)
-        next_state, reward = mdp.transition(action, WS, WH, speedCalculator)
-        agent.remember(state, action, reward, next_state)
+        next_state, reward = mdp.transition(action, WH)
+        agent.remember(state, action, reward, next_state)  # store the transition + the state flow in the
+        # final state !!
         state = next_state
-        if len(agent.memory) > batch_size:
-            agent.replay(batch_size)
+        if len(agent.memory) >= batch_size:
+            loss_sim_list.append(agent.replay(batch_size))
+            print("time: {}, Loss = {}".format(time, loss_sim_list[-1]))
+            print("i : {}".format(mdp.s[0, -1] / TORAD))
+            # For data visualisation
+            i.append(mdp.s[0, -1])
+            v.append(mdp.s[1, -1])
+            r.append(mdp.reward)
 
+    loss_over_simulation_time = np.sum(np.array([loss_sim_list])[0]) / len(np.array([loss_sim_list])[0])
+    loss_of_episode.append(loss_over_simulation_time)
+    print("Initial Heading : {}".format(hdg0_rand))
+    print("----------------------------")
+    print("episode: {}/{}, Mean Loss = {}".format(e, EPISODES, loss_over_simulation_time))
+    print("----------------------------")
+agent.save("../Networks/dqn_epsilon_batch50")
 
-        score_state=math.fabs(agent.act(state)[0,mdp.size]-14*TORAD)
-    print("episode: {}/{}, score: {}, r: {:.2}"
-              .format(e, EPISODES, score_state, reward))
+# plt.semilogy(np.linspace(1, EPISODES, EPISODES), np.array(loss_of_episode))
+# plt.xlabel("Episodes")
+# plt.ylabel("Cost")
 
-
-
-
-
-# env = gym.make('CartPole-v1')
-#     state_size = env.observation_space.shape[0]
-#     action_size = env.action_space.n
-#     agent = DQNAgent(state_size, action_size)
-#     # agent.load("./save/cartpole-master.h5")
-#     done = False
-#     batch_size = 32
-#
-#     for e in range(EPISODES):
-#         state = env.reset()
-#         state = np.reshape(state, [1, state_size])
-#         for time in range(500):
-#             # env.render()
-#             action = agent.act(state)
-#             next_state, reward, done, _ = env.step(action)
-#             reward = reward if not done else -10
-#             next_state = np.reshape(next_state, [1, state_size])
-#             agent.remember(state, action, reward, next_state, done)
-#             state = next_state
-#             if done:
-#                 print("episode: {}/{}, score: {}, e: {:.2}"
-#                       .format(e, EPISODES, time, agent.epsilon))
-#                 break
-#         if len(agent.memory) > batch_size:
-#             agent.replay(batch_size)
+f, axarr = plt.subplots(4, sharex=True)
+axarr[0].plot(np.array(i[floor(len(i) / 2):len(i) - 1]) / TORAD)
+axarr[1].plot(v[floor(len(i) / 2):len(i) - 1])
+axarr[2].plot(r[floor(len(i) / 2):len(i) - 1])
+axarr[3].semilogy(loss_sim_list[floor(len(i) / 2):len(i) - 1])
+axarr[0].set_ylabel("angle of attack")
+axarr[1].set_ylabel("v")
+axarr[2].set_ylabel("r")
+axarr[3].set_ylabel("cost")
+plt.show()

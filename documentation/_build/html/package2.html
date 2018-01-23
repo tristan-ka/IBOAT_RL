@@ -48,7 +48,7 @@
 <span id="policy-learner"></span><h2>Policy Learner<a class="headerlink" href="#module-policyLearning" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="policyLearning.PolicyLearner">
-<em class="property">class </em><code class="descclassname">policyLearning.</code><code class="descname">PolicyLearner</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>policy_angle</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">policyLearning.</code><code class="descname">PolicyLearner</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>batch_size</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>The aim of this class is to learn the Q-value of the action defined by a policy.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -89,7 +89,7 @@
 <dl class="method">
 <dt id="policyLearning.PolicyLearner.actDeterministicallyUnderPolicy">
 <code class="descname">actDeterministicallyUnderPolicy</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.actDeterministicallyUnderPolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the action to take from a state according to a policy.</p>
+<dd><p>Policy that reattaches when the angle of attack goes higher than 16 degree</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -103,9 +103,15 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="policyLearning.PolicyLearner.actRandomly">
+<code class="descname">actRandomly</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.actRandomly" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="policyLearning.PolicyLearner.actUnderPolicy">
 <code class="descname">actUnderPolicy</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.actUnderPolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Does the same as <a class="reference internal" href="#policyLearning.PolicyLearner.actDeterministicallyUnderPolicy" title="policyLearning.PolicyLearner.actDeterministicallyUnderPolicy"><code class="xref py py-meth docutils literal"><span class="pre">actDeterministicallyUnderPolicy()</span></code></a> instead that the returned action is sometime taken randomly.</p>
+<dd><p>Does the same as <a class="reference internal" href="#policyLearning.PolicyLearner.actDeterministicallyUnderPolicy" title="policyLearning.PolicyLearner.actDeterministicallyUnderPolicy"><code class="xref py py-meth docutils literal"><span class="pre">actDeterministicallyUnderPolicy()</span></code></a> instead that the returned action
+is sometime taken randomly.</p>
 </dd></dl>
 
 <dl class="method">
@@ -125,24 +131,60 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="policyLearning.PolicyLearner.load">
-<code class="descname">load</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.load" title="Permalink to this definition">¶</a></dt>
+<dt id="policyLearning.PolicyLearner.evaluateNextAction">
+<code class="descname">evaluateNextAction</code><span class="sig-paren">(</span><em>stall</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.evaluateNextAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the next action without updating the stall state in order to use it during the experience replay
+:param np.array state: state for which we want to know the policy action.
+:return: the policy action.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.get_stall">
+<code class="descname">get_stall</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.get_stall" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="policyLearning.PolicyLearner.init_stall">
+<code class="descname">init_stall</code><span class="sig-paren">(</span><em>mean</em>, <em>mdp</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.init_stall" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mean</strong> &#8211; </li>
+<li><strong>mdp</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="policyLearning.PolicyLearner.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the weight of the network saved in the file into :ivar model
+:param name: name of the file containing the weights to load</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="policyLearning.PolicyLearner.remember">
-<code class="descname">remember</code><span class="sig-paren">(</span><em>state</em>, <em>action</em>, <em>reward</em>, <em>next_state</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.remember" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remember a transition defined by an action <cite>action</cite> taken from a state <cite>state</cite> yielding a transition to a next state
-<cite>next_state</cite> and a reward <cite>reward</cite>.</p>
+<code class="descname">remember</code><span class="sig-paren">(</span><em>state</em>, <em>action</em>, <em>reward</em>, <em>next_state</em>, <em>stall</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.remember" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remember a transition defined by an action <cite>action</cite> taken from a state <cite>state</cite> yielding a transition to a next
+state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#8217;]</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>state</strong> (<em>np.array</em>) &#8211; initial state.</li>
-<li><strong>action</strong> (<em>int</em>) &#8211; action.</li>
-<li><strong>reward</strong> (<em>float</em>) &#8211; reward received from transition.</li>
-<li><strong>next_state</strong> (<em>np.array</em>) &#8211; final state salut.</li>
+<li><strong>state</strong> (<em>np.array</em>) &#8211; initial state (s).</li>
+<li><strong>action</strong> (<em>int</em>) &#8211; action (a).</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; reward received from transition (r).</li>
+<li><strong>next_state</strong> (<em>np.array</em>) &#8211; final state (s&#8217;).</li>
+<li><strong>stall</strong> (<em>int</em>) &#8211; flow state in the final state (s&#8217;).</li>
 </ul>
 </td>
 </tr>
@@ -169,6 +211,115 @@
 <dl class="method">
 <dt id="policyLearning.PolicyLearner.save">
 <code class="descname">save</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the weights of the newtork
+:param name: Name of the file where the weights are saved</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DDPG">
+<span id="ddpg"></span><h2>DDPG<a class="headerlink" href="#module-DDPG" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DDPG.DDPGAgent">
+<em class="property">class </em><code class="descclassname">DDPG.</code><code class="descname">DDPGAgent</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>lower_bound</em>, <em>upper_bound</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks
+It uses the Deep Deterministic Policy Gradient to update tha actor network.
+This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>state_size</strong> (<em>int</em>) &#8211; shape of the input (for convolutionnal layers).</li>
+<li><strong>action_size</strong> (<em>int</em>) &#8211; number of action output by the network.</li>
+<li><strong>memory</strong> (<em>deque</em>) &#8211; last-in first-out list of the batch.</li>
+<li><strong>gamma</strong> (<em>float</em>) &#8211; discount factor.</li>
+<li><strong>epsilon</strong> (<em>float</em>) &#8211; exploration rate.</li>
+<li><strong>epsilon_min</strong> (<em>float</em>) &#8211; smallest exploration rate that we want to converge to.</li>
+<li><strong>epsilon_decay</strong> (<em>float</em>) &#8211; decay factor that we apply after each replay.</li>
+<li><strong>learning_rate</strong> (<em>float</em>) &#8211; the learning rate of the NN.</li>
+<li><strong>actor_model</strong> (<em>keras.model</em>) &#8211; NN, i.e the model containing the weight of the policy estimator.</li>
+<li><strong>critic_model</strong> (<em>keras.model</em>) &#8211; NN, i.e the model containing the weight of the critic value estimator.</li>
+<li><strong>lower_bound</strong> (<em>float</em>) &#8211; minimum value for rudder action</li>
+<li><strong>upper_bound</strong> (<em>float</em>) &#8211; maximum value for rudder action</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="DDPG.DDPGAgent.act">
+<code class="descname">act</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.act" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DDPG.DDPGAgent.act_epsilon_greedy">
+<code class="descname">act_epsilon_greedy</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.act_epsilon_greedy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DDPG.DDPGAgent.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>state</em>, <em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the Q-value of a state-action pair  using the critic neural network.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>np.array</em>) &#8211; state that we want to evaluate.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The actions values as a vector.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="DDPG.DDPGAgent.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DDPG.DDPGAgent.remember">
+<code class="descname">remember</code><span class="sig-paren">(</span><em>state</em>, <em>action</em>, <em>reward</em>, <em>next_state</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.remember" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remember a transition defined by an action <cite>action</cite> taken from a state <cite>state</cite> yielding a transition to a next
+state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#8217;]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>state</strong> (<em>np.array</em>) &#8211; initial state (s).</li>
+<li><strong>action</strong> (<em>int</em>) &#8211; action (a).</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; reward received from transition (r).</li>
+<li><strong>next_state</strong> (<em>np.array</em>) &#8211; final state (s&#8217;).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="DDPG.DDPGAgent.replay">
+<code class="descname">replay</code><span class="sig-paren">(</span><em>batch_size</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.replay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the learning on a the experience replay memory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch_size</strong> &#8211; number of samples used in the experience replay memory for the fit.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the average loss over the replay batch.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="DDPG.DDPGAgent.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.save" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -241,6 +392,7 @@
   <ul>
 <li><a class="reference internal" href="#">Package RL</a><ul>
 <li><a class="reference internal" href="#module-policyLearning">Policy Learner</a></li>
+<li><a class="reference internal" href="#module-DDPG">DDPG</a></li>
 <li><a class="reference internal" href="#tutorial">Tutorial</a></li>
 </ul>
 </li>

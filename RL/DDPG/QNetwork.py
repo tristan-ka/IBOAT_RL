@@ -66,24 +66,30 @@ class Network:
         # Compute the target value
         reward = tf.expand_dims(self.reward_ph, 1)
         not_done = tf.expand_dims(self.is_not_done_ph, 1)
-        targets = reward + not_done * settings.DISCOUNT * self.q_values_next
+        targets = reward +  settings.DISCOUNT * self.q_values_next
 
         # 1-step temporal difference errors
         td_errors = targets - self.q_values_of_given_actions
 
         # Critic loss and optimization
         critic_loss = tf.reduce_mean(tf.square(td_errors))
-        critic_loss += l2_regularization(self.critic_vars)
+        #critic_loss += l2_regularization(self.critic_vars)
         critic_trainer = tf.train.AdamOptimizer(settings.CRITIC_LEARNING_RATE)
         self.critic_train_op = critic_trainer.minimize(critic_loss)
         self.critic_loss = critic_loss
 
         # Actor loss and optimization
-        actor_loss = -1 * tf.reduce_mean(self.q_values_of_suggested_actions)
-        actor_loss += l2_regularization(self.actor_vars)
+        self.action_grad = tf.gradients(self.q_values_of_suggested_actions, self.actions)[0]
+        self.actor_grad = tf.gradients(self.actions, self.actor_vars, -self.action_grad)
         actor_trainer = tf.train.AdamOptimizer(settings.ACTOR_LEARNING_RATE)
-        self.actor_train_op = actor_trainer.minimize(actor_loss,
-                                                     var_list=self.actor_vars)
+        self.actor_train_op = actor_trainer.apply_gradients(zip(self.actor_grad, self.actor_vars))
+
+        # Actor loss and optimization
+        actor_loss = -1 * tf.reduce_mean(self.q_values_of_suggested_actions)
+        #actor_loss += l2_regularization(self.actor_vars)
+        # actor_trainer = tf.train.AdamOptimizer(settings.ACTOR_LEARNING_RATE)
+        #self.actor_train_op = actor_trainer.minimize(actor_loss,
+                                                 #    var_list=self.actor_vars)
         self.actor_loss=actor_loss
 
         # For test
