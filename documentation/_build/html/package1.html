@@ -60,12 +60,62 @@ represented with the following block diagram. It contains a delay and an hystere
 <div class="section" id="module-Simulator">
 <span id="simulator"></span><h2>Simulator<a class="headerlink" href="#module-Simulator" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
+<dt id="Simulator.RealistSimulator">
+<em class="property">class </em><code class="descclassname">Simulator.</code><code class="descname">RealistSimulator</code><span class="sig-paren">(</span><em>duration</em>, <em>time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>TODO</p>
+<dl class="method">
+<dt id="Simulator.RealistSimulator.computeNewValues">
+<code class="descname">computeNewValues</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.computeNewValues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.getHdg">
+<code class="descname">getHdg</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.getHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.getLength">
+<code class="descname">getLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.getLength" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.getTimeStep">
+<code class="descname">getTimeStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.getTimeStep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.incrementDelayHdg">
+<code class="descname">incrementDelayHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.incrementDelayHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.incrementHdg">
+<code class="descname">incrementHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.incrementHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.updateHdg">
+<code class="descname">updateHdg</code><span class="sig-paren">(</span><em>k</em>, <em>inc</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.updateHdg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator.RealistSimulator.updateVMG">
+<code class="descname">updateVMG</code><span class="sig-paren">(</span><em>k</em>, <em>vmg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.updateVMG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="Simulator.Simulator">
 <em class="property">class </em><code class="descclassname">Simulator.</code><code class="descname">Simulator</code><span class="sig-paren">(</span><em>duration</em>, <em>time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>The class simulator computes the value of the velocity made good for changes of heading over a certain duration. The
-heading and velocity are therefore represented as vector. The variables of the class accounts for the characteristics
-of the simulator exposed above.</p>
+<p>Simulator object : It simulates a simplified dynamic of the boat with the config.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -74,11 +124,11 @@ of the simulator exposed above.</p>
 <li><strong>time_step</strong> (<em>float</em>) &#8211; time step of the simulator, corresponds to the frequency of data acquisition.</li>
 <li><strong>size</strong> (<em>float</em>) &#8211; size of the simulation.</li>
 <li><strong>delay</strong> (<em>int</em>) &#8211; delay between the heading command and its activation.</li>
-<li><strong>sail_pos</strong> (<em>float</em>) &#8211; position of the windsail [rad] assumed constant and equal to -40°.</li>
+<li><strong>sail_pos</strong> (<em>float</em>) &#8211; position of the windsail [rad].</li>
 <li><strong>hdg_target</strong> (<em>float</em>) &#8211; target heading towards which we want the boat to sail.</li>
 <li><strong>hdg</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; array of size <strong>size</strong> that stores the heading of the boat [rad].</li>
 <li><strong>vmg</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; array of size <strong>size</strong> that stores the velocity made good.</li>
-<li><strong>hyst</strong> (<a class="reference internal" href="#hysteresis.Hysteresis" title="hysteresis.Hysteresis"><em>hysteresis.Hysteresis</em></a>) &#8211; Memory of the flow state during the simulations.</li>
+<li><strong>hyst</strong> (<a class="reference internal" href="#module-Hysteresis" title="Hysteresis"><em>Hysteresis</em></a>) &#8211; Memory of the flow state during the simulations.</li>
 </ul>
 </td>
 </tr>
@@ -87,120 +137,35 @@ of the simulator exposed above.</p>
 </tr>
 </tbody>
 </table>
-<p>Initialization of the simulation. The variables are set according to the assumption (<cite>sail_pos</cite> = -40°, <cite>hdg_target</cite> = 0° and <cite>delay</cite> = 5).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>duration</strong> (<em>float</em>) &#8211; Duration of the simulation in seconds.</li>
-<li><strong>time_step</strong> (<em>float</em>) &#8211; time_step of the simulation in seconds.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
 <dl class="method">
 <dt id="Simulator.Simulator.computeNewValues">
 <code class="descname">computeNewValues</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.computeNewValues" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the new value of the heading and velocity vector when the heading is incremented.
-This method uses the method <a class="reference internal" href="#Simulator.Simulator.incrementDelayHdg" title="Simulator.Simulator.incrementDelayHdg"><code class="xref py py-meth docutils literal"><span class="pre">incrementDelayHdg()</span></code></a> and <code class="xref py py-meth docutils literal"><span class="pre">Hysteresis.calculateSpeed()</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>delta_hdg</strong> &#8211; value of the increment of heading</li>
-<li><strong>WH</strong> &#8211; time series of the wind conditions during the simulation.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the new heading and velocity vectors.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.getHdg">
 <code class="descname">getHdg</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getHdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access the value at index k of the heading vector.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>k</strong> &#8211; desired index.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the heading at index k.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.getLength">
 <code class="descname">getLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getLength" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the length of a simulation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">size.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.getTimeStep">
 <code class="descname">getTimeStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.getTimeStep" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access the time step of a simulation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the time step of the simulator.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.incrementDelayHdg">
 <code class="descname">incrementDelayHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.incrementDelayHdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add <cite>delta_hdg</cite> to the (k+delay)-th index of the heading vector. This method defines the delay of the simulator.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>k</strong> &#8211; index corresponding to the time at which the change of heading command is activated. The increment is therefore added to all the indices i such that i&gt;=k+delay</li>
-<li><strong>delta_hdg</strong> &#8211; Value of the increment.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.incrementHdg">
 <code class="descname">incrementHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.incrementHdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add <cite>delta_hdg</cite> to the k-th index of the heading vector.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>k</strong> &#8211; index corresponding to the value to be incremented.</li>
-<li><strong>delta_hdg</strong> &#8211; Value of the increment.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.plot">
@@ -210,38 +175,12 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 <dl class="method">
 <dt id="Simulator.Simulator.updateHdg">
 <code class="descname">updateHdg</code><span class="sig-paren">(</span><em>k</em>, <em>inc</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateHdg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Modify the value at index k of the heading vector</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>k</strong> &#8211; index corresponding to the value to be updated</li>
-<li><strong>inc</strong> &#8211; value of the update</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.updateVMG">
 <code class="descname">updateVMG</code><span class="sig-paren">(</span><em>k</em>, <em>vmg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateVMG" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the velocity of the k-th element of the velocity vector.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>k</strong> &#8211; index of the value to update.</li>
-<li><strong>vmg</strong> &#8211; new value.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -250,11 +189,11 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 <p class="last">Be careful, the delay is expressed has an offset of index. the delay in s is equal to delay*time_step</p>
 </div>
 </div>
-<div class="section" id="module-hysteresis">
-<span id="hysteresis"></span><h2>Hysteresis<a class="headerlink" href="#module-hysteresis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-Hysteresis">
+<span id="hysteresis"></span><h2>Hysteresis<a class="headerlink" href="#module-Hysteresis" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="hysteresis.Hysteresis">
-<em class="property">class </em><code class="descclassname">hysteresis.</code><code class="descname">Hysteresis</code><a class="headerlink" href="#hysteresis.Hysteresis" title="Permalink to this definition">¶</a></dt>
+<dt id="Hysteresis.Hysteresis">
+<em class="property">class </em><code class="descclassname">Hysteresis.</code><code class="descname">Hysteresis</code><a class="headerlink" href="#Hysteresis.Hysteresis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Markov Decision process modelization of the transition</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -265,8 +204,8 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 </tbody>
 </table>
 <dl class="method">
-<dt id="hysteresis.Hysteresis.calculateSpeed">
-<code class="descname">calculateSpeed</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#hysteresis.Hysteresis.calculateSpeed" title="Permalink to this definition">¶</a></dt>
+<dt id="Hysteresis.Hysteresis.calculateSpeed">
+<code class="descname">calculateSpeed</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Hysteresis.Hysteresis.calculateSpeed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the velocity from angle of attack.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -283,8 +222,8 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 </dd></dl>
 
 <dl class="method">
-<dt id="hysteresis.Hysteresis.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hysteresis.Hysteresis.copy" title="Permalink to this definition">¶</a></dt>
+<dt id="Hysteresis.Hysteresis.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Hysteresis.Hysteresis.copy" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -296,9 +235,38 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 </dd></dl>
 
 <dl class="method">
-<dt id="hysteresis.Hysteresis.reset">
-<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hysteresis.Hysteresis.reset" title="Permalink to this definition">¶</a></dt>
+<dt id="Hysteresis.Hysteresis.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Hysteresis.Hysteresis.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset the memory of the flow.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-environment">
+<span id="environment"></span><h2>Environment<a class="headerlink" href="#module-environment" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="environment.wind">
+<em class="property">class </em><code class="descclassname">environment.</code><code class="descname">wind</code><span class="sig-paren">(</span><em>mean</em>, <em>std</em>, <em>samples</em><span class="sig-paren">)</span><a class="headerlink" href="#environment.wind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generetate the wind samples of the environment. The wind intesity is assumed constant and equal to 15 knots</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mean</strong> (<em>float</em>) &#8211; mean direction of the wind in [rad]</li>
+<li><strong>std</strong> (<em>float</em>) &#8211; standard deviation of the wind direction in [rad]</li>
+<li><strong>samples</strong> (<em>float</em>) &#8211; number of samples to generate</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="environment.wind.generateWind">
+<code class="descname">generateWind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#environment.wind.generateWind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the wind samples
+:return: np.array of wind samples</p>
 </dd></dl>
 
 </dd></dl>
@@ -306,6 +274,64 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 </div>
 <div class="section" id="module-mdp">
 <span id="markov-decision-process-mdp"></span><h2>Markov Decision Process (MDP)<a class="headerlink" href="#module-mdp" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mdp.ContinuousMDP">
+<em class="property">class </em><code class="descclassname">mdp.</code><code class="descname">ContinuousMDP</code><span class="sig-paren">(</span><em>duration_history</em>, <em>duration_simulation</em>, <em>delta_t</em>, <em>LOWER_BOUND</em>, <em>UPPER_BOUND</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Markov Decision process modelization of the transition
+Based on Realistic Simulator of Iboat autonomous sailboat provided by Simulink
+Compatible with continuous action</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>history_duration</strong> (<em>float</em>) &#8211; Duration of the memory.</li>
+<li><strong>simulation_duration</strong> (<em>float</em>) &#8211; Duration of the memory.</li>
+<li><strong>size</strong> (<em>int</em>) &#8211; size of the first dimension of the state.</li>
+<li><strong>dt</strong> (<em>float</em>) &#8211; time step between each value of the state.</li>
+<li><strong>s</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; state containing the history of angles of attacks and velocities.</li>
+<li><strong>idx_memory</strong> (<em>range</em>) &#8211; indices corresponding to the values shared by two successive states.</li>
+<li><strong>simulator</strong> (<a class="reference internal" href="#module-Simulator" title="Simulator"><em>Simulator</em></a>) &#8211; Simulator used to compute new values after a transition.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; reward associated with a transition.</li>
+<li><strong>discount</strong> (<em>float</em>) &#8211; discount factor.</li>
+<li><strong>action</strong> (<em>float</em>) &#8211; action for transition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mdp.ContinuousMDP.computeState">
+<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.computeState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.ContinuousMDP.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.ContinuousMDP.extractSimulationData">
+<code class="descname">extractSimulationData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.extractSimulationData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.ContinuousMDP.initializeMDP">
+<code class="descname">initializeMDP</code><span class="sig-paren">(</span><em>hdg0</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.initializeMDP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.ContinuousMDP.initializeState">
+<code class="descname">initializeState</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.initializeState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.ContinuousMDP.transition">
+<code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.transition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="mdp.MDP">
 <em class="property">class </em><code class="descclassname">mdp.</code><code class="descname">MDP</code><span class="sig-paren">(</span><em>duration_history</em>, <em>duration_simulation</em>, <em>delta_t</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP" title="Permalink to this definition">¶</a></dt>
@@ -333,7 +359,11 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 <dl class="method">
 <dt id="mdp.MDP.computeState">
 <code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.computeState" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Computes the mdp state when an action is applied.
+:param action:
+:param WH:
+:return:</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mdp.MDP.copy">
@@ -388,6 +418,42 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
 <dl class="method">
 <dt id="mdp.MDP.transition">
 <code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.transition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mdp.RealistMDP">
+<em class="property">class </em><code class="descclassname">mdp.</code><code class="descname">RealistMDP</code><span class="sig-paren">(</span><em>duration_history</em>, <em>duration_simulation</em>, <em>delta_t</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exact same class as the</p>
+<dl class="method">
+<dt id="mdp.RealistMDP.computeState">
+<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.computeState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.RealistMDP.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.RealistMDP.extractSimulationData">
+<code class="descname">extractSimulationData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.extractSimulationData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.RealistMDP.initializeMDP">
+<code class="descname">initializeMDP</code><span class="sig-paren">(</span><em>hdg0</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.initializeMDP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.RealistMDP.initializeState">
+<code class="descname">initializeState</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.initializeState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp.RealistMDP.transition">
+<code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.transition" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -463,7 +529,8 @@ This method uses the method <a class="reference internal" href="#Simulator.Simul
   <ul>
 <li><a class="reference internal" href="#">Package Sim</a><ul>
 <li><a class="reference internal" href="#module-Simulator">Simulator</a></li>
-<li><a class="reference internal" href="#module-hysteresis">Hysteresis</a></li>
+<li><a class="reference internal" href="#module-Hysteresis">Hysteresis</a></li>
+<li><a class="reference internal" href="#module-environment">Environment</a></li>
 <li><a class="reference internal" href="#module-mdp">Markov Decision Process (MDP)</a></li>
 <li><a class="reference internal" href="#tutorial">Tutorial</a></li>
 </ul>

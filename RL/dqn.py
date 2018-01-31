@@ -1,9 +1,10 @@
 import random
 import sys
-from collections import deque
-from sim.Simulator import TORAD
-
 sys.path.append("../sim/")
+from collections import deque
+from Simulator import TORAD
+
+
 import numpy as np
 import keras
 from keras.layers import Input, Convolution1D, MaxPooling1D, Dense, Flatten, merge
@@ -11,7 +12,7 @@ from keras.models import Model
 from keras.optimizers import Adam
 
 # The n-step learner needs to simulate with MDP agent
-from sim.mdp import MDP
+from mdp import MDP
 
 
 class DQNAgent:
@@ -84,18 +85,26 @@ class DQNAgent:
 
     def remember(self, state, action, reward, next_state):
         """
-        Add s, a, r ,s' to the memory.
-        :param np.array() state: state to add.
-        :param int action: action taken from state.
-        :param float reward:  reward observed.
-        :param np.array() next_state: next_state in which we end up when taking action a from s.
-        :return:
+        Remember a transition defined by an action `action` taken from a state `state` yielding a transition to a next
+        state `next_state` and a reward `reward`. [s, a ,r, s']
+
+        :param np.array state: initial state (s).
+        :param int action: action (a).
+        :param float reward: reward received from transition (r).
+        :param np.array next_state: final state (s').
         """
         self.memory.append((state, action, reward, next_state))
 
 
+    def actDeterministically(self, state):
+        sub_state1 = np.reshape(state[0, :], [1, self.state_size, 1])
+        sub_state2 = np.reshape(state[1, :], [1, self.state_size, 1])
+        act_values = self.model.predict([sub_state1, sub_state2])
+        return np.argmax(act_values[0])  # returns action
+
     def act(self, state):
         """
+
         Act ε-greedy with respect to the actual Q-value output by the network.
         :param state: State from which we want to use the network to compute the action to take.
         :return: a random action with probability ε or the greedy action with probability 1-ε.
@@ -110,6 +119,7 @@ class DQNAgent:
 
     def replay(self, batch_size):
         """
+
         Core of the algorithm --> Q update according to the current weight of the network.
         :param int batch_size: Batch size for the batch gradient descent.
         :return:
@@ -197,6 +207,7 @@ class MultiStepDQNAgent:
 
     def _build_model(self):
 
+
         # On reprend le CNN qui a appris la Policy
 
         inp1 = Input(shape=(self.state_size, 1))
@@ -271,6 +282,12 @@ class MultiStepDQNAgent:
     '''
 
     def replay(self, batch_size):
+        """
+         Performs an update with n-step return target of the network on a minibatch chosen among the experience replay memory.
+
+         :param batch_size: number of samples used in the experience replay memory for the fit.
+         :return: the average loss over the replay batch.
+         """
         minibatch = random.sample(self.memory, batch_size)
         loss_list = []
         count = 0

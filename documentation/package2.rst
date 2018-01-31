@@ -9,6 +9,15 @@ Policy Learner
 	:undoc-members:
 	:show-inheritance:
 
+DDPG
+-----------------
+
+.. automodule:: DDPG
+	:members:
+	:undoc-members:
+	:show-inheritance:
+
+
 Tutorial
 ---------------
 

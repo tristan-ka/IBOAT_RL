@@ -47,7 +47,15 @@ Simulator
 Hysteresis
 ------------------------------
 
-.. automodule:: hysteresis
+.. automodule:: Hysteresis
+	:members:
+	:undoc-members:
+
+
+Environment
+------------------------------
+
+.. automodule:: environment
 	:members:
 	:undoc-members:
 

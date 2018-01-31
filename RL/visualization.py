@@ -158,7 +158,7 @@ class ValidateNetwork:
 
         for time in range(self.sim_time):
             WH=self.wh.generateWind()
-            action = agent.act(state)
+            action = agent.actDeterministically(state)
             next_state, reward = self.mdp.transition(action, WH)
             state=next_state
             i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
@@ -170,5 +170,7 @@ class ValidateNetwork:
         f, axarr = plt.subplots(2, sharex=True)
         axarr[0].plot(time_vec, i/TORAD)
         axarr[1].plot(time_vec,v)
+        axarr[0].set_ylabel("angle of attack")
+        axarr[1].set_ylabel("v")
 
         plt.show()

@@ -32,9 +32,9 @@ class DDPGAgent:
         self.state_size = state_size
         self.action_size = action_size
         self.memory = deque(maxlen=80)
-        self.gamma = 0.975  # discount rate
+        self.gamma = 0.99  # discount rate
         self.epsilon = 1  # exploration rate
-        self.epsilon_min = 0.01
+        self.epsilon_min = 0.15
         self.epsilon_decay = 0.95
         self.learning_rate = 0.0001
         self.actor_model = self._build_actor_model()
@@ -76,7 +76,7 @@ class DDPGAgent:
         out = Dense(1, activation='sigmoid')(dense)
 
         model = Model([inp1, inp2], out)
-        model.compile(loss='mse',  # using the cross-entropy loss function
+        model.compile(loss='mean_absolute_error',  # using the cross-entropy loss function
                       optimizer=Adam(lr=self.learning_rate),  # using the Adam optimiser
                       metrics=['accuracy'])  # reporting the accuracy
 
@@ -141,12 +141,25 @@ class DDPGAgent:
         self.memory.append((state, action, reward, next_state))
 
     def act(self,state):
+        """
+        Calculate the action given by the Actor network's current weights
+
+        :param state: state in which we want to chose an action.
+        :return: the greedy action according to actor network
+        """
         sub_state1 = np.reshape(state[0, :], [1, self.state_size, 1])
         sub_state2 = np.reshape(state[1, :], [1, self.state_size, 1])
         action = self.actor_model.predict([sub_state1, sub_state2])
         return action
 
     def act_epsilon_greedy(self,state):
+        """
+        With probability epsilon, returns a random action between bounds
+        With probability 1 - epsilon, returns the action given by the Actor network's current weights
+
+        :param state: state in which we want to chose an action.
+        :return: a random action or the action given by actor
+        """
         alea = np.random.rand()
         if alea <= self.epsilon:
             print("NOISY ACTION")
@@ -164,11 +177,13 @@ class DDPGAgent:
         Evaluate the Q-value of a state-action pair  using the critic neural network.
 
         :param np.array state: state that we want to evaluate.
-        :return: The actions values as a vector.
+        :param float action: action that we want to evaluate (has to be between permitted bounds)
+        :return: The continuous action value.
         """
         sub_state1 = np.reshape(state[0, :], [1, self.state_size, 1])
         sub_state2 = np.reshape(state[1, :], [1, self.state_size, 1])
-        act_value = self.critic_model.predict([sub_state1, sub_state2],action)
+        sub_action = np.reshape(action, [1, self.action_size, 1])
+        act_value = self.critic_model.predict([sub_state1, sub_state2, sub_action])
         return act_value[0]
 
     '''
@@ -177,14 +192,12 @@ class DDPGAgent:
 
     def replay(self, batch_size):
         """
-        Perform the learning on a the experience replay memory.
+        Performs an update of both actor and critic networks on a minibatch chosen among the experience replay memory.
 
         :param batch_size: number of samples used in the experience replay memory for the fit.
         :return: the average loss over the replay batch.
         """
         minibatch = random.sample(self.memory, batch_size)
-        actor_loss_list = []
-        critic_loss_list = []
         X1 = []
         X2 = []
         Y_actor = []
@@ -235,10 +248,18 @@ class DDPGAgent:
         return actor, critic
 
     def load(self, name):
+        """
+        Load the weights of the 2 networks saved in the file into :ivar actor_model and :ivar critic_model
+        :param name: name of the file containing the weights to load
+        """
         self.actor_model.load_weights(name)
         self.critic_model.load_weights(name)
 
 
     def save(self, name):
+        """
+        Save the weights of both of the networks
+        :param name: Name of the file where the weights are saved
+        """
         self.actor_model.save_weights(name)
         self.critic_model.save_weights(name)

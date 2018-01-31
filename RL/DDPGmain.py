@@ -11,6 +11,9 @@ from DDPG import DDPGAgent
 from Simulator import TORAD
 from mdp import ContinuousMDP
 
+from environment import wind
+
+
 '''
 MDP Parameters
 '''
@@ -27,7 +30,8 @@ WIND CONDITIONS
 mean = 45 * TORAD
 std = 0 * TORAD
 wind_samples = 10
-WH = np.random.uniform(mean - std, mean + std, size=10)
+w = wind(mean=mean, std=std, samples = wind_samples)
+WH = w.generateWind()
 
 
 '''
@@ -57,7 +61,7 @@ Start of training phase
 actor_loss_of_episode = []
 critic_loss_of_episode = []
 for e in range(EPISODES):
-    WH = np.random.uniform(mean - std, mean + std, size=10)
+    WH = w.generateWind()
     hdg0_rand = random.sample(hdg0_rand_vec, 1)[0]
 
     hdg0 = hdg0_rand * TORAD * np.ones(10)
@@ -87,6 +91,10 @@ for e in range(EPISODES):
             #reward= reward-0.5
         print("the reward is: {}".format(reward))
         agent.remember(state, action, reward, next_state)
+
+        # For Critic test
+        print("Q value for -3,0,3 in current state: {},{},{}".format(agent.evaluate(state,-2.99),agent.evaluate(state,0),agent.evaluate(state,2.99)))
+
         state = next_state
         if len(agent.memory) >= batch_size:
             a_loss, c_loss = agent.replay(batch_size)
