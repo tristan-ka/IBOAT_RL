@@ -17,8 +17,9 @@ a **marked decrease of the boat's speed**.
 Hysteresis such as stall are hard to model. We therefore proposes an **end-to-end controller** which learns the stall behavior and
 builds a policy that avoids it. Learning is performed on a simplified transition model representing the stochastic environment and the dynamic of the boat.
 
-On this page, you will find the documentation of the simplified simulator of the boat as well as the documentation of the reinforcement learning tools. Each package
-contains tutorials to better understand how the code can be used
+Learning is performed on two types of simulators, A **proof of concept** is first carried out on a simplified simulator of the boat coded in Python. The second phase of the project consist of trying to control a **more realisitic**  model of the boat. For this purpose we use a dynamic library which is derived using the Code Generation tools in Simulink. The executable C are then feeded to Python using the "ctypes" library.
+
+On this page, you will find the documentation of the simplified simulator of the boat as well as the documentation of the reinforcement learning tools. Each package contains tutorials to better understand how the code can be used
 
 
 Requirements
@@ -48,13 +49,27 @@ The project depends on the following extensions :
    :height: 60px
    :scale: 50 %
 
+Libraries
+------------------
+
+There are two dynamic libraries available to simulate the realistic model of the boat :
+
+1. :download:`libBoatModel.so <../libs/libBoatModel.so>` for Linux users    
+2. :download:`libBoatModel.dylib <../libs/libBoatModel.dylib>` for Mac users
+
+One has to change the extension of the library in the file :file:`Simulator_realistic.py` depending on its OS.
+We also provide a guideline to generate such libraries from a simulink (see :download:`this file <SIMULINK_TO_C__PYTHON.pdf>` for more information).
+ 
+
 Contents
 ---------------
 .. toctree::
    :maxdepth: 2
 
-   Sim <package1.rst>
+   Simplified simulator <package1.rst>
 
+   Realistic simulator <package1bis.rst>
+  
    RL <package2.rst>
 
 

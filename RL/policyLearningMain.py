@@ -27,7 +27,7 @@ hdg0 = 0 * np.ones(10)
 mdp.initializeMDP(hdg0, WH)
 
 agent = PolicyLearner(mdp.size, action_size=2, batch_size=32)
-agent.load("../Networks/epsilon_pi")
+#agent.load("../Networks/epsilon_pi")
 EPISODES = 1
 count_luff = 0
 count_bear_off = 0
@@ -78,7 +78,7 @@ for e in range(EPISODES):
 print("n_luff : {}".format(count_luff))
 print("n_bear_off : {}".format(count_bear_off))
 
-agent.save("../Networks/epsilon_pi_02_experience_replay")
+agent.save("../Networks/lighter_archi")
 
 # plt.semilogy(np.linspace(1, EPISODES, EPISODES), np.array(loss_of_episode))
 # plt.xlabel("Episodes")

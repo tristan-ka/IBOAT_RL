@@ -19,13 +19,12 @@ i_decr = 16 * math.pi / 180
 
 class Hysteresis:
     """
-    Markov Decision process modelization of the transition
-
+    Class that remembers the state of the flow and that computes the velocity for a given angle of attack of the wind
+    on the wingsail.
     :ivar float e: state of the flow (0 if attached and 1 if detached)
 
     """
     def __init__(self):
-
         self.e = 0
 
     def copy(self):
@@ -46,8 +45,6 @@ class Hysteresis:
         Calculate the velocity from angle of attack.
 
         :param float i: angle of attack
-
-
         :return: v - Boat velocity
         :rtype: float
 

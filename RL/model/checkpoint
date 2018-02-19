@@ -1,2 +1,0 @@
-model_checkpoint_path: "Model_300000_5000_epochs_state_60_buffer_5000.cptk"
-all_model_checkpoint_paths: "Model_300000_5000_epochs_state_60_buffer_5000.cptk"

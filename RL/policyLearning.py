@@ -53,20 +53,20 @@ class PolicyLearner:
         :return: The model of the neural network.
         """
         inp1 = Input(shape=(self.state_size, 1))
-        conv1 = Convolution1D(40, 50, padding='same', dilation_rate=2, activation='relu', )(inp1)
-        conv11 = Convolution1D(30, 20, padding='same', dilation_rate=2, activation='relu', )(conv1)
+        conv1 = Convolution1D(40, 10, padding='same', dilation_rate=2, activation='relu', )(inp1)
+        conv11 = Convolution1D(30, 5, padding='same', dilation_rate=2, activation='relu', )(conv1)
         pool1 = MaxPooling1D(pool_size=2)(conv11)
         # drop_1 = Dropout(0.25)(pool_1)
-        dense1 = Dense(120, activation='relu')(pool1)
-        out1 = Dense(60, activation='relu')(dense1)
+        #dense1 = Dense(100, activation='relu')(pool1)
+        out1 = Dense(60, activation='relu')(pool1)
 
         inp2 = Input(shape=(self.state_size, 1))
-        conv2 = Convolution1D(40, 50, padding='same', dilation_rate=2, activation='relu')(inp2)
-        conv21 = Convolution1D(20, 20, padding='same', dilation_rate=2, activation='relu')(conv2)
+        conv2 = Convolution1D(40, 10, padding='same', dilation_rate=2, activation='relu')(inp2)
+        conv21 = Convolution1D(30, 5, padding='same', dilation_rate=2, activation='relu')(conv2)
         pool2 = MaxPooling1D(pool_size=2)(conv21)
         # drop_2 = Dropout(0.25)(pool_2)
-        dense2 = Dense(120, activation='relu')(pool2)
-        out2 = Dense(60, activation='relu')(dense2)
+        #dense2 = Dense(120, activation='relu')(pool2)
+        out2 = Dense(60, activation='relu')(pool2)
 
         merged = merge([out1, out2], mode='concat', concat_axis=1)
         merged = Flatten()(merged)

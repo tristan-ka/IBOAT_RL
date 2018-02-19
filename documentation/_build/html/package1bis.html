@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Package Realistic Simulator &#8212; IBOAT RL 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Package RL" href="package2.html" />
+    <link rel="prev" title="Package Sim" href="package1.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="package-realistic-simulator">
+<h1>Package Realistic Simulator<a class="headerlink" href="#package-realistic-simulator" title="Permalink to this headline">¶</a></h1>
+<p>This package contains all the classes required to build a realistic simulation of the boat. It uses the dynamic library <code class="file docutils literal"><span class="pre">libBoatModel.so</span></code> which implements the accurate dynamic of the boat. It is coded in C++ in order to speed up the calculation process and hence the learning.</p>
+<div class="section" id="module-Simulator_realistic">
+<span id="realisitic-simulator"></span><h2>Realisitic Simulator<a class="headerlink" href="#module-Simulator_realistic" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T">
+<em class="property">class </em><code class="descclassname">Simulator_realistic.</code><code class="descname">DW_Model_2_EXPORT_Discrete_T</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">_ctypes.Structure</span></code></p>
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteFilter_states">
+<code class="descname">DiscreteFilter_states</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteFilter_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator1_DSTATE">
+<code class="descname">DiscreteTimeIntegrator1_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator1_DSTATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE">
+<code class="descname">DiscreteTimeIntegrator_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE_p">
+<code class="descname">DiscreteTimeIntegrator_DSTATE_p</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOADI">
+<code class="descname">DiscreteTimeIntegrator_IC_LOADI</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOADI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOA_m">
+<code class="descname">DiscreteTimeIntegrator_IC_LOA_m</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOA_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel1_states">
+<code class="descname">Discretemotormodel1_states</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel1_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel_states">
+<code class="descname">Discretemotormodel_states</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay1_DSTATE">
+<code class="descname">FixPtUnitDelay1_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay1_DSTATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay2_DSTATE">
+<code class="descname">FixPtUnitDelay2_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay2_DSTATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.G3_PreviousInput">
+<code class="descname">G3_PreviousInput</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.G3_PreviousInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY">
+<code class="descname">PrevY</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY_d">
+<code class="descname">PrevY_d</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY_d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.incidencemeasure_DSTATE">
+<code class="descname">incidencemeasure_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.incidencemeasure_DSTATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.speedmeasure_DSTATE">
+<code class="descname">speedmeasure_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.speedmeasure_DSTATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T">
+<em class="property">class </em><code class="descclassname">Simulator_realistic.</code><code class="descname">RT_MODEL_Model_2_EXPORT_Discr_T</code><a class="headerlink" href="#Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">_ctypes.Structure</span></code></p>
+<dl class="attribute">
+<dt id="Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T.dwork">
+<code class="descname">dwork</code><a class="headerlink" href="#Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T.dwork" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Simulator_realistic.Simulator_realistic">
+<em class="property">class </em><code class="descclassname">Simulator_realistic.</code><code class="descname">Simulator_realistic</code><span class="sig-paren">(</span><em>simulation_duration</em>, <em>hdg0</em>, <em>speed0</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator_realistic.Simulator_realistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="Simulator_realistic.Simulator_realistic.step">
+<code class="descname">step</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>truewindheading</em>, <em>truewindheading_std</em>, <em>duration</em>, <em>precision</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator_realistic.Simulator_realistic.step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Simulator_realistic.Simulator_realistic.terminate">
+<code class="descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator_realistic.Simulator_realistic.terminate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be careful to use the libBoatModel library corresponding to your OS (Linux or Mac)</p>
+</div>
+</div>
+<div class="section" id="module-mdp_realistic">
+<span id="realistic-mdp"></span><h2>Realistic MDP<a class="headerlink" href="#module-mdp_realistic" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mdp_realistic.mdp_realistic">
+<em class="property">class </em><code class="descclassname">mdp_realistic.</code><code class="descname">mdp_realistic</code><span class="sig-paren">(</span><em>mdp_duration</em>, <em>hdg0</em>, <em>speed0</em>, <em>history_duration</em>, <em>mdp_step</em>, <em>delta_t</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="mdp_realistic.mdp_realistic.computeState">
+<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>truewindheading</em>, <em>truewindheading_std</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.computeState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mdp state when an action is applied.
+:param action:
+:param WH:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdp_realistic.mdp_realistic.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the MDP object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Deep copy of the object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="package1.html#mdp.MDP" title="mdp.MDP">MDP</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdp_realistic.mdp_realistic.extractSimulationData">
+<code class="descname">extractSimulationData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.extractSimulationData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp_realistic.mdp_realistic.initializeMDP">
+<code class="descname">initializeMDP</code><span class="sig-paren">(</span><em>truewindheading</em>, <em>truewindheading_std</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.initializeMDP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mdp_realistic.mdp_realistic.transition">
+<code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>truewindheading</em>, <em>truewindheading_std</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.transition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/IBOAT_logo1.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Package Realistic Simulator</a><ul>
+<li><a class="reference internal" href="#module-Simulator_realistic">Realisitic Simulator</a></li>
+<li><a class="reference internal" href="#module-mdp_realistic">Realistic MDP</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="package1.html" title="previous chapter">Package Sim</a></li>
+      <li>Next: <a href="package2.html" title="next chapter">Package RL</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/package1bis.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Tristan Karch.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/package1bis.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,5 +1,5 @@
-Package Sim
-================
+Package Simulator
+==================
 
 This package contains all the classes required to build a simulation for the learning. In this small paragraph, the physic of the simulator is described
 so that the reader can better understand the implementation.
@@ -76,7 +76,10 @@ Tutorial
 To visualize how a simulation can be generated we provide a file MDPmain.py that creates a simulation where the heading is first increase and then decrease.
 
 .. code-block:: python
-   :emphasize-lines: 36
+   :emphasize-lines: 38
+
+   import mdp
+   import numpy as np
 
    TORAD = math.pi / 180
 
@@ -113,7 +116,7 @@ To visualize how a simulation can be generated we provide a file MDPmain.py that
        else:
            action = 1
 
-       nex_state, reward = mdp.transition(action, WH)
+       next_state, reward = mdp.transition(action, WH)
        next_state = state
        i = np.concatenate([i, mdp.extractSimulationData()[0, :]])
        vmg = np.concatenate([vmg, mdp.extractSimulationData()[1, :]])

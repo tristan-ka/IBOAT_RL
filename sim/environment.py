@@ -21,3 +21,11 @@ class wind:
         :return: np.array of wind samples
         """
         return np.random.uniform(self.mean - self.std, self.mean + self.std, size=self.samples)
+
+    def generateGust(self, Delta_WH):
+        '''
+        Generates a Gust i.e. an important change of wind heading.
+        :param Delta_WH: Magnitude of the gust.
+        :return: The vector of wind heading corresponding to the gust.
+        '''
+        return np.random.uniform(self.mean + Delta_WH - self.std, self.mean + Delta_WH + self.std, size=self.samples)

@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Package Sim" href="package1.html" />
+    <link rel="next" title="Package Simulator" href="package1.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -52,8 +52,8 @@ a classical wing to push the boat forward. If the angle of attack of the wind co
 a <strong>marked decrease of the boat&#8217;s speed</strong>.</p>
 <p>Hysteresis such as stall are hard to model. We therefore proposes an <strong>end-to-end controller</strong> which learns the stall behavior and
 builds a policy that avoids it. Learning is performed on a simplified transition model representing the stochastic environment and the dynamic of the boat.</p>
-<p>On this page, you will find the documentation of the simplified simulator of the boat as well as the documentation of the reinforcement learning tools. Each package
-contains tutorials to better understand how the code can be used</p>
+<p>Learning is performed on two types of simulators, A <strong>proof of concept</strong> is first carried out on a simplified simulator of the boat coded in Python. The second phase of the project consist of trying to control a <strong>more realisitic</strong>  model of the boat. For this purpose we use a dynamic library which is derived using the Code Generation tools in Simulink. The executable C are then feeded to Python using the &#8220;ctypes&#8221; library.</p>
+<p>On this page, you will find the documentation of the simplified simulator of the boat as well as the documentation of the reinforcement learning tools. Each package contains tutorials to better understand how the code can be used</p>
 </div>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
@@ -65,11 +65,21 @@ contains tutorials to better understand how the code can be used</p>
 </ol>
 <p><a class="reference internal" href="_images/numpy.jpeg"><img alt="pic1" class="align-top" src="_images/numpy.jpeg" style="width: 100.0px; height: 35.0px;" /></a> <a class="reference internal" href="_images/matplotlib.jpeg"><img alt="pic2" src="_images/matplotlib.jpeg" style="width: 100.0px; height: 35.0px;" /></a> <a class="reference internal" href="_images/keras.png"><img alt="pic3" src="_images/keras.png" style="width: 100.0px; height: 30.0px;" /></a></p>
 </div>
+<div class="section" id="libraries">
+<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h2>
+<p>There are two dynamic libraries available to simulate the realistic model of the boat :</p>
+<ol class="arabic simple">
+<li><a class="reference download internal" href="_downloads/libBoatModel.so" download=""><code class="xref download docutils literal"><span class="pre">libBoatModel.so</span></code></a> for Linux users</li>
+<li><a class="reference download internal" href="_downloads/libBoatModel.dylib" download=""><code class="xref download docutils literal"><span class="pre">libBoatModel.dylib</span></code></a> for Mac users</li>
+</ol>
+<p>One has to change the extension of the library in the file <code class="file docutils literal"><span class="pre">Simulator_realistic.py</span></code> depending on its OS.
+We also provide a guideline to generate such libraries from a simulink (see <a class="reference download internal" href="_downloads/SIMULINK_TO_C__PYTHON.pdf" download=""><code class="xref download docutils literal"><span class="pre">this</span> <span class="pre">file</span></code></a> for more information).</p>
+</div>
 <div class="section" id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="package1.html">Sim</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="package1.html">Simplified simulator</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="package1.html#module-Simulator">Simulator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="package1.html#module-Hysteresis">Hysteresis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="package1.html#module-environment">Environment</a></li>
@@ -77,8 +87,14 @@ contains tutorials to better understand how the code can be used</p>
 <li class="toctree-l2"><a class="reference internal" href="package1.html#tutorial">Tutorial</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="package1bis.html">Realistic simulator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="package1bis.html#module-Simulator_realistic">Realisitic Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="package1bis.html#module-mdp_realistic">Realistic MDP</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="package2.html">RL</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="package2.html#module-policyLearning">Policy Learner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="package2.html#module-dqn">DQN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="package2.html#module-DDPG">DDPG</a></li>
 <li class="toctree-l2"><a class="reference internal" href="package2.html#tutorial">Tutorial</a></li>
 </ul>
@@ -110,6 +126,7 @@ contains tutorials to better understand how the code can be used</p>
 <li><a class="reference internal" href="#">Welcome to IBOAT RL&#8217;s documentation!</a><ul>
 <li><a class="reference internal" href="#a-brief-context">A brief context</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#libraries">Libraries</a></li>
 <li><a class="reference internal" href="#contents">Contents</a></li>
 </ul>
 </li>
@@ -119,7 +136,7 @@ contains tutorials to better understand how the code can be used</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="package1.html" title="next chapter">Package Sim</a></li>
+      <li>Next: <a href="package1.html" title="next chapter">Package Simulator</a></li>
   </ul></li>
 </ul>
 </div>

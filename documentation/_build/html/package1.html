@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Package Sim &#8212; IBOAT RL 1.0.0 documentation</title>
+    <title>Package Simulator &#8212; IBOAT RL 1.0.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Package RL" href="package2.html" />
+    <link rel="next" title="Package Realistic Simulator" href="package1bis.html" />
     <link rel="prev" title="Welcome to IBOAT RL’s documentation!" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -43,8 +43,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="package-sim">
-<h1>Package Sim<a class="headerlink" href="#package-sim" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="package-simulator">
+<h1>Package Simulator<a class="headerlink" href="#package-simulator" title="Permalink to this headline">¶</a></h1>
 <p>This package contains all the classes required to build a simulation for the learning. In this small paragraph, the physic of the simulator is described
 so that the reader can better understand the implementation.</p>
 <p>We need the boat to be in a configuration when it sails upwind so that the flow around the sail is attached and the sail works as a wing.
@@ -59,58 +59,6 @@ represented with the following block diagram. It contains a delay and an hystere
 <a class="reference internal image-reference" href="_images/block_diagrams.png"><img alt="_images/block_diagrams.png" class="align-center" src="_images/block_diagrams.png" style="width: 400.0px; height: 200.0px;" /></a>
 <div class="section" id="module-Simulator">
 <span id="simulator"></span><h2>Simulator<a class="headerlink" href="#module-Simulator" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="Simulator.RealistSimulator">
-<em class="property">class </em><code class="descclassname">Simulator.</code><code class="descname">RealistSimulator</code><span class="sig-paren">(</span><em>duration</em>, <em>time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>TODO</p>
-<dl class="method">
-<dt id="Simulator.RealistSimulator.computeNewValues">
-<code class="descname">computeNewValues</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.computeNewValues" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.getHdg">
-<code class="descname">getHdg</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.getHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.getLength">
-<code class="descname">getLength</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.getLength" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.getTimeStep">
-<code class="descname">getTimeStep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.getTimeStep" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.incrementDelayHdg">
-<code class="descname">incrementDelayHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.incrementDelayHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.incrementHdg">
-<code class="descname">incrementHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.incrementHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.plot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.updateHdg">
-<code class="descname">updateHdg</code><span class="sig-paren">(</span><em>k</em>, <em>inc</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.updateHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Simulator.RealistSimulator.updateVMG">
-<code class="descname">updateVMG</code><span class="sig-paren">(</span><em>k</em>, <em>vmg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.RealistSimulator.updateVMG" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="class">
 <dt id="Simulator.Simulator">
 <em class="property">class </em><code class="descclassname">Simulator.</code><code class="descname">Simulator</code><span class="sig-paren">(</span><em>duration</em>, <em>time_step</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator" title="Permalink to this definition">¶</a></dt>
@@ -140,7 +88,25 @@ represented with the following block diagram. It contains a delay and an hystere
 <dl class="method">
 <dt id="Simulator.Simulator.computeNewValues">
 <code class="descname">computeNewValues</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.computeNewValues" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Increment the boat headind and compute the corresponding boat velocity. This method uses the hysteresis function
+<code class="xref py py-meth docutils literal"><span class="pre">Hysteresis.calculateSpeed()</span></code>.
+to calculate the velocity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>delta_hdg</strong> &#8211; increment of heading.</li>
+<li><strong>WH</strong> &#8211; Heading of the wind on the wingsail.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the heading and velocities value over the simulated time.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.getHdg">
@@ -165,7 +131,11 @@ represented with the following block diagram. It contains a delay and an hystere
 <dl class="method">
 <dt id="Simulator.Simulator.incrementHdg">
 <code class="descname">incrementHdg</code><span class="sig-paren">(</span><em>k</em>, <em>delta_hdg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.incrementHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Increment the heading.
+:param k: index to increment.
+:param delta_hdg: value of the increment of heading.
+:return:</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.plot">
@@ -175,12 +145,31 @@ represented with the following block diagram. It contains a delay and an hystere
 <dl class="method">
 <dt id="Simulator.Simulator.updateHdg">
 <code class="descname">updateHdg</code><span class="sig-paren">(</span><em>k</em>, <em>inc</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateHdg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Change the value of the heading at index k.
+:param k: index to update.
+:param inc:
+:return:</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="Simulator.Simulator.updateVMG">
 <code class="descname">updateVMG</code><span class="sig-paren">(</span><em>k</em>, <em>vmg</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator.Simulator.updateVMG" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>k</strong> &#8211; index to update</li>
+<li><strong>vmg</strong> &#8211; value of the velocity to update</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -194,15 +183,9 @@ represented with the following block diagram. It contains a delay and an hystere
 <dl class="class">
 <dt id="Hysteresis.Hysteresis">
 <em class="property">class </em><code class="descclassname">Hysteresis.</code><code class="descname">Hysteresis</code><a class="headerlink" href="#Hysteresis.Hysteresis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Markov Decision process modelization of the transition</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><strong>e</strong> (<em>float</em>) &#8211; state of the flow (0 if attached and 1 if detached)</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Class that remembers the state of the flow and that computes the velocity for a given angle of attack of the wind
+on the wingsail.
+:ivar float e: state of the flow (0 if attached and 1 if detached)</p>
 <dl class="method">
 <dt id="Hysteresis.Hysteresis.calculateSpeed">
 <code class="descname">calculateSpeed</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#Hysteresis.Hysteresis.calculateSpeed" title="Permalink to this definition">¶</a></dt>
@@ -262,6 +245,14 @@ represented with the following block diagram. It contains a delay and an hystere
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="environment.wind.generateGust">
+<code class="descname">generateGust</code><span class="sig-paren">(</span><em>Delta_WH</em><span class="sig-paren">)</span><a class="headerlink" href="#environment.wind.generateGust" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a Gust i.e. an important change of wind heading.
+:param Delta_WH: Magnitude of the gust.
+:return: The vector of wind heading corresponding to the gust.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="environment.wind.generateWind">
 <code class="descname">generateWind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#environment.wind.generateWind" title="Permalink to this definition">¶</a></dt>
@@ -418,43 +409,22 @@ Compatible with continuous action</p>
 <dl class="method">
 <dt id="mdp.MDP.transition">
 <code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.transition" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>action</strong> &#8211; action to make (either luff or bear off)</li>
+<li><strong>WH</strong> &#8211; Wind heading provided by the environment during the transition.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The state and reward</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
-
-<dl class="class">
-<dt id="mdp.RealistMDP">
-<em class="property">class </em><code class="descclassname">mdp.</code><code class="descname">RealistMDP</code><span class="sig-paren">(</span><em>duration_history</em>, <em>duration_simulation</em>, <em>delta_t</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Exact same class as the</p>
-<dl class="method">
-<dt id="mdp.RealistMDP.computeState">
-<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.computeState" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mdp.RealistMDP.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.copy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mdp.RealistMDP.extractSimulationData">
-<code class="descname">extractSimulationData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.extractSimulationData" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mdp.RealistMDP.initializeMDP">
-<code class="descname">initializeMDP</code><span class="sig-paren">(</span><em>hdg0</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.initializeMDP" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mdp.RealistMDP.initializeState">
-<code class="descname">initializeState</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.initializeState" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="mdp.RealistMDP.transition">
-<code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.RealistMDP.transition" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -466,7 +436,10 @@ Compatible with continuous action</p>
 <div class="section" id="tutorial">
 <h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
 <p>To visualize how a simulation can be generated we provide a file MDPmain.py that creates a simulation where the heading is first increase and then decrease.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">TORAD</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mdp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">TORAD</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
 
 <span class="n">history_duration</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">mdp_step</span> <span class="o">=</span> <span class="mi">1</span>
@@ -500,9 +473,9 @@ Compatible with continuous action</p>
         <span class="n">action</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">action</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="hll">    <span class="n">nex_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
-</span>    <span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span>
+<span class="hll">
+</span>    <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
+    <span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">mdp</span><span class="o">.</span><span class="n">extractSimulationData</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]])</span>
     <span class="n">vmg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">vmg</span><span class="p">,</span> <span class="n">mdp</span><span class="o">.</span><span class="n">extractSimulationData</span><span class="p">()[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]])</span>
     <span class="n">wind_heading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">wind_heading</span><span class="p">,</span> <span class="n">WH</span><span class="p">])</span>
@@ -527,7 +500,7 @@ Compatible with continuous action</p>
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Package Sim</a><ul>
+<li><a class="reference internal" href="#">Package Simulator</a><ul>
 <li><a class="reference internal" href="#module-Simulator">Simulator</a></li>
 <li><a class="reference internal" href="#module-Hysteresis">Hysteresis</a></li>
 <li><a class="reference internal" href="#module-environment">Environment</a></li>
@@ -541,7 +514,7 @@ Compatible with continuous action</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Welcome to IBOAT RL&#8217;s documentation!</a></li>
-      <li>Next: <a href="package2.html" title="next chapter">Package RL</a></li>
+      <li>Next: <a href="package1bis.html" title="next chapter">Package Realistic Simulator</a></li>
   </ul></li>
 </ul>
 </div>

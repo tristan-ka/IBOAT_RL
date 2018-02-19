@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Package Sim" href="package1.html" />
+    <link rel="prev" title="Package Realistic Simulator" href="package1bis.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -218,32 +218,141 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 </dd></dl>
 
 </div>
-<div class="section" id="module-DDPG">
-<span id="ddpg"></span><h2>DDPG<a class="headerlink" href="#module-DDPG" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-dqn">
+<span id="dqn"></span><h2>DQN<a class="headerlink" href="#module-dqn" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="DDPG.DDPGAgent">
-<em class="property">class </em><code class="descclassname">DDPG.</code><code class="descname">DDPGAgent</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>lower_bound</em>, <em>upper_bound</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent" title="Permalink to this definition">¶</a></dt>
+<dt id="dqn.DQNAgent">
+<em class="property">class </em><code class="descclassname">dqn.</code><code class="descname">DQNAgent</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks
-It uses the Deep Deterministic Policy Gradient to update tha actor network.
-This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound</p>
+<p>DQN agent</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
-<li><strong>state_size</strong> (<em>int</em>) &#8211; shape of the input (for convolutionnal layers).</li>
-<li><strong>action_size</strong> (<em>int</em>) &#8211; number of action output by the network.</li>
-<li><strong>memory</strong> (<em>deque</em>) &#8211; last-in first-out list of the batch.</li>
+<li><strong>state_size</strong> (<em>np.shape</em><em>(</em><em>)</em>) &#8211; shape of the input.</li>
+<li><strong>action_size</strong> (<em>int</em>) &#8211; number of actions.</li>
+<li><strong>memory</strong> (<em>deque</em><em>(</em><em>)</em>) &#8211; memory as a list.</li>
+<li><strong>gamma</strong> (<em>float</em>) &#8211; Discount rate.</li>
+<li><strong>epsilon</strong> (<em>float</em>) &#8211; exploration rate.</li>
+<li><strong>epsilon_min</strong> (<em>float</em>) &#8211; minimum exploration rate.</li>
+<li><strong>epsilon_decay</strong> (<em>float</em>) &#8211; decay of the exploration rate.</li>
+<li><strong>learning_rate</strong> (<em>float</em>) &#8211; initial learning rate for the gradient descent</li>
+<li><strong>model</strong> (<em>keras.model</em>) &#8211; neural network model</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="dqn.DQNAgent.act">
+<code class="descname">act</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.act" title="Permalink to this definition">¶</a></dt>
+<dd><p>Act ε-greedy with respect to the actual Q-value output by the network.
+:param state: State from which we want to use the network to compute the action to take.
+:return: a random action with probability ε or the greedy action with probability 1-ε.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dqn.DQNAgent.actDeterministically">
+<code class="descname">actDeterministically</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.actDeterministically" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicts the action with the highest q-value at a given state.
+:param state: state from which we want to know the action to make.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dqn.DQNAgent.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the weights for a defined architecture.
+:param name: Name of the source file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dqn.DQNAgent.loadModel">
+<code class="descname">loadModel</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.loadModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the an architecture from source file.
+:param name: Name of the source file.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dqn.DQNAgent.remember">
+<code class="descname">remember</code><span class="sig-paren">(</span><em>state</em>, <em>action</em>, <em>reward</em>, <em>next_state</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.remember" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remember a transition defined by an action <cite>action</cite> taken from a state <cite>state</cite> yielding a transition to a next
+state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#8217;]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>state</strong> (<em>np.array</em>) &#8211; initial state (s).</li>
+<li><strong>action</strong> (<em>int</em>) &#8211; action (a).</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; reward received from transition (r).</li>
+<li><strong>next_state</strong> (<em>np.array</em>) &#8211; final state (s&#8217;).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="dqn.DQNAgent.replay">
+<code class="descname">replay</code><span class="sig-paren">(</span><em>batch_size</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.replay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Core of the algorithm Q update according to the current weight of the network.
+:param int batch_size: Batch size for the batch gradient descent.
+:return: the loss after the batch gradient descent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dqn.DQNAgent.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the weights for a defined architecture.
+:param name: Name of the output file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dqn.DQNAgent.saveModel">
+<code class="descname">saveModel</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#dqn.DQNAgent.saveModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model&#8217;s weight and architecture.
+:param name: Name of the output file</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DDPG">
+<span id="ddpg"></span><h2>DDPG<a class="headerlink" href="#module-DDPG" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DDPG.DDPGAgent">
+<em class="property">class </em><code class="descclassname">DDPG.</code><code class="descname">DDPGAgent</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>lower_bound</em>, <em>upper_bound</em>, <em>sess</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks
+It uses the Deep Deterministic Policy Gradient to update tha actor network.
+This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>state_size</strong> (<em>int</em>) &#8211; length of the state input (for convolutionnal layers).</li>
+<li><strong>action_size</strong> (<em>int</em>) &#8211; number of continuous action output by the network.</li>
+<li><strong>lower_bound</strong> (<em>float</em>) &#8211; minimum value for rudder action.</li>
+<li><strong>upper_bound</strong> (<em>float</em>) &#8211; maximum value for rudder action.</li>
+<li><strong>sess</strong> (<em>tensorflow.session</em>) &#8211; initialized tensorflow session within which the agent will be trained.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>memory</strong> (<em>deque</em>) &#8211; last-in first-out list of the batch buffer.</li>
 <li><strong>gamma</strong> (<em>float</em>) &#8211; discount factor.</li>
 <li><strong>epsilon</strong> (<em>float</em>) &#8211; exploration rate.</li>
 <li><strong>epsilon_min</strong> (<em>float</em>) &#8211; smallest exploration rate that we want to converge to.</li>
 <li><strong>epsilon_decay</strong> (<em>float</em>) &#8211; decay factor that we apply after each replay.</li>
-<li><strong>learning_rate</strong> (<em>float</em>) &#8211; the learning rate of the NN.</li>
-<li><strong>actor_model</strong> (<em>keras.model</em>) &#8211; NN, i.e the model containing the weight of the policy estimator.</li>
-<li><strong>critic_model</strong> (<em>keras.model</em>) &#8211; NN, i.e the model containing the weight of the critic value estimator.</li>
-<li><strong>lower_bound</strong> (<em>float</em>) &#8211; minimum value for rudder action</li>
-<li><strong>upper_bound</strong> (<em>float</em>) &#8211; maximum value for rudder action</li>
+<li><strong>actor_learning_rate</strong> (<em>float</em>) &#8211; the learning rate of the NN of actor.</li>
+<li><strong>critic_learning_rate</strong> (<em>float</em>) &#8211; the learning rate of the NN of critic.</li>
+<li><a class="reference internal" href="#DDPG.DDPGAgent.update_target" title="DDPG.DDPGAgent.update_target"><strong>update_target</strong></a> (<em>float</em>) &#8211; update factor of the Neural Networks for each fit to target</li>
+<li><strong>network</strong> (<em>DDPGNetworks.Network</em>) &#8211; tensorflow model which defines actor and critic convolutional neural networks features</li>
 </ul>
 </td>
 </tr>
@@ -252,12 +361,35 @@ This model deals with a continuous space of actions on the rudder, chosen betwee
 <dl class="method">
 <dt id="DDPG.DDPGAgent.act">
 <code class="descname">act</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.act" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calculate the action given by the Actor network&#8217;s current weights</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> &#8211; state in which we want to chose an action.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the greedy action according to actor network</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="DDPG.DDPGAgent.act_epsilon_greedy">
 <code class="descname">act_epsilon_greedy</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.act_epsilon_greedy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>With probability epsilon, returns a random action between bounds
+With probability 1 - epsilon, returns the action given by the Actor network&#8217;s current weights</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> &#8211; state in which we want to chose an action.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a random action or the action given by actor</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="DDPG.DDPGAgent.evaluate">
@@ -267,9 +399,14 @@ This model deals with a continuous space of actions on the rudder, chosen betwee
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>np.array</em>) &#8211; state that we want to evaluate.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>state</strong> (<em>np.array</em>) &#8211; state that we want to evaluate.</li>
+<li><strong>action</strong> (<em>float</em>) &#8211; action that we want to evaluate (has to be between permitted bounds)</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The actions values as a vector.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The continuous action value.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -278,7 +415,23 @@ This model deals with a continuous space of actions on the rudder, chosen betwee
 <dl class="method">
 <dt id="DDPG.DDPGAgent.load">
 <code class="descname">load</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.load" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Load the weights of the 2 networks saved in the file into :ivar network
+:param name: name of the file containing the weights to load</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DDPG.DDPGAgent.noise_decay">
+<code class="descname">noise_decay</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.noise_decay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies decay on noisy epsilon-greedy actions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>e</strong> &#8211; current episode playing during learning</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="DDPG.DDPGAgent.remember">
@@ -304,14 +457,14 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 <dl class="method">
 <dt id="DDPG.DDPGAgent.replay">
 <code class="descname">replay</code><span class="sig-paren">(</span><em>batch_size</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.replay" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform the learning on a the experience replay memory.</p>
+<dd><p>Performs an update of both actor and critic networks on a minibatch chosen among the experience replay memory.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch_size</strong> &#8211; number of samples used in the experience replay memory for the fit.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the average loss over the replay batch.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the average losses for actor and critic over the replay batch.</td>
 </tr>
 </tbody>
 </table>
@@ -320,7 +473,15 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 <dl class="method">
 <dt id="DDPG.DDPGAgent.save">
 <code class="descname">save</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Save the weights of both of the networks into a .ckpt tensorflow session file
+:param name: Name of the file where the weights are saved</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="DDPG.DDPGAgent.update_target">
+<code class="descname">update_target</code><em class="property"> = None</em><a class="headerlink" href="#DDPG.DDPGAgent.update_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Definition of the neural networks</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -350,30 +511,30 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 
  <span class="n">EPISODES</span> <span class="o">=</span> <span class="mi">500</span>
 
- <span class="n">loss_of_episode</span> <span class="o">=</span> <span class="p">[]</span>
  <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPISODES</span><span class="p">):</span>
-     <span class="n">WH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-     <span class="n">hdg0_rand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">hdg0_rand_vec</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-     <span class="n">hdg0</span> <span class="o">=</span> <span class="n">hdg0_rand</span> <span class="o">*</span> <span class="n">TORAD</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-     <span class="c1"># initialize the incidence randomly</span>
-     <span class="n">mdp</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">hyst</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1">#</span>
+     <span class="n">WH</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">generateWind</span><span class="p">()</span>
+     <span class="n">hdg0_rand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">hdg0_rand_vec</span><span class="p">)</span> <span class="o">*</span> <span class="n">TORAD</span>
+     <span class="n">hdg0</span> <span class="o">=</span> <span class="n">hdg0_rand</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+     <span class="n">mdp</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">hyst</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
      <span class="c1">#  We reinitialize the memory of the flow</span>
      <span class="n">state</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">initializeMDP</span><span class="p">(</span><span class="n">hdg0</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
      <span class="n">loss_sim_list</span> <span class="o">=</span> <span class="p">[]</span>
-     <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
-         <span class="c1"># print(time)</span>
-         <span class="n">WH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">wind_samples</span><span class="p">)</span>
-<span class="hll">         <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">actDeterministicallyUnderPolicy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-</span><span class="hll">         <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
-</span><span class="hll">         <span class="n">agent</span><span class="o">.</span><span class="n">remember</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)</span>
+     <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">80</span><span class="p">):</span>
+         <span class="n">WH</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">generateWind</span><span class="p">()</span>
+         <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="hll">         <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
+</span><span class="hll">         <span class="n">agent</span><span class="o">.</span><span class="n">remember</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)</span>  <span class="c1"># store the transition + the state flow in the</span>
+</span><span class="hll">         <span class="c1"># final state !!</span>
 </span>         <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
-         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">memory</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">batch_size</span><span class="p">:</span>
+         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">memory</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">batch_size</span><span class="p">:</span>
 <span class="hll">             <span class="n">loss_sim_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">replay</span><span class="p">(</span><span class="n">batch_size</span><span class="p">))</span>
-</span>     <span class="n">loss_over_simulation_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">loss_sim_list</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">loss_sim_list</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+</span>             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;time: {}, Loss = {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">loss_sim_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;i : {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mdp</span><span class="o">.</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">TORAD</span><span class="p">))</span>
+         <span class="c1"># For data visualisation</span>
+     <span class="n">loss_over_simulation_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">los</span>    <span class="n">s_sim_list</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">loss_sim_list</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
      <span class="n">loss_of_episode</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_over_simulation_time</span><span class="p">)</span>
-     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Initial Heading : {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hdg0_rand</span><span class="p">))</span>
-     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;episode: {}/{}, Mean Loss = {}&quot;</span>
-           <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">EPISODES</span><span class="p">,</span> <span class="n">loss_over_simulation_time</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -392,6 +553,7 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
   <ul>
 <li><a class="reference internal" href="#">Package RL</a><ul>
 <li><a class="reference internal" href="#module-policyLearning">Policy Learner</a></li>
+<li><a class="reference internal" href="#module-dqn">DQN</a></li>
 <li><a class="reference internal" href="#module-DDPG">DDPG</a></li>
 <li><a class="reference internal" href="#tutorial">Tutorial</a></li>
 </ul>
@@ -401,7 +563,7 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="package1.html" title="previous chapter">Package Sim</a></li>
+      <li>Previous: <a href="package1bis.html" title="previous chapter">Package Realistic Simulator</a></li>
   </ul></li>
 </ul>
 </div>

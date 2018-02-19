@@ -9,9 +9,16 @@ Policy Learner
 	:undoc-members:
 	:show-inheritance:
 
-DDPG
+DQN
 -----------------
 
+.. automodule:: dqn
+	:members:
+	:undoc-members:   
+	:show-inheritance:
+
+DDPG    
+-----------------
 .. automodule:: DDPG
 	:members:
 	:undoc-members:
@@ -48,28 +55,27 @@ Tutorial
 
     EPISODES = 500
 
-    loss_of_episode = []
     for e in range(EPISODES):
-        WH = np.random.uniform(mean - std, mean + std, size=10)
-        hdg0_rand = random.sample(hdg0_rand_vec, 1)[0]
-        hdg0 = hdg0_rand * TORAD * np.ones(10)
-        # initialize the incidence randomly
-        mdp.simulator.hyst.reset()  #
+        WH = w.generateWind()
+        hdg0_rand = random.choice(hdg0_rand_vec) * TORAD
+        hdg0 = hdg0_rand * np.ones(10)
+
+        mdp.simulator.hyst.reset()
+
         #  We reinitialize the memory of the flow
         state = mdp.initializeMDP(hdg0, WH)
         loss_sim_list = []
-        for time in range(40):
-            # print(time)
-            WH = np.random.uniform(mean - std, mean + std, size=wind_samples)
-            action = agent.actDeterministicallyUnderPolicy(state)
+        for time in range(80):
+            WH = w.generateWind()
+            action = agent.act(state)
             next_state, reward = mdp.transition(action, WH)
-            agent.remember(state, action, reward, next_state)
+            agent.remember(state, action, reward, next_state)  # store the transition + the state flow in the
+            # final state !!
             state = next_state
-            if len(agent.memory) > batch_size:
+            if len(agent.memory) >= batch_size:
                 loss_sim_list.append(agent.replay(batch_size))
-        loss_over_simulation_time = np.sum(np.array([loss_sim_list])[0]) / len(np.array([loss_sim_list])[0])
+                print("time: {}, Loss = {}".format(time, loss_sim_list[-1]))
+                print("i : {}".format(mdp.s[0, -1] / TORAD))
+            # For data visualisation
+        loss_over_simulation_time = np.sum(np.array([los    s_sim_list])[0]) / len(np.array([loss_sim_list])[0])
         loss_of_episode.append(loss_over_simulation_time)
-        print("Initial Heading : {}".format(hdg0_rand))
-        print("episode: {}/{}, Mean Loss = {}"
-              .format(e, EPISODES, loss_over_simulation_time))
-

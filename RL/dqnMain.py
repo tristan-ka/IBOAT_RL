@@ -9,6 +9,7 @@ from Simulator import TORAD
 from dqn import DQNAgent
 from environment import wind
 from mdp import MDP
+import random
 
 '''
 MDP Parameters
@@ -25,10 +26,10 @@ hdg0 = 0 * np.ones(10)
 mdp.initializeMDP(hdg0, WH)
 
 agent = DQNAgent(mdp.size, action_size=2)
-agent.load("../Networks/epsilon_pi")
+agent.load("../Networks/lighter_archi")
 batch_size = 50
 
-EPISODES = 1000
+EPISODES = 500
 hdg0_rand_vec=[-3, 0, 3, 6, 9, 12, 15, 18, 21]
 
 loss_of_episode = []
@@ -37,7 +38,7 @@ v = []
 r = []
 for e in range(EPISODES):
     WH = w.generateWind()
-    hdg0_rand = 0 * TORAD
+    hdg0_rand = random.choice(hdg0_rand_vec) * TORAD
     hdg0 = hdg0_rand * np.ones(10)
 
     mdp.simulator.hyst.reset()
@@ -67,7 +68,7 @@ for e in range(EPISODES):
     print("----------------------------")
     print("episode: {}/{}, Mean Loss = {}".format(e, EPISODES, loss_over_simulation_time))
     print("----------------------------")
-agent.save("../Networks/dqn_epsilon_batch50")
+agent.save("../Networks/dqn_lighter_archi")
 
 # plt.semilogy(np.linspace(1, EPISODES, EPISODES), np.array(loss_of_episode))
 # plt.xlabel("Episodes")

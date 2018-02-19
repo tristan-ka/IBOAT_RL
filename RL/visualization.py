@@ -24,7 +24,21 @@ def rollOut(time, SIMULATION_TIME, agent, mdp, action, WH):
     return reward_list
 
 
-class ValidateNetwork:
+class Visualization:
+    '''
+    Class to generate different plots for result visualization.
+    :param hist_duration: Size of the history buffer.
+    :param mdp_step: mdp step (frequency of decision).
+    :param time_step: time step of the mdp.
+    :param action_size: size of the action space of the model.
+    :param batch_size: size of the batch use to train the model.
+    :param mean: average wind heading.
+    :param std: noise on wind heading.
+    :param hdg0: initial heading of the simulation.
+    :param src_file: source file containing the weights of the model used for the simulation.
+    :param sim_time: duration of the simulation.
+
+    '''
     def __init__(self, hist_duration, mdp_step, time_step, action_size, batch_size, mean, std, hdg0, src_file,
                  sim_time):
         self.mdp = MDP(hist_duration, mdp_step, time_step)
@@ -36,7 +50,12 @@ class ValidateNetwork:
         self.src = src_file
         self.sim_time = sim_time
 
+
     def generateQplots(self):
+        '''
+        Creates the comparison between the Q-values predicted by the network and the Monte-Carlo return computed over the simulation time
+        :return: Two plots of the comparison.
+        '''
 
         WH = self.wh.generateWind()
         hdg0 = self.hdg0 * TORAD * np.ones(self.wh.samples)
@@ -145,6 +164,11 @@ class ValidateNetwork:
         return f
 
     def simulateDQNControl(self, hdg0):
+        '''
+        Plots the control law of the network over a simulation.
+        :param hdg0: Initial heading of the boat for the simulation.
+        :return: A plot of the angle of attack and velocity during the control.
+        '''
         agent = DQNAgent(self.mdp.size, self.action_size)
         agent.load(self.src)
         WH = self.wh.generateWind()
@@ -174,3 +198,42 @@ class ValidateNetwork:
         axarr[1].set_ylabel("v")
 
         plt.show()
+
+    def simulateGustsControl(self):
+        '''
+        Simulate the response of the controller to gusts.
+        :return: A plot of the simulation.
+        '''
+        self.sim_time=100
+        agent = DQNAgent(self.mdp.size, self.action_size)
+        agent.load(self.src)
+        WH = self.wh.generateWind()
+        hdg0 = 0 * TORAD * np.ones(self.wh.samples)
+
+        state = self.mdp.initializeMDP(hdg0, WH)
+
+        i = np.ones(0)
+        v = np.ones(0)
+        wind_heading = np.ones(0)
+
+        for time in range(self.sim_time):
+            WH = self.wh.generateWind()
+            if time == 20:
+                WH = self.wh.generateGust(10*TORAD)
+            action = agent.actDeterministically(state)
+            next_state, reward = self.mdp.transition(action, WH)
+            state = next_state
+            i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
+            v = np.concatenate([v, self.mdp.extractSimulationData()[1, :]])
+            wind_heading = np.concatenate([wind_heading, WH[0:10]])
+
+        time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
+
+        f, axarr = plt.subplots(2, sharex=True)
+        axarr[0].plot(time_vec, i / TORAD)
+        axarr[1].plot(time_vec, v)
+        axarr[0].set_ylabel("angle of attack")
+        axarr[1].set_ylabel("v")
+
+        plt.show()
+
