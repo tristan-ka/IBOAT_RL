@@ -14,3 +14,5 @@ builds a policy that avoids it. Learning is performed on a simplified transition
 Learning is performed on two types of simulators, A **proof of concept** is first carried out on a simplified simulator of the boat coded in Python. The second phase of the project consist of trying to control a **more realisitic**  model of the boat. For this purpose we use a dynamic library which is derived using the Code Generation tools in Simulink. The executable C are then feeded to Python using the "ctypes" library.
 
 The documentation of all the modules is available on this page :
+
+https://tristan-ka.github.io/IBOAT_RL/
