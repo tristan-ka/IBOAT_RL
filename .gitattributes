@@ -1,1 +1,2 @@
-_static/* linguist-vendored
+/* linguist-documentation
+docs/formatter.rb linguist-documentation=false
