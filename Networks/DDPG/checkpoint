@@ -1,2 +1,0 @@
-model_checkpoint_path: "Network_Very_Slow_Learning_15000.ckpt"
-all_model_checkpoint_paths: "Network_Very_Slow_Learning_15000.ckpt"
