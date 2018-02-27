@@ -19,9 +19,9 @@ Prerequisites and code documentation
 This project is using Python 3.*. The documentation as well as the prerequisites can be found here:
 
 ![Alt text](img/IBOAT_logo.png?raw=true "https://tristan-ka.github.io/IBOAT_RL/")
-
+```
 https://tristan-ka.github.io/IBOAT_RL/
-
+```
 
 Usage
 -----
