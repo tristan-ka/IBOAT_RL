@@ -46,3 +46,8 @@ This project has been carried out with the help of:
 * [Emmanuel Rachelson](https://github.com/erachelson) - Professor in reinforcement learning at ISAE-Supaero.
 * [Valentin Guillet](https://github.com/Val95240/RL-Agents) - ISAE-Supaero student who has implemented various RL algorithms.
 
+## Authors
+
+* **Tristan Karch** - *Initial work* - Implementation of simplified simulator and Deep Q-Learning algorithm and responsible of the documentation building.
+* **Nicolas Megel** - Implementation of DDPG algorithm and responsible of the project management.
+* **Albert Bonet** - Simulink expert responsible of the realisitic simulator implementation and compilation.
