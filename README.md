@@ -19,9 +19,9 @@ Prerequisites and code documentation
 This project is using Python 3.*. The documentation as well as the prerequisites can be found here:
 
 ![Alt text](img/IBOAT_logo.png?raw=true "https://tristan-ka.github.io/IBOAT_RL/")
-```
+
 https://tristan-ka.github.io/IBOAT_RL/
-```
+
 
 Usage
 -----
@@ -31,6 +31,21 @@ This repositroy is intended to be a **source of information** for future work on
 - A realistic and fast simulator implemented in C++.
 - Two reinforcement learning algorithms which have been tested on a simplified simulator
 - A fully integrated environment to play with these tools
+
+Getting started
+---------------
+
+The notebook [demonstrator.ipynb](demonstrator.ipynb) contains different scripts to help users getting familiar with the different scripts. One simply has to have installed ipython or Jupyter notebook (http://jupyter.readthedocs.io/en/latest/install.html) and run :
+```
+jupyter notebook
+```
+And open the file.
+
+Tests
+-----
+The packages 
+
+
 
 Built With
 ----------
