@@ -14,7 +14,7 @@ import random
 '''
 MDP Parameters
 '''
-mdp = MDP(duration_history=6, duration_simulation=1, delta_t=0.1)
+mdp = MDP(duration_history=3, duration_simulation=1, delta_t=0.1)
 
 '''
 Environment Parameters
@@ -26,7 +26,7 @@ hdg0 = 0 * np.ones(10)
 mdp.initializeMDP(hdg0, WH)
 
 agent = DQNAgent(mdp.size, action_size=2)
-agent.load("../Networks/lighter_archi")
+#agent.load("../Networks/lighter_archi")
 batch_size = 50
 
 EPISODES = 500
@@ -68,7 +68,7 @@ for e in range(EPISODES):
     print("----------------------------")
     print("episode: {}/{}, Mean Loss = {}".format(e, EPISODES, loss_over_simulation_time))
     print("----------------------------")
-agent.save("../Networks/dqn_lighter_archi")
+agent.save("../Networks/dqn_lighter_archi_loss")
 
 # plt.semilogy(np.linspace(1, EPISODES, EPISODES), np.array(loss_of_episode))
 # plt.xlabel("Episodes")

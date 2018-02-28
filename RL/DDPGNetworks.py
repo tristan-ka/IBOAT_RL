@@ -39,19 +39,19 @@ class Network:
 
         # Main actor network
         self.actions = build_actor(self.state_ph, self.bounds, self.action_size,
-                                   trainable=True, scope='actor')
+                                   trainable=True, scope='actor', reuse = None)
 
         # Main critic network
         self.q_values_of_given_actions = build_critic(
             self.state_ph, self.action_ph, trainable=True, reuse=False, scope='critic')
-        self.actions = tf.expand_dims(self.actions, axis = 2)   # We need
+        self.actions = tf.expand_dims(self.actions, axis = 2)
         self.q_values_of_suggested_actions = build_critic(
             self.state_ph, self.actions, trainable=True, reuse=True, scope='critic')
         
         # Target actor network
         self.target_next_actions = tf.stop_gradient(
             build_actor(self.next_state_ph, self.bounds, self.action_size,
-                        trainable=False, scope='target_actor'))
+                        trainable=False, scope='target_actor', reuse = None))
 
         # Target critic network
         self.target_next_actions = tf.expand_dims(self.target_next_actions,axis = 2)
@@ -97,11 +97,11 @@ class Network:
         # Actor loss and optimization
         self.action_grad = tf.gradients(self.q_values_of_suggested_actions, self.actions)[0]
         self.actor_grad = tf.gradients(self.actions, self.actor_vars, -self.action_grad)
-        actor_trainer = tf.train.AdamOptimizer(self.actor_learning_rate)
-        self.actor_train_op = actor_trainer.apply_gradients(zip(self.actor_grad, self.actor_vars))
+        grads = zip(self.actor_grad, self.actor_vars)
+        self.actor_train_op = tf.train.AdamOptimizer(self.actor_learning_rate).apply_gradients(grads)
 
         # Actor loss and optimization
-        actor_loss = -1 * tf.reduce_mean(self.q_values_of_suggested_actions)
+        actor_loss = tf.reduce_mean(self.q_values_of_suggested_actions)
         #actor_loss += l2_regularization(self.actor_vars)
         # actor_trainer = tf.train.AdamOptimizer(sself.actor_learning_rate)
         #self.actor_train_op = actor_trainer.minimize(actor_loss,
@@ -111,3 +111,5 @@ class Network:
         # For test
         self.prediction = tf.stop_gradient(build_critic(self.state_ph, self.action_ph,
                                                        trainable=False, reuse=True,scope='critic'))
+        self.behaviour = tf.stop_gradient(build_actor(self.state_ph, self.bounds, self.action_size,
+                                   trainable=True, scope='actor', reuse = True))

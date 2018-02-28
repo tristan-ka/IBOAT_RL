@@ -37,8 +37,8 @@ WH = w.generateWind()
 '''
 Random initial conditions 
 '''
-hdg0_rand_vec=(0,2,4,6,8,10,13,15,17,20)
-
+# hdg0_rand_vec=(0,2,4,6,8,10,13,15,17,20)
+hdg0_rand_vec=(0,7,13)
 action_size = 2
 action_size_DDPG = 1
 
@@ -66,7 +66,6 @@ Q_predictions_0 = []
 tf.reset_default_graph()
 with tf.Session() as sess:
     agent = DDPGAgent(mdp.size, action_size_DDPG, lower_bound, upper_bound, sess)
-    agent.load("../Networks/DDPG/Network_Noise_400")
     for e in range(EPISODES):
         WH = w.generateWind()
         hdg0_rand = random.sample(hdg0_rand_vec, 1)[0]
@@ -92,15 +91,12 @@ with tf.Session() as sess:
                 count_luff+=1
             next_state, reward = mdp.transition(action, WH)
             # Reward shaping
-                # reward = 1 - 15 *(next_state[0,59]-15.9*TORAD)**2# normalized reward shaping to get close to stall incidence
-                # reward = state[1,59]/2.1
-            if state[0,59]>0.3:
+            if state[0,59]>19*TORAD:
                 reward= reward-0.5
             print("the reward is: {}".format(reward))
             agent.remember(state, action, reward, next_state)
 
-            # For Critic test
-
+            # For Critic visualization during learning
             # print("Q value for -3,0,3 in current state: {},{},{}".format(agent.evaluate(state,-2.99),agent.evaluate(state,0),agent.evaluate(state,2.99)))
 
             state = next_state
@@ -133,14 +129,15 @@ with tf.Session() as sess:
               .format(e, EPISODES, critic_loss_over_simulation_time))
 
     # Save final tensorflow session
-    agent.save("../Networks/DDPG/Network_Noise_1000")
+    agent.save("../Networks/DDPG/Slow_Learning_FullNoise_1000")
 
 # Save test elements
-np.save("../Networks/DDPG/actor_loss_Noise",np.array(actor_loss_of_episode))
-np.save("../Networks/DDPG/critic_loss_Noise",np.array(critic_loss_of_episode))
-np.save("../Networks/DDPG/Q3_Noise", np.array(Q_predictions_3))
-np.save("../Networks/DDPG/Qminus3_Noise", np.array(Q_predictions_minus_3))
-np.save("../Networks/DDPG/Q0_Noise", np.array(Q_predictions_0))
+commentaire = "Slow_Learning_FullNoise_1000"
+np.save("../Networks/DDPG/actor_loss_"+commentaire,np.array(actor_loss_of_episode))
+np.save("../Networks/DDPG/critic_loss_"+commentaire,np.array(critic_loss_of_episode))
+np.save("../Networks/DDPG/Q3_"+commentaire, np.array(Q_predictions_3))
+np.save("../Networks/DDPG/Qminus3_"+commentaire, np.array(Q_predictions_minus_3))
+np.save("../Networks/DDPG/Q0_"+commentaire, np.array(Q_predictions_0))
 
 print("n_luff : {}".format(count_luff))
 print("n_bear_off : {}".format(count_bear_off))

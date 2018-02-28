@@ -10,9 +10,14 @@ from DDPGNetworks import Network
 class DDPGAgent:
     '''
     The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks
+<<<<<<< HEAD
     It uses the Deep Deterministic Policy Gradient to update tha actor network.
     This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound.
 
+=======
+    It uses the Deep Deterministic Policy Gradient to update the actor network.
+    This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound
+>>>>>>> 720fd95e20ec768898d45dccd1e514934a38f83f
     :param int state_size: length of the state input (for convolutionnal layers).
     :param int action_size:  number of continuous action output by the network.
     :param float lower_bound: minimum value for rudder action.
@@ -40,11 +45,11 @@ class DDPGAgent:
         self.gamma = 0.97  # discount rate
         self.epsilon = 1  # exploration rate
         self.epsilon_min = 0.10
-        self.epsilon_decay = 0.70 # Thus it goes down to 0.11 after 10 decays
-        self.epsilon_decay_period = 2000
-        self.actor_learning_rate = 0.0001
-        self.critic_learning_rate = 0.0001
-        self.update_target = 0.5
+        self.epsilon_decay = 0.50
+        self.epsilon_decay_period = 700
+        self.actor_learning_rate = 0.0005
+        self.critic_learning_rate = 0.0005
+        self.update_target = 0.001
 
         '''
         Definition of the neural networks   
@@ -81,7 +86,7 @@ class DDPGAgent:
         :return: the greedy action according to actor network
         """
         s = np.reshape([state[0,:], state[1,:]], [1,2 * self.state_size, 1])
-        a, = self.sess.run(self.network.actions,
+        a, = self.sess.run(self.network.behaviour,
                            feed_dict={self.network.state_ph: s})
         return a
 
@@ -110,11 +115,11 @@ class DDPGAgent:
         else:
             print("CHOSEN ACTION")
             s = np.reshape([state[0, :], state[1, :]], [1, 2 * self.state_size, 1])
-            a, = self.sess.run(self.network.actions,
+            a, = self.sess.run(self.network.behaviour,
                                feed_dict={self.network.state_ph: s})
         return a
 
-    def evaluate(self, state,action):
+    def evaluate(self, state, action):
         """
         Evaluate the Q-value of a state-action pair  using the critic neural network.
 

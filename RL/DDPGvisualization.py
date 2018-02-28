@@ -72,7 +72,7 @@ class DDPGVisualization:
             agent2.stall = self.agent.get_stall()
 
             WH = self.wh.generateWind()
-            policy_action = self.agent.actDeterministicallyUnderPolicy(state)
+            policy_action = self.agent.act(state)
 
             mdp_tmp2 = self.mdp.copy()
             next_state, reward = self.mdp.transition(policy_action, WH)
@@ -85,8 +85,8 @@ class DDPGVisualization:
 
             next_state_tmp2, reward_tmp2 = mdp_tmp2.transition(other_action, WH)
 
-            policy_action_tmp1 = agent1.actDeterministicallyUnderPolicy(next_state)
-            policy_action_tmp2 = agent2.actDeterministicallyUnderPolicy(next_state_tmp2)
+            policy_action_tmp1 = agent1.act(next_state)
+            policy_action_tmp2 = agent2.act(next_state_tmp2)
 
             reward_1 = np.array([reward] + rollOut(time, self.sim_time, agent1, mdp_tmp1, policy_action_tmp1, WH))
             reward_2 = np.array(
@@ -155,7 +155,7 @@ class DDPGVisualization:
 
         return f
 
-    def simulateDDPGControl(self, hdg0):
+    def simulateDDPGCritic(self, hdg0):
         #sess = tf.Session()
         #agent = DDPGAgent(self.mdp.size, 1, self.agent.lower_bound, self.agent.upper_bound, sess)
         #agent.load(self.src)
@@ -167,10 +167,28 @@ class DDPGVisualization:
         i = np.ones(0)
         v = np.ones(0)
         wind_heading = np.ones(0)
-
+        # critic = np.ones(0)
+        critic3 = np.ones(0)
+        critic0 = np.ones(0)
+        criticminus3 = np.ones(0)
         for time in range(self.sim_time):
             WH=self.wh.generateWind()
-            action = self.agent.act(state)
+
+            # Critic policy
+            critic = [self.agent.evaluate(state,-3), self.agent.evaluate(state,0), self.agent.evaluate(state,3)]
+            action = np.argmax(critic)
+            if action == 0:
+                action = -3
+            if action == 2:
+                action = 3
+            if action ==1:
+                action = 0
+
+            # For critic visualization
+            # critic = np.concatenate([critic, np.ones(10)*self.agent.evaluate(state,action)[0][0]])
+            critic3 = np.concatenate([critic3, np.ones(10)*critic[2][0]])
+            critic0 = np.concatenate([critic0, np.ones(10)*critic[1][0]])
+            criticminus3 = np.concatenate([criticminus3, np.ones(10)*critic[0][0]])
             print(action)
             next_state, reward = self.mdp.transition(action, WH)
             state=next_state
@@ -180,11 +198,66 @@ class DDPGVisualization:
 
         time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
 
-        f, axarr = plt.subplots(2, sharex=True)
+        f, axarr = plt.subplots(3, sharex=True)
         axarr[0].plot(time_vec, i/TORAD)
         axarr[1].plot(time_vec,v)
+        # axarr[2].plot(time_vec,critic, 'b', label = 'current state-action pair')
+        axarr[2].plot(time_vec,critic3, 'r', label = 'current state with action luff (3)')
+        axarr[2].plot(time_vec,critic0, 'b', label = 'current state with action do-nothing (0)')
+        axarr[2].plot(time_vec,criticminus3, 'g',  label = 'current state with action bear-off (-3)')
         axarr[0].set_ylabel("angle of attack")
         axarr[1].set_ylabel("v")
+        axarr[2].set_ylabel("Q-values estimated by Critic Network")
+
+        plt.show()
+
+    def simulateDDPGControl(self, hdg0):
+        # sess = tf.Session()
+        # agent = DDPGAgent(self.mdp.size, 1, self.agent.lower_bound, self.agent.upper_bound, sess)
+        # agent.load(self.src)
+        WH = self.wh.generateWind()
+        hdg0 = hdg0 * TORAD * np.ones(self.wh.samples)
+
+        state = self.mdp.initializeMDP(hdg0, WH)
+
+        i = np.ones(0)
+        v = np.ones(0)
+        wind_heading = np.ones(0)
+        # critic = np.ones(0)
+        critic3 = np.ones(0)
+        critic0 = np.ones(0)
+        criticminus3 = np.ones(0)
+        for time in range(self.sim_time):
+            WH = self.wh.generateWind()
+
+            # Actor policy
+            action = self.agent.act(state)
+            critic = [self.agent.evaluate(state,-3), self.agent.evaluate(state,0), self.agent.evaluate(state,3)]
+
+            # For critic visualization
+            # critic = np.concatenate([critic, np.ones(10)*self.agent.evaluate(state,action)[0][0]])
+            critic3 = np.concatenate([critic3, np.ones(10) * critic[2][0]])
+            critic0 = np.concatenate([critic0, np.ones(10) * critic[1][0]])
+            criticminus3 = np.concatenate([criticminus3, np.ones(10) * critic[0][0]])
+            print(action)
+            next_state, reward = self.mdp.transition(action, WH)
+            state = next_state
+            i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
+            v = np.concatenate([v, self.mdp.extractSimulationData()[1, :]])
+            wind_heading = np.concatenate([wind_heading, WH[0:10]])
+
+        time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
+
+        f, axarr = plt.subplots(3, sharex=True)
+        axarr[0].plot(time_vec, i / TORAD)
+        axarr[1].plot(time_vec, v)
+        # axarr[2].plot(time_vec,critic, 'b', label = 'current state-action pair')
+        axarr[2].plot(time_vec, critic3, 'r', label='current state with action luff (3)')
+        axarr[2].plot(time_vec, critic0, 'b', label='current state with action do-nothing (0)')
+        axarr[2].plot(time_vec, criticminus3, 'g', label='current state with action bear-off (-3)')
+        axarr[0].set_ylabel("angle of attack")
+        axarr[1].set_ylabel("v")
+        axarr[2].set_ylabel("Q-values estimated by Critic Network")
 
         plt.show()
 

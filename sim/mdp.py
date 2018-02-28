@@ -79,12 +79,13 @@ class MDP:
         self.reward = np.sum(self.simulator.vmg) / self.simulator.size
         return self.s
 
-    def computeState(self, action, WH):
+    def transition(self, action, WH):
         """
         Computes the mdp state when an action is applied.
-        :param action:
-        :param WH:
-        :return:
+        :param action: action to make. Action should be either 0 or 1. If action is 0 then the heading is increased by one degree.
+        If the action is 1 the heading is decreased by one degree
+        :param WH: vector of wind heading seen during the period of action making.
+        :return: the state and reward yielded by taking action action from the current state of the mdp.
         """
 
         if action != 0 and action != 1:
@@ -105,18 +106,6 @@ class MDP:
 
         self.reward = np.sum(self.simulator.vmg) / self.simulator.size / Simulator.BSTRESH
 
-    '''
-    Update the current state from previous state 
-    '''
-
-    def transition(self, action, WH):
-        """
-
-        :param action: action to make (either luff or bear off)
-        :param WH: Wind heading provided by the environment during the transition.
-        :return: The state and reward
-        """
-        self.computeState(action, WH)
         return self.s, self.reward
 
     def extractSimulationData(self):
@@ -191,7 +180,7 @@ class ContinuousMDP:
         self.reward = np.sum(self.simulator.vmg) / self.simulator.size
         return self.s
 
-    def computeState(self, action, WH):
+    def transition(self, action, WH):
         if action < self.LOWER_BOUND or action > self.UPPER_BOUND:
             raise ValueError("Action out of bound. Could not generate transition.")
 
@@ -207,12 +196,6 @@ class ContinuousMDP:
 
         self.reward = np.sum(self.simulator.vmg) / self.simulator.size / Simulator.BSTRESH
 
-    '''
-    Update the current state from previous state 
-    '''
-
-    def transition(self, action, WH):
-        self.computeState(action, WH)
         return self.s, self.reward
 
     def extractSimulationData(self):

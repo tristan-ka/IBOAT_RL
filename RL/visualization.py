@@ -194,8 +194,10 @@ class Visualization:
         f, axarr = plt.subplots(2, sharex=True)
         axarr[0].plot(time_vec, i/TORAD)
         axarr[1].plot(time_vec,v)
-        axarr[0].set_ylabel("angle of attack")
-        axarr[1].set_ylabel("v")
+        axarr[0].set_ylabel("i [°]")
+        axarr[1].set_ylabel("v [m/s]")
+        axarr[0].set_xlabel("t [s]")
+        axarr[1].set_xlabel("t [s]")
 
         plt.show()
 

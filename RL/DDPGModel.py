@@ -1,7 +1,7 @@
 
 import tensorflow as tf
 
-def build_actor(states, bounds, action_size, trainable, scope):
+def build_actor(states, bounds, action_size, trainable, scope, reuse):
     """
     Builds actor CNN in the current tensorflow model under given scope name
 
@@ -16,36 +16,49 @@ def build_actor(states, bounds, action_size, trainable, scope):
     with tf.variable_scope(scope):
 
         conv_i = tf.layers.conv1d(states[:,0:60,:], filters = 40,kernel_size = 50, strides = 1, padding = "same", trainable=trainable,
-                                 activation=tf.nn.relu, name='conv_i')
+                                 activation=tf.nn.relu, name='conv_i', reuse = reuse)
         conv_v = tf.layers.conv1d(states[:,60:120,:], filters=40,kernel_size = 50, strides = 1, padding = "same", trainable=trainable,
-                                 activation=tf.nn.relu, name='conv_v')
+                                 activation=tf.nn.relu, name='conv_v', reuse = reuse)
         conv_i_2 = tf.layers.conv1d(conv_i, filters=30, kernel_size=20,
                                     trainable=trainable, padding = "same",
-                                    activation=tf.nn.relu, name='conv_i_2')
+                                    activation=tf.nn.relu, name='conv_i_2', reuse = reuse)
         conv_i_2 = tf.layers.max_pooling1d(conv_i_2,pool_size = 2, strides = 1)
 
         conv_v_2 = tf.layers.conv1d(conv_v, filters=20, kernel_size=20,
                                     trainable=trainable, padding = "same",
-                                    activation=tf.nn.relu, name='conv_v_2')
+                                    activation=tf.nn.relu, name='conv_v_2', reuse = reuse)
         conv_v_2 = tf.layers.max_pooling1d(conv_v_2,pool_size = 2, strides = 1)
         hidden_i = tf.layers.dense(conv_i_2, 120, trainable=trainable,
-                                   activation=tf.nn.relu, name='dense_i')
+                                   activation=tf.nn.relu, name='dense_i', reuse = reuse)
         hidden_v = tf.layers.dense(conv_v_2, 120, trainable=trainable,
-                                   activation=tf.nn.relu, name='dense_v')
+                                   activation=tf.nn.relu, name='dense_v', reuse = reuse)
         hidden_i_2 = tf.layers.dense(hidden_i, 60, trainable=trainable,
-                                   activation=tf.nn.relu, name='dense_i_2')
+                                   activation=tf.nn.relu, name='dense_i_2', reuse = reuse)
         hidden_v_2 = tf.layers.dense(hidden_v, 60, trainable=trainable,
-                                   activation=tf.nn.relu, name='dense_v_2')
+                                   activation=tf.nn.relu, name='dense_v_2', reuse = reuse)
         merge = tf.concat([hidden_i_2,hidden_v_2],axis = 1)
         merge_flat = tf.contrib.layers.flatten(merge,scope=scope)
+
+        # conv_i_v = tf.layers.conv1d(states, filters = 40,kernel_size = 50, strides = 1, padding = "same", trainable=trainable,
+        #                          activation=tf.nn.relu, name='conv_i_v', reuse = reuse)
+        # conv_i_v_2 = tf.layers.conv1d(conv_i_v, filters=40, kernel_size=50, strides=1, padding="same", trainable=trainable,
+        #                             activation=tf.nn.relu, name='conv_i_v_2', reuse=reuse)
+        # flat = tf.contrib.layers.flatten(conv_i_v, scope = scope)
+
         hidden_i_v = tf.layers.dense(merge_flat, 80, trainable=trainable,
-                                   activation=tf.nn.relu, name='dense_i_v')
+                                   activation=tf.nn.relu, name='dense_i_v', reuse = reuse)
+
+        # hidden_i_v = tf.layers.batch_normalization(hidden_i_v, trainable = trainable, name = 'bnorm1')
+
         hidden_i_v_2 = tf.layers.dense(hidden_i_v, 40, trainable=trainable,
-                                   activation=tf.nn.relu, name='dense_i_v_2')
+                                   activation=tf.nn.relu, name='dense_i_v_2', reuse = reuse)
+
+        # hidden_i_v_2 = tf.layers.batch_normalization(hidden_i_v_2, trainable = trainable, name = 'bnorm2')
+
         hidden_i_v_3 = tf.layers.dense(hidden_i_v_2, 20, trainable=trainable,
-                                       activation=tf.nn.relu, name='dense_i_v_3')
+                                       activation=tf.nn.relu, name='dense_i_v_3', reuse = reuse)
         actions_unscaled = tf.layers.dense(hidden_i_v_3, action_size,
-                                           trainable=trainable, name='dense_i_v_out')
+                                           trainable=trainable, name='dense_i_v_out', reuse = reuse)
         # bound the actions to the valid range
         low_bound, high_bound = bounds
         valid_range = high_bound - low_bound
@@ -93,8 +106,17 @@ def build_critic(states, actions, trainable, reuse, scope):
                                      activation=tf.nn.relu, name='dense_v_2')
         merge = tf.concat([hidden_i_2, hidden_v_2], axis=1)
         merge_flat = tf.contrib.layers.flatten(merge, scope=scope)
-        hidden_i_v = tf.layers.dense(merge_flat, 80, trainable=trainable, reuse = reuse,
-                                     activation=tf.nn.relu, name='dense_i_v')
+        # conv_i_v = tf.layers.conv1d(states, filters=40, kernel_size=50, strides=1, padding="same", trainable=trainable,
+        #                             activation=tf.nn.relu, name='conv_i_v', reuse=reuse)
+        # conv_i_v_2 = tf.layers.conv1d(conv_i_v, filters=40, kernel_size=50, strides=1, padding="same",
+        #                               trainable=trainable,
+        #                               activation=tf.nn.relu, name='conv_i_v_2', reuse=reuse)
+        # flat = tf.contrib.layers.flatten(conv_i_v_2, scope=scope)
+
+        # Ca se separe ici entre les deux methodes
+
+        hidden_i_v = tf.layers.dense(merge_flat, 80, trainable=trainable,
+                                     activation=tf.nn.relu, name='dense_i_v', reuse=reuse)
         # hidden_a = tf.layers.dense(actions, 1, trainable=trainable,reuse=reuse,
                                   #   activation=tf.nn.relu, name='dense_a')
         merge_with_action = tf.concat([tf.expand_dims(hidden_i_v,axis=2),actions],axis = 1)
