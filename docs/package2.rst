@@ -1,6 +1,14 @@
 Package RL
 ==========
 
+This package contains three classes of RL agent :
+
+* :class:`policyLearning` - That trains a neural network to predict the Q-values of a discrete actions of a policy of the boat behavior.
+* :class:`dqn` - That trains a neural network to find the optimal policy to avoid stall with discrete actions.
+* :class:`DDPG` - That trains a neural network to find the optimal policy to avoid stall with a continuous set of actions.
+
+You'll find a tutorial in order to understand how to generate a training scenario at the bottom of the page. 
+
 Policy Learner
 -----------------
 

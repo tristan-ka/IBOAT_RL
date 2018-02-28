@@ -15,6 +15,9 @@ class PolicyLearner:
     '''
     The aim of this class is to learn the Q-value of the action defined by a policy.
 
+    .. tip::
+        Please note that the policy to learn has to be defined in the methods :meth:`actUnderPolicy` and :meth:`actDeterministicallyUnderPolicy`.
+
     :ivar int state_size: shape of the input (for convolutionnal layers).
     :ivar int action_size:  number of action output by the network.
     :ivar deque memory: last-in first-out list of the batch.

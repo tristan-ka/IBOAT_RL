@@ -14,7 +14,7 @@ from keras.optimizers import Adam
 
 class DQNAgent:
     """
-    DQN agent
+    DQN agent that aims at learning the optimal policy for stall avoidance with a discrete set of available actions.
 
     :ivar np.shape() state_size: shape of the input.
     :ivar int action_size: number of actions.

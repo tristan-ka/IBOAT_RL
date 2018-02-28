@@ -9,15 +9,10 @@ from DDPGNetworks import Network
 
 class DDPGAgent:
     '''
-    The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks
-<<<<<<< HEAD
-    It uses the Deep Deterministic Policy Gradient to update tha actor network.
-    This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound.
-
-=======
+    The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks.
     It uses the Deep Deterministic Policy Gradient to update the actor network.
     This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound
->>>>>>> 720fd95e20ec768898d45dccd1e514934a38f83f
+
     :param int state_size: length of the state input (for convolutionnal layers).
     :param int action_size:  number of continuous action output by the network.
     :param float lower_bound: minimum value for rudder action.

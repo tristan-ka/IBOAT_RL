@@ -109,6 +109,10 @@ class MDP:
         return self.s, self.reward
 
     def extractSimulationData(self):
+        """
+        Extract the new simulated data. Gets rid of the simulation data that are present more than twice in the state memory.
+        :return: The data of interest in the state memory.
+        """
         return self.s[:, int((self.history_duration - self.simulation_duration) / self.dt):len(self.s[0, :])]
 
     def policy(self, i_treshold):
@@ -123,7 +127,7 @@ class ContinuousMDP:
     """
         Markov Decision process modelization of the transition
         Based on Realistic Simulator of Iboat autonomous sailboat provided by Simulink
-        Compatible with continuous action
+        Compatible with continuous action. See documentation of :class:`MDP` for all undocumented method as they are the same.
 
         :ivar float history_duration: Duration of the memory.
         :ivar float simulation_duration: Duration of the memory.

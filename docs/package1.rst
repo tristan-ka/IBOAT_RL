@@ -76,7 +76,7 @@ Tutorial
 To visualize how a simulation can be generated we provide a file MDPmain.py that creates a simulation where the heading is first increase and then decrease.
 
 .. code-block:: python
-   :emphasize-lines: 38
+   :emphasize-lines: 39
 
    import mdp
    import numpy as np
