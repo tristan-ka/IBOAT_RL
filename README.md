@@ -35,7 +35,7 @@ This repositroy is intended to be a **source of information** for future work on
 Getting started
 ---------------
 
-The notebook [demonstrator.ipynb](demonstrator.ipynb) contains different scripts to help users getting familiar with the different scripts. One simply has to have installed ipython or Jupyter notebook (http://jupyter.readthedocs.io/en/latest/install.html) and run :
+The notebook [demonstrator.ipynb](demonstrator.ipynb) contains different scripts to help users getting familiar with the different scripts. One simply has to have installed ipython or Jupyter notebook (http://jupyter.readthedocs.io/en/latest/install.html) and type in a shell :
 ```
 jupyter notebook
 ```
@@ -43,8 +43,18 @@ And open the file.
 
 Tests
 -----
-The packages 
 
+In this repo, all the files finishing by Main.py are tests file. 
+
+- In package sim, the following files can be run to generate simulations and understand how they work:
+    * [SimulationMain.py](SimulationMain.py) - generate a simulation using the simplified simulator.
+    * [MDPMain.py](MDPMain.py) - generate trajectories via mdp transitions and using the simplified simulator.
+    * [Realistic_MDPMain.py](Realistic_MDPMain.py) - generate trajectories via mdp transitions and using the realistic      simulator.
+  
+- In package RL, the following files can be run to train models:
+    * [policyLearningMain.py](policyLearningMain.py)
+    * [dqnMain.py](dqnMain.py)
+    * [DDPGMain.py](DDPGMain.py)
 
 
 Built With
