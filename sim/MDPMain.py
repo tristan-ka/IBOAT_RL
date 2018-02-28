@@ -90,3 +90,5 @@ axarr[2].grid(True)
 gridlines = axarr[2].get_xgridlines() + axarr[2].get_ygridlines()
 for line in gridlines:
     line.set_linestyle('-.')
+
+plt.show()

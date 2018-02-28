@@ -147,4 +147,4 @@ class Simulator:
             axarr[k].set_xlabel('t [s]')
         axarr[0].set_ylabel('VMG [m/s]')
         axarr[1].set_ylabel('Heading [°]')
-
+        plt.show()
