@@ -11,7 +11,7 @@ a **marked decrease of the boat's speed**.
 Hysteresis such as stall are hard to model. We therefore proposes an **end-to-end controller** which learns the stall behavior and
 builds a policy that avoids it. Learning is performed on a simplified transition model representing the stochastic environment and the dynamic of the boat.
 
-Learning is performed on two types of simulators, A **proof of concept** is first carried out on a simplified simulator of the boat coded in Python. The second phase of the project consist of trying to control a **more realisitic**  model of the boat. For this purpose we use a dynamic library which is derived using the Code Generation tools in Simulink. The executable C are then feeded to Python using the "ctypes" library.
+Learning is performed on two types of simulators. A **proof of concept** is first carried out on a simplified simulator of the boat coded in Python. The second phase of the project consist of trying to control a **more realisitic**  model of the boat. For this purpose we use a dynamic library which is derived using the Code Generation tools in Simulink. The executable C are then feeded to Python using the "ctypes" library.
 
 Prerequisites and code documentation
 ------------------------------------
@@ -19,9 +19,9 @@ Prerequisites and code documentation
 This project is using Python 3.*. The documentation as well as the prerequisites can be found here:
 
 ![Alt text](img/IBOAT_logo.png?raw=true "https://tristan-ka.github.io/IBOAT_RL/")
-
+```
 https://tristan-ka.github.io/IBOAT_RL/
-
+```
 
 Usage
 -----
@@ -40,5 +40,14 @@ Built With
 Acknowledgments
 ---------------
 
-This 
+This project has been carried out with the help of:
 
+* [Yves Brière](https://personnel.isae-supaero.fr/yves-briere/) - Professor of automatics at ISAE-Supaero.
+* [Emmanuel Rachelson](https://github.com/erachelson) - Professor in reinforcement learning at ISAE-Supaero.
+* [Valentin Guillet](https://github.com/Val95240/RL-Agents) - ISAE-Supaero student who has implemented various RL algorithms.
+
+## Authors
+
+* **Tristan Karch** - *Initial work* - Implementation of simplified simulator and Deep Q-Learning algorithm and responsible of the documentation building.
+* **Nicolas Megel** - Implementation of DDPG algorithm and responsible of the project management.
+* **Albert Bonet** - Simulink expert responsible of the realisitic simulator implementation and compilation.
