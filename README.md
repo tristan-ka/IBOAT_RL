@@ -16,7 +16,9 @@ Learning is performed on two types of simulators. A **proof of concept** is firs
 Prerequisites and code documentation
 ------------------------------------
 
-This project is using Python 3.*. The documentation as well as the prerequisites can be found here:
+This project is using Python 3.*. 
+
+The documentation as well as the prerequisites can be found on the following webpage :
 
 ![Alt text](img/IBOAT_logo.png?raw=true "https://tristan-ka.github.io/IBOAT_RL/")
 
@@ -52,9 +54,9 @@ In this repo, all the files finishing by Main.py are tests file.
     * [Realistic_MDPMain.py](Realistic_MDPMain.py) - generate trajectories via mdp transitions and using the realistic      simulator.
   
 - In package RL, the following files can be run to train models:
-    * [policyLearningMain.py](policyLearningMain.py)
-    * [dqnMain.py](dqnMain.py)
-    * [DDPGMain.py](DDPGMain.py)
+    * [policyLearningMain.py](policyLearningMain.py) - train a network to learn the Q-values of a policy.
+    * [dqnMain.py](dqnMain.py) - find the optimal policy to control the Iboat using the DQN algorithm (discret set of actions).
+    * [DDPGMain.py](DDPGMain.py) - find the optimal policy to control the Iboat using the DDPG algorithm (continuous set of actions).
 
 
 Built With
