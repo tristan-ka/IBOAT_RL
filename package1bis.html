@@ -46,129 +46,63 @@
   <div class="section" id="package-realistic-simulator">
 <h1>Package Realistic Simulator<a class="headerlink" href="#package-realistic-simulator" title="Permalink to this headline">¶</a></h1>
 <p>This package contains all the classes required to build a realistic simulation of the boat. It uses the dynamic library <code class="file docutils literal"><span class="pre">libBoatModel.so</span></code> which implements the accurate dynamic of the boat. It is coded in C++ in order to speed up the calculation process and hence the learning.</p>
-<div class="section" id="module-Simulator_realistic">
-<span id="realisitic-simulator"></span><h2>Realisitic Simulator<a class="headerlink" href="#module-Simulator_realistic" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-Realistic_Simulator">
+<span id="realisitic-simulator"></span><h2>Realisitic Simulator<a class="headerlink" href="#module-Realistic_Simulator" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T">
-<em class="property">class </em><code class="descclassname">Simulator_realistic.</code><code class="descname">DW_Model_2_EXPORT_Discrete_T</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">_ctypes.Structure</span></code></p>
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteFilter_states">
-<code class="descname">DiscreteFilter_states</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteFilter_states" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator1_DSTATE">
-<code class="descname">DiscreteTimeIntegrator1_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator1_DSTATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE">
-<code class="descname">DiscreteTimeIntegrator_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE_p">
-<code class="descname">DiscreteTimeIntegrator_DSTATE_p</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_DSTATE_p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOADI">
-<code class="descname">DiscreteTimeIntegrator_IC_LOADI</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOADI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOA_m">
-<code class="descname">DiscreteTimeIntegrator_IC_LOA_m</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.DiscreteTimeIntegrator_IC_LOA_m" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel1_states">
-<code class="descname">Discretemotormodel1_states</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel1_states" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel_states">
-<code class="descname">Discretemotormodel_states</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.Discretemotormodel_states" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay1_DSTATE">
-<code class="descname">FixPtUnitDelay1_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay1_DSTATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay2_DSTATE">
-<code class="descname">FixPtUnitDelay2_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.FixPtUnitDelay2_DSTATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.G3_PreviousInput">
-<code class="descname">G3_PreviousInput</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.G3_PreviousInput" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY">
-<code class="descname">PrevY</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY_d">
-<code class="descname">PrevY_d</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.PrevY_d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.incidencemeasure_DSTATE">
-<code class="descname">incidencemeasure_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.incidencemeasure_DSTATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.speedmeasure_DSTATE">
-<code class="descname">speedmeasure_DSTATE</code><a class="headerlink" href="#Simulator_realistic.DW_Model_2_EXPORT_Discrete_T.speedmeasure_DSTATE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T">
-<em class="property">class </em><code class="descclassname">Simulator_realistic.</code><code class="descname">RT_MODEL_Model_2_EXPORT_Discr_T</code><a class="headerlink" href="#Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">_ctypes.Structure</span></code></p>
-<dl class="attribute">
-<dt id="Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T.dwork">
-<code class="descname">dwork</code><a class="headerlink" href="#Simulator_realistic.RT_MODEL_Model_2_EXPORT_Discr_T.dwork" title="Permalink to this definition">¶</a></dt>
-<dd><p>Structure/Union member</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="Simulator_realistic.Simulator_realistic">
-<em class="property">class </em><code class="descclassname">Simulator_realistic.</code><code class="descname">Simulator_realistic</code><span class="sig-paren">(</span><em>simulation_duration</em>, <em>hdg0</em>, <em>speed0</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator_realistic.Simulator_realistic" title="Permalink to this definition">¶</a></dt>
+<dt id="Realistic_Simulator.Realistic_Simulator">
+<em class="property">class </em><code class="descclassname">Realistic_Simulator.</code><code class="descname">Realistic_Simulator</code><a class="headerlink" href="#Realistic_Simulator.Realistic_Simulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>This class holds a Simulink-based boat simulation, with methods to simulate and act upon it. Real simulation inputs
+are the heading reference for sail position is supposed to be fixed for a given configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time_step</strong> (<em>float</em>) &#8211; Smallest possible time step, inherited from Simulink model</li>
+<li><strong>simulation_time</strong> (<em>float</em>) &#8211; Timer of the real simulation time</li>
+<li><strong>U_hdg_ref</strong> (<em>c_double</em>) &#8211; Heading reference</li>
+<li><strong>U_sailpos</strong> (<em>c_double</em>) &#8211; Sail position</li>
+<li><strong>U_truewindspeed</strong> (<em>c_double</em>) &#8211; Absolute wind speed</li>
+<li><strong>U_truewindheading</strong> (<em>c_double</em>) &#8211; Absolute wind heading</li>
+<li><strong>U_truewaterspeed</strong> (<em>c_double</em>) &#8211; Absolute water speed</li>
+<li><strong>U_truewaterheading</strong> (<em>c_double</em>) &#8211; Absolute water heading</li>
+<li><strong>U_hdg0</strong> (<em>c_double</em>) &#8211; Initial absolute boat heading</li>
+<li><strong>U_speed0</strong> (<em>c_double</em>) &#8211; Initial absolute boat speed</li>
+<li><strong>Y_Windincidence</strong> (<em>c_double</em>) &#8211; Relative wind incidence wrt the wing</li>
+<li><strong>Y_SpeedOverGround</strong> (<em>c_double</em>) &#8211; Absolute boat speed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
-<dt id="Simulator_realistic.Simulator_realistic.step">
-<code class="descname">step</code><span class="sig-paren">(</span><em>delta_hdg</em>, <em>truewindheading</em>, <em>truewindheading_std</em>, <em>duration</em>, <em>precision</em><span class="sig-paren">)</span><a class="headerlink" href="#Simulator_realistic.Simulator_realistic.step" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="Realistic_Simulator.Realistic_Simulator.step">
+<code class="descname">step</code><span class="sig-paren">(</span><em>duration</em>, <em>precision</em><span class="sig-paren">)</span><a class="headerlink" href="#Realistic_Simulator.Realistic_Simulator.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Advance the simulation a certain amount of time and perform incidence and speed measures
+with a certain sample time, stored in np.arrays</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>duration</strong> (<em>float</em>) &#8211; How much to advance the simulation</li>
+<li><strong>precision</strong> (<em>float</em>) &#8211; Sampling time for the measures</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of np.array Incidence, SpeedOverGround</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt id="Simulator_realistic.Simulator_realistic.terminate">
-<code class="descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Simulator_realistic.Simulator_realistic.terminate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="Realistic_Simulator.Realistic_Simulator.terminate">
+<code class="descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Realistic_Simulator.Realistic_Simulator.terminate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Terminate the simulation and its variables</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -181,17 +115,30 @@
 <span id="realistic-mdp"></span><h2>Realistic MDP<a class="headerlink" href="#module-mdp_realistic" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mdp_realistic.mdp_realistic">
-<em class="property">class </em><code class="descclassname">mdp_realistic.</code><code class="descname">mdp_realistic</code><span class="sig-paren">(</span><em>mdp_duration</em>, <em>hdg0</em>, <em>speed0</em>, <em>history_duration</em>, <em>mdp_step</em>, <em>delta_t</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">mdp_realistic.</code><code class="descname">mdp_realistic</code><span class="sig-paren">(</span><em>mdp_duration</em>, <em>history_duration</em>, <em>mdp_step</em>, <em>delta_t</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="mdp_realistic.mdp_realistic.computeState">
-<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>truewindheading</em>, <em>truewindheading_std</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.computeState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the mdp state when an action is applied.
-:param action:
-:param WH:
-:return:</p>
-</dd></dl>
-
+<p>Markov Decision process modelization of the transition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>history_duration</strong> (<em>float</em>) &#8211; Duration of the memory.</li>
+<li><strong>simulation_duration</strong> (<em>float</em>) &#8211; Duration of the memory.</li>
+<li><strong>mdp_step</strong> (<em>float</em>) &#8211; Sampling period for decision making measures</li>
+<li><strong>size</strong> (<em>int</em>) &#8211; size of the first dimension of the state.</li>
+<li><strong>dt</strong> (<em>float</em>) &#8211; time step between each value of the state.</li>
+<li><strong>s</strong> (<em>np.array</em><em>(</em><em>)</em>) &#8211; state containing the history of angles of attacks and velocities.</li>
+<li><strong>idx_memory</strong> (<em>range</em>) &#8211; indices corresponding to the values shared by two successive states.</li>
+<li><strong>Simulator simulator</strong> (<em>Realistic</em>) &#8211; Simulator used to compute new values after a transition.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; reward associated with a transition.</li>
+<li><strong>discount</strong> (<em>float</em>) &#8211; discount factor.</li>
+<li><strong>action</strong> (<em>float</em>) &#8211; action for transition.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="mdp_realistic.mdp_realistic.copy">
 <code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.copy" title="Permalink to this definition">¶</a></dt>
@@ -211,17 +158,51 @@
 <dl class="method">
 <dt id="mdp_realistic.mdp_realistic.extractSimulationData">
 <code class="descname">extractSimulationData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.extractSimulationData" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Recover data from the simulation and add it to the state
+:return: state s</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mdp_realistic.mdp_realistic.initializeMDP">
-<code class="descname">initializeMDP</code><span class="sig-paren">(</span><em>truewindheading</em>, <em>truewindheading_std</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.initializeMDP" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">initializeMDP</code><span class="sig-paren">(</span><em>hdg0</em>, <em>sailpos</em>, <em>speed0</em>, <em>truewaterheading</em>, <em>truewaterspeed</em>, <em>truewindspeed</em>, <em>truewindheading</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.initializeMDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialization of the Markov Decision Process, filling the values of the history memory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hdg0</strong> &#8211; Initial cap</li>
+<li><strong>speed0</strong> &#8211; Initial speed</li>
+<li><strong>truewaterheading</strong> &#8211; Absolute water heading</li>
+<li><strong>truewaterspeed</strong> &#8211; Absolute water speed</li>
+<li><strong>truewindspeed</strong> &#8211; Absolute wind speed</li>
+<li><strong>truewindheading</strong> &#8211; Absolute wind heading</li>
+<li><strong>truewindheading_std</strong> &#8211; Wind heading variance</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">state s</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="mdp_realistic.mdp_realistic.transition">
-<code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>truewindheading</em>, <em>truewindheading_std</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.transition" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">transition</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp_realistic.mdp_realistic.transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the mdp state when an action is applied.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> &#8211; Action to perform</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">state, reward</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -240,7 +221,7 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Package Realistic Simulator</a><ul>
-<li><a class="reference internal" href="#module-Simulator_realistic">Realisitic Simulator</a></li>
+<li><a class="reference internal" href="#module-Realistic_Simulator">Realisitic Simulator</a></li>
 <li><a class="reference internal" href="#module-mdp_realistic">Realistic MDP</a></li>
 </ul>
 </li>

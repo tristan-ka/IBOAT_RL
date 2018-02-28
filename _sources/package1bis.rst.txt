@@ -6,9 +6,8 @@ This package contains all the classes required to build a realistic simulation o
 Realisitic Simulator
 ---------------------
 
-.. automodule:: Simulator_realistic
+.. automodule:: Realistic_Simulator
     :members:
-    :undoc-members:
     :show-inheritance:
 
 .. warning::
