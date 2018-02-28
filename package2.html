@@ -44,6 +44,13 @@
             
   <div class="section" id="package-rl">
 <h1>Package RL<a class="headerlink" href="#package-rl" title="Permalink to this headline">¶</a></h1>
+<p>This package contains three classes of RL agent :</p>
+<ul class="simple">
+<li><a class="reference internal" href="#module-policyLearning" title="policyLearning"><code class="xref py py-class docutils literal"><span class="pre">policyLearning</span></code></a> - That trains a neural network to predict the Q-values of a discrete actions of a policy of the boat behavior.</li>
+<li><a class="reference internal" href="#module-dqn" title="dqn"><code class="xref py py-class docutils literal"><span class="pre">dqn</span></code></a> - That trains a neural network to find the optimal policy to avoid stall with discrete actions.</li>
+<li><a class="reference internal" href="#module-DDPG" title="DDPG"><code class="xref py py-class docutils literal"><span class="pre">DDPG</span></code></a> - That trains a neural network to find the optimal policy to avoid stall with a continuous set of actions.</li>
+</ul>
+<p>You&#8217;ll find a tutorial in order to understand how to generate a training scenario at the bottom of the page.</p>
 <div class="section" id="module-policyLearning">
 <span id="policy-learner"></span><h2>Policy Learner<a class="headerlink" href="#module-policyLearning" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -51,6 +58,10 @@
 <em class="property">class </em><code class="descclassname">policyLearning.</code><code class="descname">PolicyLearner</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>batch_size</em><span class="sig-paren">)</span><a class="headerlink" href="#policyLearning.PolicyLearner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>The aim of this class is to learn the Q-value of the action defined by a policy.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Please note that the policy to learn has to be defined in the methods <a class="reference internal" href="#policyLearning.PolicyLearner.actUnderPolicy" title="policyLearning.PolicyLearner.actUnderPolicy"><code class="xref py py-meth docutils literal"><span class="pre">actUnderPolicy()</span></code></a> and <a class="reference internal" href="#policyLearning.PolicyLearner.actDeterministicallyUnderPolicy" title="policyLearning.PolicyLearner.actDeterministicallyUnderPolicy"><code class="xref py py-meth docutils literal"><span class="pre">actDeterministicallyUnderPolicy()</span></code></a>.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -327,9 +338,9 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 <dt id="DDPG.DDPGAgent">
 <em class="property">class </em><code class="descclassname">DDPG.</code><code class="descname">DDPGAgent</code><span class="sig-paren">(</span><em>state_size</em>, <em>action_size</em>, <em>lower_bound</em>, <em>upper_bound</em>, <em>sess</em><span class="sig-paren">)</span><a class="headerlink" href="#DDPG.DDPGAgent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks
-It uses the Deep Deterministic Policy Gradient to update tha actor network.
-This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound.</p>
+<p>The aim of this class is to learn an optimal policy via an actor-critic structure with 2 separated Convolutional Neural Networks.
+It uses the Deep Deterministic Policy Gradient to update the actor network.
+This model deals with a continuous space of actions on the rudder, chosen between lower_bound and upper_bound</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

@@ -270,7 +270,7 @@ on the wingsail.
 <em class="property">class </em><code class="descclassname">mdp.</code><code class="descname">ContinuousMDP</code><span class="sig-paren">(</span><em>duration_history</em>, <em>duration_simulation</em>, <em>delta_t</em>, <em>LOWER_BOUND</em>, <em>UPPER_BOUND</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Markov Decision process modelization of the transition
 Based on Realistic Simulator of Iboat autonomous sailboat provided by Simulink
-Compatible with continuous action</p>
+Compatible with continuous action. See documentation of <a class="reference internal" href="#mdp.MDP" title="mdp.MDP"><code class="xref py py-class docutils literal"><span class="pre">MDP</span></code></a> for all undocumented method as they are the same.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -291,11 +291,6 @@ Compatible with continuous action</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="mdp.ContinuousMDP.computeState">
-<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.computeState" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="mdp.ContinuousMDP.copy">
 <code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.ContinuousMDP.copy" title="Permalink to this definition">¶</a></dt>
@@ -348,15 +343,6 @@ Compatible with continuous action</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="mdp.MDP.computeState">
-<code class="descname">computeState</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.computeState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the mdp state when an action is applied.
-:param action:
-:param WH:
-:return:</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="mdp.MDP.copy">
 <code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy the MDP object</p>
@@ -375,7 +361,9 @@ Compatible with continuous action</p>
 <dl class="method">
 <dt id="mdp.MDP.extractSimulationData">
 <code class="descname">extractSimulationData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.extractSimulationData" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Extract the new simulated data. Gets rid of the simulation data that are present more than twice in the state memory.
+:return: The data of interest in the state memory.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="mdp.MDP.initializeMDP">
@@ -409,21 +397,11 @@ Compatible with continuous action</p>
 <dl class="method">
 <dt id="mdp.MDP.transition">
 <code class="descname">transition</code><span class="sig-paren">(</span><em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#mdp.MDP.transition" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>action</strong> &#8211; action to make (either luff or bear off)</li>
-<li><strong>WH</strong> &#8211; Wind heading provided by the environment during the transition.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The state and reward</p>
-</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Computes the mdp state when an action is applied.
+:param action: action to make. Action should be either 0 or 1. If action is 0 then the heading is increased by one degree.
+If the action is 1 the heading is decreased by one degree
+:param WH: vector of wind heading seen during the period of action making.
+:return: the state and reward yielded by taking action action from the current state of the mdp.</p>
 </dd></dl>
 
 </dd></dl>
@@ -473,9 +451,9 @@ Compatible with continuous action</p>
         <span class="n">action</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">action</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="hll">
-</span>    <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
-    <span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span>
+
+<span class="hll">    <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span> <span class="o">=</span> <span class="n">mdp</span><span class="o">.</span><span class="n">transition</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">WH</span><span class="p">)</span>
+</span>    <span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">mdp</span><span class="o">.</span><span class="n">extractSimulationData</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]])</span>
     <span class="n">vmg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">vmg</span><span class="p">,</span> <span class="n">mdp</span><span class="o">.</span><span class="n">extractSimulationData</span><span class="p">()[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]])</span>
     <span class="n">wind_heading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">wind_heading</span><span class="p">,</span> <span class="n">WH</span><span class="p">])</span>
