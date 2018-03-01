@@ -9,8 +9,11 @@
   <a href="PyPI - Python Version">
     <img src="https://img.shields.io/pypi/pyversions/Django.svg">
   </a>
-    <a href="https://tristan-ka.github.io/IBOAT_RL/">
+  <a href="https://tristan-ka.github.io/IBOAT_RL/">
     <img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest)">
+  </a>
+  <a href="https://shields.io/">
+    <img src="https://img.shields.io/badge/university-ISAE-blue.svg">
   </a>
 </h1>
 
@@ -89,7 +92,11 @@ In this repo, all the files finishing by Main.py are test files.
 
 ## Related 
 
-This project falls under the IBOAT project and is related to the repo: [![github](https://img.shields.io/website-up-down-green-red/https/naereen.github.io.svg)](https://github.com/PBarde/IBoatPIE). It tackles the problem of long-term path planning under uncertainty for offshore sailing using parallel MCTS.
+This project falls under the IBOAT project and is related to the repo: 
+
+[![github](https://img.shields.io/website-up-down-green-red/https/naereen.github.io.svg)](https://github.com/PBarde/IBoatPIE)
+
+It tackles the problem of long-term path planning under uncertainty for offshore sailing using parallel MCTS.
 
 ## Acknowledgments
 
