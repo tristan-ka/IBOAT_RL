@@ -497,6 +497,107 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 </dd></dl>
 
 </div>
+<div class="section" id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<p>We also provide a file in order to generate plots to visualize results.</p>
+<span class="target" id="module-visualization"></span><dl class="class">
+<dt id="visualization.Visualization">
+<em class="property">class </em><code class="descclassname">visualization.</code><code class="descname">Visualization</code><span class="sig-paren">(</span><em>hist_duration</em>, <em>mdp_step</em>, <em>time_step</em>, <em>action_size</em>, <em>batch_size</em>, <em>mean</em>, <em>std</em>, <em>hdg0</em>, <em>src_file</em>, <em>sim_time</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class to generate different plots for result visualization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hist_duration</strong> &#8211; Size of the history buffer.</li>
+<li><strong>mdp_step</strong> &#8211; mdp step (frequency of decision).</li>
+<li><strong>time_step</strong> &#8211; time step of the mdp.</li>
+<li><strong>action_size</strong> &#8211; size of the action space of the model.</li>
+<li><strong>batch_size</strong> &#8211; size of the batch use to train the model.</li>
+<li><strong>mean</strong> &#8211; average wind heading.</li>
+<li><strong>std</strong> &#8211; noise on wind heading.</li>
+<li><strong>hdg0</strong> &#8211; initial heading of the simulation.</li>
+<li><strong>src_file</strong> &#8211; source file containing the weights of the model used for the simulation.</li>
+<li><strong>sim_time</strong> &#8211; duration of the simulation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="visualization.Visualization.generateAnimation">
+<code class="descname">generateAnimation</code><span class="sig-paren">(</span><em>hdg0</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.generateAnimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an animation showing the two Q-values during an interesting control simulation including gusts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hdg0</strong> &#8211; Initial heading of the boat for the simulation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.generateDeltaAnimation">
+<code class="descname">generateDeltaAnimation</code><span class="sig-paren">(</span><em>hdg0</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.generateDeltaAnimation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an animation showing the differences between the two Q-values during an interesting control simulation including gusts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hdg0</strong> &#8211; Initial heading of the boat for the simulation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.generateQplots">
+<code class="descname">generateQplots</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.generateQplots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the comparison between the Q-values predicted by the network and the Monte-Carlo return computed over the simulation time
+:return: Two plots of the comparison.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.simulateDQNControl">
+<code class="descname">simulateDQNControl</code><span class="sig-paren">(</span><em>hdg0</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.simulateDQNControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the control law of the network over a simulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hdg0</strong> &#8211; Initial heading of the boat for the simulation.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A plot of the angle of attack and velocity during the control.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualization.Visualization.simulateGustsControl">
+<code class="descname">simulateGustsControl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#visualization.Visualization.simulateGustsControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate the response of the controller to gusts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A plot of the simulation.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="visualization.rollOut">
+<code class="descclassname">visualization.</code><code class="descname">rollOut</code><span class="sig-paren">(</span><em>time</em>, <em>SIMULATION_TIME</em>, <em>agent</em>, <em>mdp</em>, <em>action</em>, <em>WH</em><span class="sig-paren">)</span><a class="headerlink" href="#visualization.rollOut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="tutorial">
 <h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span></span> <span class="n">history_duration</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Duration of state history [s]</span>
@@ -566,6 +667,7 @@ state <cite>next_state</cite> and a reward <cite>reward</cite>. [s, a ,r, s&#821
 <li><a class="reference internal" href="#module-policyLearning">Policy Learner</a></li>
 <li><a class="reference internal" href="#module-dqn">DQN</a></li>
 <li><a class="reference internal" href="#module-DDPG">DDPG</a></li>
+<li><a class="reference internal" href="#visualization">Visualization</a></li>
 <li><a class="reference internal" href="#tutorial">Tutorial</a></li>
 </ul>
 </li>

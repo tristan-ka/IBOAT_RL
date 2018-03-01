@@ -27,11 +27,22 @@ DQN
 
 DDPG    
 -----------------
+
 .. automodule:: DDPG
 	:members:
 	:undoc-members:
 	:show-inheritance:
 
+
+Visualization
+-------------
+
+We also provide a file in order to generate plots to visualize results.
+
+.. automodule:: visualization
+	:members:
+	:undoc-members:
+	:show-inheritance:
 
 Tutorial
 ---------------
