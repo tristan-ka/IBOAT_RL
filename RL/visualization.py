@@ -1,6 +1,5 @@
-import sys
-
 import matplotlib.pyplot as plt
+import sys
 
 sys.path.append("../sim/")
 import numpy as np
@@ -9,6 +8,9 @@ from dqn import DQNAgent
 from Simulator import TORAD
 from mdp import MDP
 from environment import wind
+import math
+import matplotlib.animation as animation
+import time
 
 '''
 MISCELLANEOUS FUNCTIONS
@@ -39,6 +41,7 @@ class Visualization:
     :param sim_time: duration of the simulation.
 
     '''
+
     def __init__(self, hist_duration, mdp_step, time_step, action_size, batch_size, mean, std, hdg0, src_file,
                  sim_time):
         self.mdp = MDP(hist_duration, mdp_step, time_step)
@@ -49,7 +52,6 @@ class Visualization:
         self.hdg0 = hdg0
         self.src = src_file
         self.sim_time = sim_time
-
 
     def generateQplots(self):
         '''
@@ -181,10 +183,10 @@ class Visualization:
         wind_heading = np.ones(0)
 
         for time in range(self.sim_time):
-            WH=self.wh.generateWind()
+            WH = self.wh.generateWind()
             action = agent.actDeterministically(state)
             next_state, reward = self.mdp.transition(action, WH)
-            state=next_state
+            state = next_state
             i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
             v = np.concatenate([v, self.mdp.extractSimulationData()[1, :]])
             wind_heading = np.concatenate([wind_heading, WH[0:10]])
@@ -192,8 +194,8 @@ class Visualization:
         time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
 
         f, axarr = plt.subplots(2, sharex=True)
-        axarr[0].plot(time_vec, i/TORAD)
-        axarr[1].plot(time_vec,v)
+        axarr[0].plot(time_vec, i / TORAD)
+        axarr[1].plot(time_vec, v)
         axarr[0].set_ylabel("i [°]")
         axarr[1].set_ylabel("v [m/s]")
         axarr[0].set_xlabel("t [s]")
@@ -206,7 +208,7 @@ class Visualization:
         Simulate the response of the controller to gusts.
         :return: A plot of the simulation.
         '''
-        self.sim_time=100
+        self.sim_time = 100
         agent = DQNAgent(self.mdp.size, self.action_size)
         agent.load(self.src)
         WH = self.wh.generateWind()
@@ -221,7 +223,7 @@ class Visualization:
         for time in range(self.sim_time):
             WH = self.wh.generateWind()
             if time == 20:
-                WH = self.wh.generateGust(10*TORAD)
+                WH = self.wh.generateGust(10 * TORAD)
             action = agent.actDeterministically(state)
             next_state, reward = self.mdp.transition(action, WH)
             state = next_state
@@ -239,3 +241,162 @@ class Visualization:
 
         plt.show()
 
+    def generateDeltaAnimation(self, hdg0):
+        """
+        Generate an animation showing the differences between the two Q-values during an interesting control simulation including gusts.
+        :param hdg0: Initial heading of the boat for the simulation
+        """
+        agent = DQNAgent(self.mdp.size, self.action_size)
+        agent.load(self.src)
+        WH = self.wh.generateWind()
+        hdg0 = hdg0 * TORAD * np.ones(self.wh.samples)
+
+        state = self.mdp.initializeMDP(hdg0, WH)
+
+        i = np.ones(0)
+        v = np.ones(0)
+        NN_Q0 = np.zeros(self.sim_time)
+        NN_Q1 = np.zeros(self.sim_time)
+        wind_heading = np.ones(0)
+
+        for timesim in range(self.sim_time):
+            WH = self.wh.generateWind()
+            if timesim == 50:
+                WH = self.wh.generateGust(10 * TORAD)
+            action = agent.actDeterministically(state)
+            next_state, reward = self.mdp.transition(action, WH)
+            state = next_state
+            i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
+            v = np.concatenate([v, self.mdp.extractSimulationData()[1, :]])
+
+            NN_Q0[timesim] = self.agent.evaluate(self.mdp.s)[0]
+            NN_Q1[timesim] = self.agent.evaluate(self.mdp.s)[1]
+
+            wind_heading = np.concatenate([wind_heading, WH[0:10]])
+
+        time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
+
+        # Visualization tools start here
+        f = plt.figure(figsize=(15, 5))
+        ax0 = f.add_subplot(2, 2, 1)
+        ax1 = f.add_subplot(2, 2, 3)
+        ax2 = f.add_subplot(2, 2, (2, 4))
+
+        ax0.set_title('Simulation')
+        ax0.set_ylabel('i [°]')
+        ax0.grid(linestyle='-', linewidth=1)
+
+        ax1.set_ylabel('v [m/s]')
+        ax1.set_xlabel('t [s]')
+        ax1.grid(linestyle='-', linewidth=1)
+
+        ax3 = ax2.twiny()
+        tresh = np.max(NN_Q0 - NN_Q1)
+        ax3.plot(np.linspace(-tresh, tresh, 100), 0.5 * np.ones(100))  # Create a dummy plot
+        ax3.cla()
+
+        ax2.set_xticks([-1, 1])
+        ax2.grid(linestyle='-', linewidth=1)
+        ax2.set_xticklabels(['Luff', 'Bear off'])
+        ax2.set_ylim([-.5, .5])
+        ax2.set_xlim([-1, 1])
+        ax2.set_title('Q(s,bear-off) - Q(s,luff)', y=-0.1)
+        ax2.get_yaxis().set_visible(False)
+        ax3.get_yaxis().set_visible(False)
+
+        l0, = ax0.plot(time_vec, i / TORAD)
+        l1, = ax1.plot(time_vec, v)
+        bar0 = ax2.barh(0, NN_Q0[0] - NN_Q1[0])
+        ax2.plot([0, 0], [-0.5, 0.5], color='gray')
+
+        def animate(k):
+            l0.set_data(time_vec[:k], i[:k] / TORAD)
+            time.sleep(.0025)
+            l1.set_data(time_vec[:k], v[:k])
+            if k % 10 == 0:
+                kk = k // 10
+                bar0[0].set_width(NN_Q0[kk] - NN_Q1[kk])
+
+            return l0, l1, bar0
+
+        ani = animation.FuncAnimation(f, animate, frames=1000, interval=1, blit=False)
+        plt.show()
+
+        return ani
+
+    def generateAnimation(self, hdg0):
+        """
+        Generate an animation showing the two Q-values during an interesting control simulation including gusts.
+        :param hdg0: Initial heading of the boat for the simulation
+        """
+        agent = DQNAgent(self.mdp.size, self.action_size)
+        agent.load(self.src)
+        WH = self.wh.generateWind()
+        hdg0 = hdg0 * TORAD * np.ones(self.wh.samples)
+
+        state = self.mdp.initializeMDP(hdg0, WH)
+
+        i = np.ones(0)
+        v = np.ones(0)
+        NN_Q0 = np.zeros(self.sim_time)
+        NN_Q1 = np.zeros(self.sim_time)
+        wind_heading = np.ones(0)
+
+        for timesim in range(self.sim_time):
+            WH = self.wh.generateWind()
+            if timesim == 50:
+                WH = self.wh.generateGust(10 * TORAD)
+            action = agent.actDeterministically(state)
+            next_state, reward = self.mdp.transition(action, WH)
+            state = next_state
+            i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
+            v = np.concatenate([v, self.mdp.extractSimulationData()[1, :]])
+
+            NN_Q0[timesim] = self.agent.evaluate(self.mdp.s)[0]
+            NN_Q1[timesim] = self.agent.evaluate(self.mdp.s)[1]
+
+            wind_heading = np.concatenate([wind_heading, WH[0:10]])
+
+        time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
+
+        # Visualization tools start here
+        f = plt.figure(figsize=(15, 5))
+        ax0 = f.add_subplot(2, 2, 1)
+        ax1 = f.add_subplot(2, 2, 3)
+        ax2 = f.add_subplot(2, 2, (2, 4))
+
+        ax0.set_title('Simulation')
+        ax0.set_ylabel('i [°]')
+        ax0.set_xlabel('t [s]')
+        ax0.grid(linestyle='-', linewidth=1)
+
+        ax1.set_ylabel('v [m/s]')
+        ax1.set_xlabel('t [s]')
+        ax1.grid(linestyle='-', linewidth=1)
+
+        ax2.set_xticks([0, 1])
+        ax2.grid(linestyle='-', linewidth=1)
+        ax2.set_xticklabels(['Bear-off', 'Luff'])
+        ax2.set_ylim([14, 20])
+        ax2.set_xlim([0, 1])
+        ax2.set_title('Q(s,a) of actions')
+
+        l0, = ax0.plot(time_vec, i)
+        l1, = ax1.plot(time_vec, v)
+        bar0 = ax2.bar([0, 1], [NN_Q0[0], NN_Q1[0]], color=['b', 'r'])
+
+        def animate(k):
+            l0.set_data(time_vec[:k], i[:k])
+            time.sleep(.0025)
+            l1.set_data(time_vec[:k], v[:k])
+            if k % 10 == 0:
+                kk = k // 10
+                bar0[0].set_height(NN_Q0[kk])
+                bar0[1].set_height(NN_Q1[kk])
+
+            return l0, l1, bar0
+
+        ani = animation.FuncAnimation(f, animate, frames=1000, interval=1, blit=False)
+        plt.show()
+
+        return ani
