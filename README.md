@@ -17,7 +17,7 @@
   </a>
 </h1>
 
-<h4 align="center">Controling autonomous boat with RL </h4>
+<h4 align="center">End-to-end control of an autonomous sailboat </h4>
 
 
 
