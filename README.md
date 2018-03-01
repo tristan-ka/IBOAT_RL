@@ -76,6 +76,6 @@ This project has been carried out with the help of:
 
 ## Authors
 
-* **Tristan Karch** - *Initial work* - Implementation of simplified simulator and Deep Q-Learning algorithm and responsible for the documentation management.
+* **Tristan Karch** - *Initial work* - Implementation of simplified simulator and proof of concept with Deep Q-Learning algorithm. Also responsible for the documentation management.
 * **Nicolas Megel** - Implementation of DDPG algorithm and responsible for the project management.
 * **Albert Bonet** - Simulink expert responsible for the realisitic simulator implementation and compilation.
