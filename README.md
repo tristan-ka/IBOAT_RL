@@ -2,9 +2,18 @@
   <br>
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="img/IBOAT_logo.png" alt="Markdownify" width="200"></a>
   <br>
-  Welcome to IBOAT RL's documentation
+  Welcome to IBOAT RL's project
   <br>
 </h1>
+
+<p align="center">
+  <a href="PyPI - Python Version">
+    <img src="https://img.shields.io/pypi/pyversions/Django.svg">
+  </a>
+    <a href="https://tristan-ka.github.io/IBOAT_RL/">
+    <img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest)">
+  </a>
+</p>
 
 <h4 align="center">Controling autonomous boat with RL </h4>
 
@@ -33,13 +42,10 @@ Learning is performed on two types of simulators. A **proof of concept** is firs
 
 ## Prerequisites and code documentation
 
-This project is using Python 3.*. 
 
 The documentation as well as the prerequisites can be found on the following webpage :
 
-![Alt text](img/IBOAT_logo.png?raw=true "https://tristan-ka.github.io/IBOAT_RL/")
-
-https://tristan-ka.github.io/IBOAT_RL/
+[![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](https://tristan-ka.github.io/IBOAT_RL/)
 
 
 ## Usage
@@ -76,8 +82,10 @@ In this repo, all the files finishing by Main.py are test files.
 
 ## Built With
 
-* [Sphinx](http://www.sphinx-doc.org/en/master/) - The documentation tool.
-* [Jupyter](http://jupyter.readthedocs.io/en/latest/install.html) - The demonstrator tool.
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/)
+
+
 
 ## Acknowledgments
 
