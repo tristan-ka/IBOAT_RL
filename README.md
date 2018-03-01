@@ -25,6 +25,7 @@
   <a href="#getting-started">Getting started</a> •
   <a href="#tests">Tests</a> •
   <a href="#built-with">Tools</a> •
+  <a href="#related">Related</a> •
   <a href="#acknowledgments">Acknowledgments</a>
 </p>
 
