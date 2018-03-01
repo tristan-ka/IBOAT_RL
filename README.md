@@ -91,7 +91,7 @@ Optimal control found using DQN-algorithm on a simplified environment of the boa
 </p>
 
 <p align="center">
-  <img src="img/deltaq_values.gif" width="800" title="DQN control with ΔQ-values representation">
+  <img src="img/q_values.gif" width="800" title="DQN control with ΔQ-values representation">
 </p>
 
 
