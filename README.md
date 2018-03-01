@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/pypi/pyversions/Django.svg">
   </a>
   <a href="https://tristan-ka.github.io/IBOAT_RL/">
-    <img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest)">
+    <img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest">
   </a>
   <a href="https://www.isae-supaero.fr/fr/">
     <img src="https://img.shields.io/badge/university-ISAE-blue.svg">
