@@ -1,8 +1,7 @@
 <h1 align="center">
+  Welcome to IBOAT RL's project
   <br>
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="img/IBOAT_logo.png" alt="Markdownify" width="200"></a>
-  <br>
-  Welcome to IBOAT RL's project
   <br>
 </h1>
 
