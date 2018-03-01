@@ -29,6 +29,7 @@ def rollOut(time, SIMULATION_TIME, agent, mdp, action, WH):
 class Visualization:
     '''
     Class to generate different plots for result visualization.
+
     :param hist_duration: Size of the history buffer.
     :param mdp_step: mdp step (frequency of decision).
     :param time_step: time step of the mdp.
@@ -168,6 +169,7 @@ class Visualization:
     def simulateDQNControl(self, hdg0):
         '''
         Plots the control law of the network over a simulation.
+
         :param hdg0: Initial heading of the boat for the simulation.
         :return: A plot of the angle of attack and velocity during the control.
         '''
@@ -206,6 +208,7 @@ class Visualization:
     def simulateGustsControl(self):
         '''
         Simulate the response of the controller to gusts.
+
         :return: A plot of the simulation.
         '''
         self.sim_time = 100
@@ -244,6 +247,7 @@ class Visualization:
     def generateDeltaAnimation(self, hdg0):
         """
         Generate an animation showing the differences between the two Q-values during an interesting control simulation including gusts.
+
         :param hdg0: Initial heading of the boat for the simulation
         """
         agent = DQNAgent(self.mdp.size, self.action_size)
@@ -297,7 +301,7 @@ class Visualization:
 
         ax2.set_xticks([-1, 1])
         ax2.grid(linestyle='-', linewidth=1)
-        ax2.set_xticklabels(['Luff', 'Bear off'])
+        ax2.set_xticklabels(['Bear off', 'Luff'])
         ax2.set_ylim([-.5, .5])
         ax2.set_xlim([-1, 1])
         ax2.set_title('Q(s,bear-off) - Q(s,luff)', y=-0.1)
@@ -306,7 +310,7 @@ class Visualization:
 
         l0, = ax0.plot(time_vec, i / TORAD)
         l1, = ax1.plot(time_vec, v)
-        bar0 = ax2.barh(0, NN_Q0[0] - NN_Q1[0])
+        bar0 = ax2.barh(0, NN_Q1[0] - NN_Q0[0])
         ax2.plot([0, 0], [-0.5, 0.5], color='gray')
 
         def animate(k):
@@ -315,7 +319,7 @@ class Visualization:
             l1.set_data(time_vec[:k], v[:k])
             if k % 10 == 0:
                 kk = k // 10
-                bar0[0].set_width(NN_Q0[kk] - NN_Q1[kk])
+                bar0[0].set_width(NN_Q1[kk] - NN_Q0[kk])
 
             return l0, l1, bar0
 
@@ -327,6 +331,7 @@ class Visualization:
     def generateAnimation(self, hdg0):
         """
         Generate an animation showing the two Q-values during an interesting control simulation including gusts.
+
         :param hdg0: Initial heading of the boat for the simulation
         """
         agent = DQNAgent(self.mdp.size, self.action_size)
