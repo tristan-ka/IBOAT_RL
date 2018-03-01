@@ -86,7 +86,9 @@ In this repo, all the files finishing by Main.py are test files.
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/)
 
+## Related 
 
+This project falls under the IBOAT project and is related to the repo: [![github](https://img.shields.io/website-up-down-green-red/https/naereen.github.io.svg)](https://github.com/PBarde/IBoatPIE). It tackles the problem of long-term path planning under uncertainty for offshore sailing using parallel MCTS.
 
 ## Acknowledgments
 
