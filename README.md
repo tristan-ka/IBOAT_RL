@@ -70,7 +70,7 @@ jupyter notebook
 ```
 And open the file.
 
-# Tests
+## Tests
 
 In this repo, all the files finishing by Main.py are test files. 
 
@@ -84,6 +84,11 @@ In this repo, all the files finishing by Main.py are test files.
     * [dqnMain.py](dqnMain.py) - find the optimal policy to control the Iboat using the DQN algorithm (discret set of actions).
     * [DDPGMain.py](DDPGMain.py) - find the optimal policy to control the Iboat using the DDPG algorithm (continuous set of actions).
 
+## Teaser
+
+<p align="center">
+  <img src="img/q_values.gif" width="800" title="DQN control with Q-values histogram">
+</p>
 
 ## Built With
 
