@@ -5,16 +5,18 @@
   <br>
 </h1>
 
-<p align="center">
+<h1 align="center">
   <a href="PyPI - Python Version">
     <img src="https://img.shields.io/pypi/pyversions/Django.svg">
   </a>
     <a href="https://tristan-ka.github.io/IBOAT_RL/">
     <img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest)">
   </a>
-</p>
+</h1>
 
 <h4 align="center">Controling autonomous boat with RL </h4>
+
+
 
 <p align="center">
   <a href="#a-brief-context">Context</a> •
