@@ -12,7 +12,7 @@
   <a href="https://tristan-ka.github.io/IBOAT_RL/">
     <img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest)">
   </a>
-  <a href="https://shields.io/">
+  <a href="https://www.isae-supaero.fr/fr/">
     <img src="https://img.shields.io/badge/university-ISAE-blue.svg">
   </a>
 </h1>
