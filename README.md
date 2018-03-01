@@ -86,9 +86,16 @@ In this repo, all the files finishing by Main.py are test files.
 
 ## Teaser
 
+Optimal control found using DQN-algorithm on a simplified environment.
+
 <p align="center">
   <img src="img/q_values.gif" width="800" title="DQN control with Q-values histogram">
 </p>
+
+<p align="center">
+  <img src="img/deltaq_values.gif" width="800" title="DQN control with ΔQ-values representation">
+</p>
+
 
 ## Built With
 
