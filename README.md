@@ -19,8 +19,6 @@
 
 <h4 align="center"> End-to-end control for stall avoidance of the wingsail of an autonomous sailboat </h4>
 
-
-
 <p align="center">
   <a href="#a-brief-context">Context</a> •
   <a href="#prerequisites-and-code-documentation">Documentation</a> •
@@ -86,7 +84,7 @@ In this repo, all the files finishing by Main.py are test files.
 
 ## Teaser
 
-Optimal control found using DQN-algorithm on a simplified environment.
+Optimal control found using DQN-algorithm on a simplified environment of the boat sailing upwind.
 
 <p align="center">
   <img src="img/q_values.gif" width="800" title="DQN control with Q-values histogram">
