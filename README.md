@@ -1,5 +1,12 @@
-Welcome to IBOAT RL's documentation!
-====================================
+<h1 align="center">
+  <br>
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="img/IBOAT_logo.png" alt="Markdownify" width="200"></a>
+  <br>
+  Welcome to IBOAT RL's documentation
+  <br>
+</h1>
+
+<h4 align="center">Controling autonomous boat with RL </h4>
 
 A brief context
 ---------------
