@@ -98,17 +98,16 @@ Optimal control found using DQN-algorithm on a simplified environment of the boa
 
 ## Built With
 
-<p align="center">
-  <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg">
-  </a>
-  <a href="https://www.sphinx-doc.org/">
-    <img src="https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg">
-  </a>
-  <a href="http://jupyter.readthedocs.io/">
-    <img src="https://img.shields.io/badge/Made%20with-Jupyter-1f425f.svg">
-  </a>
-<p>
+<a href="https://www.python.org/">
+  <img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg">
+</a>
+<a href="https://www.sphinx-doc.org/">
+  <img src="https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg">
+</a>
+<a href="http://jupyter.readthedocs.io/">
+  <img src="https://img.shields.io/badge/Made%20with-Jupyter-1f425f.svg">
+</a>
+
 
 ## Related 
 
