@@ -67,7 +67,7 @@ The notebook [demonstrator.ipynb](demonstrator.ipynb) contains different scripts
 ```
 jupyter notebook
 ```
-And open the file.
+And open the file in the tutorial folder.
 
 ## Tests
 
