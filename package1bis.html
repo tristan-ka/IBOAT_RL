@@ -108,8 +108,13 @@ with a certain sample time, stored in np.arrays</p>
 
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Be careful to use the libBoatModel library corresponding to your OS (Linux or Mac)</p>
+<p class="last">Be careful to use the libBoatModel library corresponding to your OS (Linux or Mac).</p>
 </div>
+<p>If the dynamic library is not correctly compiled one can recompile it using the source file in the folder /libs/SourceLibs thanks to the command :</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">gcc</span> <span class="o">-</span><span class="n">shared</span> <span class="o">-</span><span class="n">o</span> <span class="n">libBoatModel</span><span class="o">.</span><span class="n">so</span> <span class="o">-</span><span class="n">fPIC</span> <span class="n">Model_2_EXPORT_Discrete</span><span class="o">.</span><span class="n">c</span> <span class="n">Model_2_EXPORT_Discrete_data</span><span class="o">.</span><span class="n">c</span> <span class="n">rt_look</span><span class="o">.</span><span class="n">c</span> <span class="n">rt_look1d</span><span class="o">.</span><span class="n">c</span>
+</pre></div>
+</div>
+<p>For further assistance please read <a class="reference download internal" href="_downloads/SIMULINK_TO_C__PYTHON.pdf" download=""><code class="xref download docutils literal"><span class="pre">this</span> <span class="pre">file</span></code></a>.</p>
 </div>
 <div class="section" id="module-mdp_realistic">
 <span id="realistic-mdp"></span><h2>Realistic MDP<a class="headerlink" href="#module-mdp_realistic" title="Permalink to this headline">¶</a></h2>
