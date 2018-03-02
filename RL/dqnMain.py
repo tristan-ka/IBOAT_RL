@@ -68,7 +68,7 @@ for e in range(EPISODES):
     print("----------------------------")
     print("episode: {}/{}, Mean Loss = {}".format(e, EPISODES, loss_over_simulation_time))
     print("----------------------------")
-agent.save("../Networks/test-dqn")
+agent.save("../Networks/dqn-test")
 
 # plt.semilogy(np.linspace(1, EPISODES, EPISODES), np.array(loss_of_episode))
 # plt.xlabel("Episodes")

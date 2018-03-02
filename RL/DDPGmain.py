@@ -132,7 +132,7 @@ with tf.Session() as sess:
     agent.save("../Networks/DDPG/Slow_Learning_FullNoise_1000")
 
 # Save test elements
-commentaire = "Slow_Learning_FullNoise_1000"
+commentaire = "ddpg-test"
 np.save("../Networks/DDPG/actor_loss_"+commentaire,np.array(actor_loss_of_episode))
 np.save("../Networks/DDPG/critic_loss_"+commentaire,np.array(critic_loss_of_episode))
 np.save("../Networks/DDPG/Q3_"+commentaire, np.array(Q_predictions_3))

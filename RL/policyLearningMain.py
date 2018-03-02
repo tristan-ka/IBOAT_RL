@@ -78,7 +78,7 @@ for e in range(EPISODES):
 print("n_luff : {}".format(count_luff))
 print("n_bear_off : {}".format(count_bear_off))
 
-agent.save("../Networks/test-policy-learning")
+agent.save("../Networks/policy-learning-test")
 
 # plt.semilogy(np.linspace(1, EPISODES, EPISODES), np.array(loss_of_episode))
 # plt.xlabel("Episodes")
