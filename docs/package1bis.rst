@@ -11,7 +11,15 @@ Realisitic Simulator
     :show-inheritance:
 
 .. warning::
-    Be careful to use the libBoatModel library corresponding to your OS (Linux or Mac)
+    Be careful to use the libBoatModel library corresponding to your OS (Linux or Mac).
+
+If the dynamic library is not correctly compiled one can recompile it using the source file in the folder /libs/SourceLibs thanks to the command :
+
+.. code-block:: python
+
+    >> gcc -shared -o libname.so -fPIC file1.c file2.c
+
+For further assistance please read :download:`this file <SIMULINK_TO_C__PYTHON.pdf>`.
 
 Realistic MDP
 ---------------

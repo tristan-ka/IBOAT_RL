@@ -1,6 +1,5 @@
-import sys
-
 import matplotlib.pyplot as plt
+import sys
 
 sys.path.append("../sim/")
 import numpy as np
@@ -10,6 +9,7 @@ from mdp import ContinuousMDP
 from environment import wind
 import tensorflow as tf
 
+
 def rollOut(time, SIMULATION_TIME, agent, mdp, action, WH):
     reward_list = []
     for tt in range(time + 1, SIMULATION_TIME):
@@ -17,6 +17,7 @@ def rollOut(time, SIMULATION_TIME, agent, mdp, action, WH):
         action = agent.actDeterministicallyUnderPolicy(next_state)
         reward_list.append(reward)
     return reward_list
+
 
 class DDPGVisualization:
     '''
@@ -34,7 +35,9 @@ class DDPGVisualization:
         :param sim_time: duration of the simulation.
 
         '''
-    def __init__(self, hist_duration, mdp_step, time_step, action_size, lower_bound, upper_bound, mean, std, hdg0, src_file,
+
+    def __init__(self, hist_duration, mdp_step, time_step, action_size, lower_bound, upper_bound, mean, std, hdg0,
+                 src_file,
                  sim_time):
         self.mdp = ContinuousMDP(hist_duration, mdp_step, time_step, lower_bound, upper_bound)
         self.action_size = action_size
@@ -66,7 +69,6 @@ class DDPGVisualization:
         wind_heading = np.ones(0)
 
         for time in range(self.sim_time):
-            print("t = {} s".format(time))
 
             agent1.stall = self.agent.get_stall()
             agent2.stall = self.agent.get_stall()
@@ -156,9 +158,9 @@ class DDPGVisualization:
         return f
 
     def simulateDDPGCritic(self, hdg0):
-        #sess = tf.Session()
-        #agent = DDPGAgent(self.mdp.size, 1, self.agent.lower_bound, self.agent.upper_bound, sess)
-        #agent.load(self.src)
+        # sess = tf.Session()
+        # agent = DDPGAgent(self.mdp.size, 1, self.agent.lower_bound, self.agent.upper_bound, sess)
+        # agent.load(self.src)
         WH = self.wh.generateWind()
         hdg0 = hdg0 * TORAD * np.ones(self.wh.samples)
 
@@ -172,26 +174,26 @@ class DDPGVisualization:
         critic0 = np.ones(0)
         criticminus3 = np.ones(0)
         for time in range(self.sim_time):
-            WH=self.wh.generateWind()
+            WH = self.wh.generateWind()
 
             # Critic policy
-            critic = [self.agent.evaluate(state,-3), self.agent.evaluate(state,0), self.agent.evaluate(state,3)]
+            critic = [self.agent.evaluate(state, -3), self.agent.evaluate(state, 0), self.agent.evaluate(state, 3)]
             action = np.argmax(critic)
             if action == 0:
                 action = -3
             if action == 2:
                 action = 3
-            if action ==1:
+            if action == 1:
                 action = 0
 
             # For critic visualization
             # critic = np.concatenate([critic, np.ones(10)*self.agent.evaluate(state,action)[0][0]])
-            critic3 = np.concatenate([critic3, np.ones(10)*critic[2][0]])
-            critic0 = np.concatenate([critic0, np.ones(10)*critic[1][0]])
-            criticminus3 = np.concatenate([criticminus3, np.ones(10)*critic[0][0]])
-            print(action)
+            critic3 = np.concatenate([critic3, np.ones(10) * critic[2][0]])
+            critic0 = np.concatenate([critic0, np.ones(10) * critic[1][0]])
+            criticminus3 = np.concatenate([criticminus3, np.ones(10) * critic[0][0]])
+
             next_state, reward = self.mdp.transition(action, WH)
-            state=next_state
+            state = next_state
             i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
             v = np.concatenate([v, self.mdp.extractSimulationData()[1, :]])
             wind_heading = np.concatenate([wind_heading, WH[0:10]])
@@ -199,12 +201,12 @@ class DDPGVisualization:
         time_vec = np.linspace(0, self.sim_time, int((self.sim_time) / self.mdp.dt))
 
         f, axarr = plt.subplots(3, sharex=True)
-        axarr[0].plot(time_vec, i/TORAD)
-        axarr[1].plot(time_vec,v)
+        axarr[0].plot(time_vec, i / TORAD)
+        axarr[1].plot(time_vec, v)
         # axarr[2].plot(time_vec,critic, 'b', label = 'current state-action pair')
-        axarr[2].plot(time_vec,critic3, 'r', label = 'current state with action luff (3)')
-        axarr[2].plot(time_vec,critic0, 'b', label = 'current state with action do-nothing (0)')
-        axarr[2].plot(time_vec,criticminus3, 'g',  label = 'current state with action bear-off (-3)')
+        axarr[2].plot(time_vec, critic3, 'r', label='current state with action luff (3)')
+        axarr[2].plot(time_vec, critic0, 'b', label='current state with action do-nothing (0)')
+        axarr[2].plot(time_vec, criticminus3, 'g', label='current state with action bear-off (-3)')
         axarr[0].set_ylabel("angle of attack")
         axarr[1].set_ylabel("v")
         axarr[2].set_ylabel("Q-values estimated by Critic Network")
@@ -232,14 +234,14 @@ class DDPGVisualization:
 
             # Actor policy
             action = self.agent.act(state)
-            critic = [self.agent.evaluate(state,-3), self.agent.evaluate(state,0), self.agent.evaluate(state,3)]
+            critic = [self.agent.evaluate(state, -3), self.agent.evaluate(state, 0), self.agent.evaluate(state, 3)]
 
             # For critic visualization
             # critic = np.concatenate([critic, np.ones(10)*self.agent.evaluate(state,action)[0][0]])
             critic3 = np.concatenate([critic3, np.ones(10) * critic[2][0]])
             critic0 = np.concatenate([critic0, np.ones(10) * critic[1][0]])
             criticminus3 = np.concatenate([criticminus3, np.ones(10) * critic[0][0]])
-            print(action)
+
             next_state, reward = self.mdp.transition(action, WH)
             state = next_state
             i = np.concatenate([i, self.mdp.extractSimulationData()[0, :]])
@@ -262,7 +264,7 @@ class DDPGVisualization:
         plt.show()
 
     def simulateGustsControl(self):
-        self.sim_time=100
+        self.sim_time = 100
         agent = DDPGAgent(self.mdp.size, 1, self.agent.lower_bound, self.agent.upper_bound, self.sess)
         agent.load(self.src)
         WH = self.wh.generateWind()
@@ -277,7 +279,7 @@ class DDPGVisualization:
         for time in range(self.sim_time):
             WH = self.wh.generateWind()
             if time == 20:
-                WH = self.wh.generateGust(10*TORAD)
+                WH = self.wh.generateGust(10 * TORAD)
             action = agent.actDeterministically(state)
             next_state, reward = self.mdp.transition(action, WH)
             state = next_state
@@ -294,4 +296,3 @@ class DDPGVisualization:
         axarr[1].set_ylabel("v")
 
         plt.show()
-
