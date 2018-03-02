@@ -4,7 +4,7 @@ import numpy as np
 from ctypes import *
 
 BSTRESH = 2.4
-libc = CDLL("../libs/libBoatModel.dylib")
+libc = CDLL("../libs/libBoatModel.so")
 
 # Rename functions for readability
 model_initialize = libc.Model_2_EXPORT_Discrete_initialize
