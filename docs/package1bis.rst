@@ -17,7 +17,7 @@ If the dynamic library is not correctly compiled one can recompile it using the 
 
 .. code-block:: python
 
-    >> gcc -shared -o libname.so -fPIC file1.c file2.c
+    >> gcc -shared -o libBoatModel.so -fPIC Model_2_EXPORT_Discrete.c Model_2_EXPORT_Discrete_data.c rt_look.c rt_look1d.c
 
 For further assistance please read :download:`this file <SIMULINK_TO_C__PYTHON.pdf>`.
 

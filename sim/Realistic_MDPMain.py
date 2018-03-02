@@ -6,7 +6,7 @@ import numpy as np
 
 # %%
 TORAD = math.pi / 180
-SIMULATION_TIME = 10
+SIMULATION_TIME = 50
 
 '''
 MDP PARAMETERS
@@ -61,8 +61,7 @@ for time in range(SIMULATION_TIME):
         action = 0
     else:
         action = 1
-        
-    action = 3
+
 
     nex_state, reward = mdp.transition(action)
     next_state = state

@@ -68,7 +68,7 @@ class mdp_realistic:
         i, sog = self.simulator.step(self.history_duration,self.dt)
 
         self.s = np.array([i, sog])
-        print(self.s)
+
         self.reward = np.sum(sog[self.size - int(self.mdp_step / self.dt):]) / len(
             sog[self.size - int(self.mdp_step / self.dt):]) / Realistic_Simulator.BSTRESH
         return self.s

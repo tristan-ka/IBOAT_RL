@@ -119,7 +119,7 @@ class Realistic_Simulator:
                        byref(self.Y_Windincidence),
                        byref(self.Y_SpeedOverGround))
             
-            print("time",self.simulation_time,"incidence",self.Y_Windincidence.value,"speed",self.Y_SpeedOverGround.value)
+            #print("time",self.simulation_time,"incidence",self.Y_Windincidence.value,"speed",self.Y_SpeedOverGround.value)
             
             time = round(time, 2)
             if round(time / precision, 3) % 1 == 0:

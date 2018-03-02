@@ -55,8 +55,6 @@ for e in range(EPISODES):
         state = next_state
         if len(agent.memory) >= batch_size:
             loss_sim_list.append(agent.replay(batch_size))
-            print("time: {}, Loss = {}".format(time, loss_sim_list[-1]))
-            print("i : {}".format(mdp.s[0, -1] / TORAD))
             # For data visualisation
             i.append(mdp.s[0, -1])
             v.append(mdp.s[1, -1])
