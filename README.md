@@ -25,6 +25,7 @@
   <a href="#usage">Usage</a> •
   <a href="#getting-started">Getting started</a> •
   <a href="#tests">Tests</a> •
+  <a href="#teaser">Teaser</a> •
   <a href="#built-with">Tools</a> •
   <a href="#related">Related</a> •
   <a href="#acknowledgments">Acknowledgments</a>
@@ -97,8 +98,17 @@ Optimal control found using DQN-algorithm on a simplified environment of the boa
 
 ## Built With
 
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/)
+<p align="center">
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg">
+  </a>
+  <a href="https://www.sphinx-doc.org/">
+    <img src="https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg">
+  </a>
+  <a href="http://jupyter.readthedocs.io/">
+    <img src="https://img.shields.io/badge/Made%20with-Jupyter-1f425f.svg">
+  </a>
+<p>
 
 ## Related 
 
