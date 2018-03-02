@@ -166,11 +166,11 @@ class ContinuousMDP:
     '''
 
     def initializeState(self, state):
-        self.simulator = Simulator.RealistSimulator(self.simulation_duration, self.dt)
+        self.simulator = Simulator.Simulator(self.simulation_duration, self.dt)
         self.s = state
 
     def initializeMDP(self, hdg0, WH):
-        self.simulator = Simulator.RealistSimulator(self.simulation_duration, self.dt)
+        self.simulator = Simulator.Simulator(self.simulation_duration, self.dt)
 
         # Delay of the dynamic
         # be carefull with initialisation : due to delay we must initialize the taustep+1 first angles

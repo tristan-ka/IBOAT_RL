@@ -1,2 +1,0 @@
-model_checkpoint_path: "FullNoise_15000.ckpt"
-all_model_checkpoint_paths: "FullNoise_15000.ckpt"
