@@ -62,8 +62,7 @@ This repositroy is intended to be a **source of information** for future work on
 
 ## Getting started
 
-
-The notebook [demonstrator.ipynb](demonstrator.ipynb) contains different scripts to help users getting familiar with the different scripts. One simply has to have installed ipython or Jupyter notebook (http://jupyter.readthedocs.io/en/latest/install.html) and type the following command in a shell :
+Get started with the tutorial notebook available in the tutorial folder. You should simply have installed ipython or Jupyter notebook (http://jupyter.readthedocs.io/en/latest/install.html) and type the following command in a shell :
 ```
 jupyter notebook
 ```
