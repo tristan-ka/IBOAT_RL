@@ -1,0 +1,9 @@
+End of the run
+Episode reward : 179.97955850330146  for incidence:  0
+Episode reward : 180.3685345535647  for incidence:  7
+Episode reward : 136.0760616556169  for incidence:  13
+End of the demo
+Episode reward : 181.5935404973297  for incidence:  0
+Episode reward : 182.23233416273942  for incidence:  7
+Episode reward : 137.04962145965484  for incidence:  13
+End of the demo

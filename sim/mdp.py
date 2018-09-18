@@ -74,7 +74,8 @@ class MDP:
         self.simulator.computeNewValues(0, WH)
 
         fill = np.zeros(int(self.size - self.simulator.size))
-        self.s = np.array([np.concatenate([self.simulator.hdg, fill]), np.concatenate([self.simulator.vmg, fill])])
+        self.s = np.array([np.concatenate([fill, self.simulator.hdg]), np.concatenate([fill, self.simulator.vmg])])
+        print("Estoy poniendo antes el fill que el heading y la velocidad")
 
         self.reward = np.sum(self.simulator.vmg) / self.simulator.size
         return self.s
@@ -179,7 +180,7 @@ class ContinuousMDP:
         self.simulator.computeNewValues(0, WH)
 
         fill = np.zeros(int(self.size - self.simulator.size))
-        self.s = np.array([np.concatenate([self.simulator.hdg, fill]), np.concatenate([self.simulator.vmg, fill])])
+        self.s = np.array([np.concatenate([fill, self.simulator.hdg]), np.concatenate([fill, self.simulator.vmg])])
 
         self.reward = np.sum(self.simulator.vmg) / self.simulator.size
         return self.s
@@ -191,6 +192,10 @@ class ContinuousMDP:
         self.action = action
 
         delta_hdg = action * TORAD
+
+        if math.isnan(delta_hdg):
+            print("Estoy en mdp.py, aqui hay un problema")
+            print("la accion escogida es: ",action)
 
         hdg, vmg = self.simulator.computeNewValues(delta_hdg, WH)
 

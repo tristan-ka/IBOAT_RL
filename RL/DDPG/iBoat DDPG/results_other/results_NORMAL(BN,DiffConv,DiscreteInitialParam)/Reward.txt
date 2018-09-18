@@ -1,0 +1,22 @@
+For a simulation time of 210 s:
+End of the run
+Episode reward : 133.63200098968753  for incidence:  0
+Episode reward : 179.75878237367147  for incidence:  7
+Episode reward : 137.6453586660847  for incidence:  13
+End of the demo
+Episode reward : 181.5935404973297  for incidence:  0
+Episode reward : 181.97881243893897  for incidence:  7
+Episode reward : 142.62148863113808  for incidence:  13
+End of the demo
+
+For a simulation time of 700 s:
+End of the run
+Episode reward : 519.5798111048018  for incidence:  0
+Episode reward : 504.31237057264167  for incidence:  7
+Episode reward : 464.39856653731704  for incidence:  13
+End of the demo
+Episode reward : 606.2625536447532  for incidence:  0
+Episode reward : 606.6478255863624  for incidence:  7
+Episode reward : 475.4873635393416  for incidence:  13
+End of the demo
+

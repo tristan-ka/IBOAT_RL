@@ -1,6 +1,6 @@
 import math
 
-from Hysteresis import Hysteresis
+from hysteresis import Hysteresis
 import matplotlib.pyplot as plt
 import numpy as np
 
